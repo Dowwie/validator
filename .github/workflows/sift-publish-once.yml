@@ -1,0 +1,62 @@
+# Temporary documentation/source transfer. Creates blobs only, never updates a ref.
+# Removed by the connector after exact local/remote tree verification.
+name: Stage tested Sift files once
+on:
+  push:
+    branches: ['examples/jev-poc-execution']
+    paths: ['.github/workflows/sift-publish-once.yml']
+permissions:
+  contents: read
+jobs:
+  blobs:
+    if: github.repository == 'Dowwie/validator' && github.ref == 'refs/heads/examples/jev-poc-execution'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Verify exact tested patch and create file blobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64,hashlib,json,lzma,os,pathlib,re,subprocess,urllib.request
+          assert os.environ['GITHUB_REPOSITORY']=='Dowwie/validator'
+          assert subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip()=='058d5cb8765610f53dd0d0facdb6fe4c40c950a6'
+          compressed=base64.b64decode(''.join(pathlib.Path(f'.sift-transfer/{i}').read_text() for i in range(4)),validate=True)
+          assert hashlib.sha256(compressed).hexdigest()=='172ef6249b680223100ad9aab23afbcad4764df624376838455455014c921f86'
+          patch=lzma.decompress(compressed,memlimit=128*1024*1024)
+          assert len(patch)==101787
+          assert hashlib.sha256(patch).hexdigest()=='058d895924b9ee2c3e809115d395fec94f4ef72512a0ea0647dcb4418775943c'
+          allowed={'.github/workflows/jev-poc.yml','.gitignore','docs/acceptance/jev-poc-execution.md','docs/artifact-index.md','examples/jev-poc/README.md','examples/jev-poc/capture_sift.mjs','examples/jev-poc/sift/README.md','examples/jev-poc/sift/development.proposed.json','examples/jev-poc/sift/held_out.proposed.json','examples/jev-poc/sift/outcomes.json','examples/jev-poc/sift/review-development.md','examples/jev-poc/sift/run.py','examples/jev-poc/sift/test-capture.mjs','examples/jev-poc/test_sift_worked.py'}
+          assert set(re.findall(r'^diff --git a/(\S+) b/\S+$',patch.decode(),re.M))==allowed
+          pathlib.Path('/tmp/sift-tested.patch').write_bytes(patch)
+          subprocess.run(['git','apply','--check','--index','--unidiff-zero','/tmp/sift-tested.patch'],check=True)
+          subprocess.run(['git','apply','--index','--unidiff-zero','/tmp/sift-tested.patch'],check=True)
+          subprocess.run(['git','diff','--cached','--check'],check=True)
+          assert set(subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines())==allowed
+          result={}
+          for name in sorted(allowed):
+              data=pathlib.Path(name).read_bytes()
+              assert not pathlib.Path(name).is_symlink()
+              request=urllib.request.Request('https://api.github.com/repos/Dowwie/validator/git/blobs',data=json.dumps({'content':data.decode('utf-8'),'encoding':'utf-8'}).encode(),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'validator-tested-file-transfer'},method='POST')
+              with urllib.request.urlopen(request,timeout=30) as response:
+                  blob=json.load(response)
+              expected=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+              assert blob['sha']==expected
+              result[name]={'sha':blob['sha'],'sha256':hashlib.sha256(data).hexdigest()}
+          pathlib.Path('changed-blobs.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result,indent=2))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sift-tested-file-blobs
+          path: changed-blobs.json
+          if-no-files-found: error
+          retention-days: 7
