@@ -1,0 +1,57 @@
+name: Jev PoC verification
+
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'schemas/**'
+      - 'examples/jev-poc/**'
+      - 'Cargo.*'
+      - 'rust-toolchain.toml'
+      - '.github/workflows/jev-poc.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Preserve execution identity
+        run: |
+          mkdir -p target/poc-evidence
+          git rev-parse HEAD > target/poc-evidence/commit.txt
+          git archive HEAD > target/poc-evidence/source.tar
+          python3 --version > target/poc-evidence/python-version.txt
+      - name: Native tests, formatting, and lint
+        shell: bash
+        run: |
+          set -o pipefail
+          rustup show 2>&1 | tee target/poc-evidence/toolchain.log
+          cargo fmt --all -- --check 2>&1 | tee target/poc-evidence/fmt.log
+          cargo test --locked --all-targets 2>&1 | tee target/poc-evidence/cargo-test.log
+          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee target/poc-evidence/clippy.log
+          cargo build --locked 2>&1 | tee target/poc-evidence/build.log
+          cp target/debug/validator target/poc-evidence/validator
+      - name: Example tests and recorded-output replay
+        shell: bash
+        run: |
+          set -o pipefail
+          if test -f examples/jev-poc/test_poc.py; then
+            python3 -m unittest discover -s examples/jev-poc -p 'test_*.py' -v 2>&1 | tee target/poc-evidence/example-tests.log
+            python3 examples/jev-poc/poc.py verify --validator target/debug/validator --out target/poc-evidence/runs 2>&1 | tee target/poc-evidence/example-replay.log
+          fi
+      - name: Upload evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jev-poc-evidence
+          path: target/poc-evidence/
+          if-no-files-found: error
+          retention-days: 14
