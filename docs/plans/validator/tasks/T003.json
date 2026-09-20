@@ -1,0 +1,196 @@
+{
+  "id": "T003",
+  "title": "Construct shared identities and vocabulary-owned labels",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#canonical-golden-dataset",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#shared-records-and-typed-task-data",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#decode-validate-align-then-score",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Canonical identities and label targets can only be constructed through checked invariants.",
+  "dependencies": [
+    {
+      "task": "T001",
+      "requires": "Model constants and errors"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/common.rs",
+      "purpose": "Checked IDs, vocabulary, label indexes, Episode and Outcome records; Prediction is implemented with ObservationSet in T004"
+    },
+    {
+      "path": "src/model.rs",
+      "purpose": "Closed task declaration and re-exports"
+    },
+    {
+      "path": "Cargo.toml",
+      "purpose": "Use an established UUID primitive with only required parsing features"
+    },
+    {
+      "path": "Cargo.lock",
+      "purpose": "Record UUID dependency resolution explicitly"
+    }
+  ],
+  "interfaces": [
+    "EpisodeId, RunId, SourceId, ArtifactDigest are distinct types.",
+    "LabelVocabulary owns ordered exact strings and lookup; LabelIndex cannot be freely serialized or mixed across datasets.",
+    "Episode<Target> owns required opaque input once; Outcome<Target> distinguishes checked answered/abstained records. Prediction<Output> is implemented by T004 after ObservationSet exists."
+  ],
+  "acceptance_criteria": [
+    "UUID text must be canonical lowercase hyphenated, non-nil/non-max; standard versions allowed.",
+    "Vocabulary rejects blank or duplicate labels and respects task-specific minimum size, case, whitespace, Unicode.",
+    "Fields remain private; expose no mutable construction bypass or generic task/plugin trait."
+  ],
+  "verification": [
+    {
+      "id": "canonical_identifiers",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib canonical_identifiers -- --nocapture",
+      "expected": "Sentinels/noncanonical UUID/digest rejected; valid existing versions accepted."
+    },
+    {
+      "id": "vocabulary_exact_identity",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib vocabulary_exact_identity -- --nocapture",
+      "expected": "No trimming/normalization; duplicates and blank entries rejected."
+    },
+    {
+      "id": "model_boundary_visibility",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib model_boundary_visibility -- --nocapture",
+      "expected": "Checked constructors enforce model invariants."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V231",
+    "V232",
+    "V233",
+    "V234",
+    "V235",
+    "V236",
+    "V237",
+    "V238",
+    "V239",
+    "V240",
+    "V241",
+    "V242",
+    "V243",
+    "V244",
+    "V245",
+    "V246",
+    "V247",
+    "V248",
+    "S13",
+    "S21",
+    "AC1",
+    "D003",
+    "D004",
+    "D005",
+    "D006",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "D061",
+    "D062",
+    "D063",
+    "D064"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T001",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T001",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T001",
+      "path": "rust-toolchain.toml"
+    },
+    {
+      "from": "T001",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/error.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/model.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

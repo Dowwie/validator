@@ -1,0 +1,136 @@
+{
+  "id": "T017",
+  "title": "Verify the complete steel thread before expanding task semantics",
+  "authority": "Ratified",
+  "phase": "steel_thread_gate",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#verification-and-acceptance",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#structure-acceptance-checks",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/plans/build-validator.md#steel-thread-decision",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "An independent verifier confirms the strict admission-to-replay architecture or stops its expansion.",
+  "dependencies": [
+    {
+      "task": "T016",
+      "requires": "All four real command paths"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "tests/fixtures/steel-thread/golden.json",
+      "purpose": "Fixed four-episode golden inputs"
+    },
+    {
+      "path": "tests/fixtures/steel-thread/baseline.json",
+      "purpose": "Baseline predictions with signals and observations"
+    },
+    {
+      "path": "tests/fixtures/steel-thread/candidate.json",
+      "purpose": "Candidate predictions"
+    },
+    {
+      "path": "tests/fixtures/steel-thread/config.json",
+      "purpose": "As-recorded config"
+    },
+    {
+      "path": "tests/fixtures/steel-thread/expected.json",
+      "purpose": "Independent rational/analytical oracle"
+    },
+    {
+      "path": "tests/fixtures/steel-thread/source-a/evidence.bin",
+      "purpose": "Synthetic same-basename evidence"
+    },
+    {
+      "path": "tests/fixtures/steel-thread/source-b/evidence.bin",
+      "purpose": "Second synthetic evidence"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Full moved-run process scenario"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Architecture gate evidence, not release claim"
+    }
+  ],
+  "interfaces": [
+    "Use exact fixture inputs and expected results specified in the master plan, not production-derived oracles.",
+    "Exercise check, evaluate both runs, relocate with original evidence unavailable, inspect, compare.",
+    "Record binary/source/fixture hashes and test names in saved response; no implementation completion claim."
+  ],
+  "acceptance_criteria": [
+    "Every pass condition in the steel-thread decision is verified, including probabilities on abstention and three-row confidence bins.",
+    "Invalid vector, duplicate key, tampered evidence, and no-overwrite cases fail with specified exits and no success directory.",
+    "Fail verdict names the broken seam and blocks T018 onward; fix there, do not widen tolerances or add fallback routes."
+  ],
+  "verification": [
+    {
+      "id": "steel_thread_end_to_end",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli steel_thread_end_to_end -- --nocapture",
+      "expected": "Exact four-episode oracles, transitions, schema validation and relocation all pass."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "independent verifier",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+
+  ],
+  "input_artifacts": [
+    {
+      "from": "T016",
+      "path": "src/comparison.rs"
+    },
+    {
+      "from": "T016",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T016",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T016",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T016",
+      "path": "schemas/v2/comparison.schema.json"
+    },
+    {
+      "from": "T016",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T016",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T016",
+      "path": "tests/cli.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Format, complete locked tests and release build pass on the pinned toolchain. Run the exact warning-denied Clippy command and record its real status and exact residual symbols; only the owner-enumerated private dead_code contracts awaiting T015-T021 consumers may remain staged. No other warning, bypass, suppression, artificial consumer/export, changed tolerance or weakened oracle is accepted. The full warning-free gate remains mandatory at T027 and T035.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

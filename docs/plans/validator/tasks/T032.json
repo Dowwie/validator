@@ -1,0 +1,177 @@
+{
+  "id": "T032",
+  "title": "Document and verify installation and the machine workflow",
+  "authority": "Ratified",
+  "phase": "delivery",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#definition-of-done",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#cli-and-run-artifacts",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "An agent can use the installed executable and published contracts without reading source.",
+  "dependencies": [
+    {
+      "task": "T027",
+      "requires": "Verified public implementation"
+    },
+    {
+      "task": "T031",
+      "requires": "Synthetic worked example"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "purpose": "Concise declarative overview, tested installation and limits"
+    },
+    {
+      "path": "docs/usage.md",
+      "purpose": "Canonical preparation/check/evaluate/inspect/compare workflows and schemas"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Installation/toolchain/version evidence"
+    }
+  ],
+  "interfaces": [
+    "Document cargo install --path . --locked --root <isolated-install-root> and explicit PATH/binary identity; verify the exact installed executable hash.",
+    "Examples cover both tasks, failure discovery by fields, policy selection, strict errors, exact subset preparation, intersections and schema use.",
+    "Explain population/reference limitations, probability/observation differences and sensitive snapshot handling."
+  ],
+  "acceptance_criteria": [
+    "Installation succeeds on the pinned tested host; --version identifies the executable package, and docs/schema/report fields identify specification and wire versions.",
+    "Examples run with the installed binary using public synthetic inputs; no repository-specific scoring edits.",
+    "No claims of reference truth, calibrated probabilities, significance or deployment suitability."
+  ],
+  "verification": [
+    {
+      "id": "verified_installation",
+      "kind": "documented_check",
+      "procedure": "Run cargo install --path . --locked --root <isolated-install-root>; invoke its bin/validator --version and both documented synthetic command sequences; preserve hash, commands and exits.",
+      "expected": "Installation command succeeds on the pinned tested host, and --version identifies package/spec/wire information as documented. Examples run with the installed binary using public synthetic inputs; no repository-specific scoring edits. No claims of reference truth, calibrated probabilities, significance or deployment suitability."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V005",
+    "V006",
+    "V007",
+    "V008",
+    "V009",
+    "V010",
+    "V011",
+    "V012",
+    "V013",
+    "V014",
+    "V015",
+    "V016",
+    "V017",
+    "V018",
+    "V019",
+    "V020",
+    "V021",
+    "V022",
+    "V023",
+    "V024",
+    "V025",
+    "AC8",
+    "DOD5"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T027",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T027",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T027",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T027",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/golden.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/baseline.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/candidate.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/config.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/targeted-config.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/targeted-predictions.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/expected.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/manifest.json"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

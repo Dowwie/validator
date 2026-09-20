@@ -1,0 +1,285 @@
+{
+  "id": "T018",
+  "title": "Construct complete multi-label inputs through the shared admission boundary",
+  "authority": "Ratified",
+  "phase": "extension",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#canonical-golden-dataset",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#canonical-prediction-artifact",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#task-specific-structures",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#absence-and-uncertainty",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Multi-label data reaches a separate concrete evaluator without duplicating the shared artifact/admission backbone.",
+  "dependencies": [
+    {
+      "task": "T017",
+      "requires": "Accepted architecture gate"
+    },
+    {
+      "task": "T004",
+      "requires": "Shared source/observation types"
+    },
+    {
+      "task": "T006",
+      "requires": "Shared selection/alignment"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "LabelSet, LabelMarginals, MultiLabelOutput/Policy/Evaluation"
+    },
+    {
+      "path": "src/model.rs",
+      "purpose": "Closed concrete task dispatch"
+    },
+    {
+      "path": "src/validation.rs",
+      "purpose": "Multi-label conversion and shared alignment reuse"
+    },
+    {
+      "path": "src/validation/wire.rs",
+      "purpose": "Concrete multi-label DTO paths"
+    }
+  ],
+  "interfaces": [
+    "LabelSet is a private sorted unique vector; reject duplicate submitted labels before set construction.",
+    "LabelMarginals is distinct from categorical distribution; exact vocabulary, finite [0,1], no sum-normalization.",
+    "MultiLabelOutput supports Outcome<LabelSet> and marginals, not scoring confidence; retained confidence observations remain legal."
+  ],
+  "acceptance_criteria": [
+    "Empty set is answered; abstention, missing row and missing marginal key remain distinct.",
+    "Reject task/target/probability/policy mismatches, scored_choice sources, top-level confidence, counts, partial labels/per-label abstention.",
+    "Private checked structures and evaluator signatures prevent passing categorical policies or foreign-dataset indexes."
+  ],
+  "verification": [
+    {
+      "id": "multi_label_checked_admission",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib multi_label_checked_admission -- --nocapture",
+      "expected": "Duplicate sets and unsupported shapes fail; [0.9,0.8] marginals remain unchanged."
+    },
+    {
+      "id": "cross_task_boundaries",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib cross_task_boundaries -- --nocapture",
+      "expected": "No inferred task kinds or cross-kind coercion."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V082",
+    "V083",
+    "V084",
+    "V085",
+    "V101",
+    "V102",
+    "V103",
+    "V104",
+    "V105",
+    "V106",
+    "V107",
+    "V108",
+    "V109",
+    "V110",
+    "M13",
+    "M14",
+    "M15",
+    "M16",
+    "M20",
+    "M21",
+    "AC1",
+    "D003",
+    "D004",
+    "D005",
+    "D006",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D016",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D028",
+    "D029",
+    "D030",
+    "D031",
+    "D032",
+    "D033",
+    "D034",
+    "D035",
+    "D036",
+    "D037",
+    "D038",
+    "D039",
+    "D040",
+    "D041",
+    "D042",
+    "D043",
+    "D044",
+    "D045",
+    "D046",
+    "D047",
+    "D048",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "D061",
+    "D062",
+    "D063",
+    "D064",
+    "DM02",
+    "DM03",
+    "DM04",
+    "DM05",
+    "DM12"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/golden.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/baseline.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/candidate.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/config.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/expected.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/source-a/evidence.bin"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/source-b/evidence.bin"
+    },
+    {
+      "from": "T017",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T017",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T004",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T004",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/validation.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

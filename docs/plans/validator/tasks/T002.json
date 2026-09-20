@@ -1,0 +1,194 @@
+{
+  "id": "T002",
+  "title": "Implement strict wire decoding without losing opaque numbers",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#canonical-golden-dataset",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#validation-and-numerical-rules",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#decode-validate-align-then-score",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Untrusted JSON is decoded strictly before any semantic interpretation.",
+  "dependencies": [
+    {
+      "task": "T001",
+      "requires": "Error type and serde dependency features"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/validation.rs",
+      "purpose": "Pure decoding entry"
+    },
+    {
+      "path": "src/validation/wire.rs",
+      "purpose": "Private tagged DTOs and recursive duplicate-key rejection"
+    },
+    {
+      "path": "src/lib.rs",
+      "purpose": "Declare the implemented validation module without widening the public application API"
+    },
+    {
+      "path": "Cargo.toml",
+      "purpose": "Enable only serialization features necessary for exact opaque numbers and strict decoding"
+    },
+    {
+      "path": "Cargo.lock",
+      "purpose": "Record explicit serialization feature/dependency resolution changes"
+    }
+  ],
+  "interfaces": [
+    "Input: exact UTF-8 bytes; output: private wire DTO or typed Error.",
+    "Keep tags explicit and unknown fields fatal outside allowed opaque payload/configuration.",
+    "Required opaque input distinguishes absent from explicit null; retain arbitrary JSON numeric values."
+  ],
+  "acceptance_criteria": [
+    "Duplicate keys fail before overwrite at every nesting depth including input and source configuration.",
+    "Unknown tags/fields, wrong primitive types, and unsupported wire versions fail safely.",
+    "Numeric spelling remains in snapshots; input integer 9007199254740993 survives decode/inspection without binary64 rounding."
+  ],
+  "verification": [
+    {
+      "id": "strict_json_keys",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib strict_json_keys -- --nocapture",
+      "expected": "Escaped-equivalent keys and nested duplicate keys are rejected."
+    },
+    {
+      "id": "opaque_number_and_null",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib opaque_number_and_null -- --nocapture",
+      "expected": "Large integer preserved; explicit null legal; missing input rejected."
+    },
+    {
+      "id": "wire_tags_and_fields",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib wire_tags_and_fields -- --nocapture",
+      "expected": "Unknown fields/types/wire version are rejected without inference."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V004",
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V101",
+    "V102",
+    "V103",
+    "V104",
+    "V105",
+    "V106",
+    "V107",
+    "V108",
+    "V109",
+    "V110",
+    "S13",
+    "S21",
+    "S28",
+    "M21",
+    "E13",
+    "AC1",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "DM12"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T001",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T001",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T001",
+      "path": "rust-toolchain.toml"
+    },
+    {
+      "from": "T001",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/error.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/model.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

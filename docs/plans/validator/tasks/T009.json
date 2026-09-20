@@ -1,0 +1,162 @@
+{
+  "id": "T009",
+  "title": "Compute categorical losses and distinct probability/confidence diagnostics",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#single-label-probability-metrics-and-confidence-diagnostics",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Probability and confidence diagnostics disclose their different populations and preserve original decisions.",
+  "dependencies": [
+    {
+      "task": "T008",
+      "requires": "Typed single-label result/evidence shape"
+    },
+    {
+      "task": "T005",
+      "requires": "Checked categorical and confidence values"
+    },
+    {
+      "task": "T007",
+      "requires": "Metric/bin helpers"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "Categorical probability and signal result types"
+    },
+    {
+      "path": "src/evaluation/single_label.rs",
+      "purpose": "Losses, deterministic argmax, bins and ECE"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Independent signal and loss cases"
+    }
+  ],
+  "interfaces": [
+    "Probability metrics use all selected rows including abstentions; confidence bins use raw answered rows only.",
+    "Episode evidence separates original/working vector, argmax, max/chosen probability, disagreement and confidence.",
+    "Ten bins use min(floor(10*h),9); tie argmax uses vocabulary order."
+  ],
+  "acceptance_criteria": [
+    "[0.7,0.2,0.1] true A gives -ln(0.7), Brier 0.14; [1,0,0] true B gives infinite loss and Brier 2.",
+    "Argmax disagreement excludes raw abstentions and exposes raw answered count; chosen probability/disagreement are null on abstention.",
+    "Bins include/exclude exact IDs, means, counts, bounds and correct counts; only maximum-probability bins produce top-label ECE."
+  ],
+  "verification": [
+    {
+      "id": "categorical_loss_oracles",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance categorical_loss_oracles -- --nocapture",
+      "expected": "Finite and infinite oracles agree with full multiclass Brier scaling."
+    },
+    {
+      "id": "signal_population_bins",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance signal_population_bins -- --nocapture",
+      "expected": "As-recorded probability and confidence populations preserve abstentions, exact included/excluded IDs, bins, and counts; threshold-rejected evidence is owned by T021."
+    },
+    {
+      "id": "bin_boundary_binary64",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance bin_boundary_binary64 -- --nocapture",
+      "expected": "Adjacent binary64 values at boundaries, including 1, go to correct bins."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V111",
+    "V112",
+    "V129",
+    "V130",
+    "V131",
+    "V132",
+    "V133",
+    "V134",
+    "V135",
+    "V136",
+    "V137",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S10",
+    "S12",
+    "S17",
+    "M11",
+    "E01",
+    "E02",
+    "AC2",
+    "AC4",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060",
+    "DM07"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T008",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T008",
+      "path": "src/evaluation/single_label.rs"
+    },
+    {
+      "from": "T008",
+      "path": "src/evaluation.rs"
+    },
+    {
+      "from": "T008",
+      "path": "tests/fixtures/single-label/expected.json"
+    },
+    {
+      "from": "T008",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T005",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T005",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T007",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T007",
+      "path": "src/evaluation.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "manifestVersion": 1,
+  "id": "1ae19ede-14cc-45ef-b189-aa270f89957e",
+  "name": "validator",
+  "path": "/Users/dowwie/MyProjects/validator/.zvec-grep",
+  "rootPaths": [
+    {
+      "absolutePath": "/Users/dowwie/MyProjects/validator",
+      "recursive": true,
+      "fileTypes": [
+        "markdown"
+      ]
+    }
+  ],
+  "indexPolicy": "enabled",
+  "embedding": {
+    "provider": "local",
+    "model": "potion-code-16m-v2",
+    "dimension": 256,
+    "metric": "cosine"
+  },
+  "indexVersion": 1,
+  "createdTime": 1789746103468,
+  "updatedTime": 1789854362523,
+  "embeddingRuntime": {
+    "device": "auto"
+  }
+}

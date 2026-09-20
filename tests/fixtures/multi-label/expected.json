@@ -1,0 +1,43 @@
+{
+  "two_episode": {
+    "N": 2,
+    "G": 2,
+    "exact_match_accuracy": { "numerator": 1, "denominator": 2 },
+    "aggregate": { "tp": 1, "fp": 1, "fn": 1, "tn": 3 },
+    "answered_micro_f1": { "numerator": 2, "denominator": 4 },
+    "answered_macro_f1": { "numerator": 1, "denominator": 3 },
+    "answered_hamming_loss": { "numerator": 2, "denominator": 6 }
+  },
+  "empty_answered": {
+    "exact_match_accuracy": { "numerator": 1, "denominator": 1 },
+    "coverage": { "numerator": 1, "denominator": 1 },
+    "answered_hamming_loss": { "numerator": 0, "denominator": 2 },
+    "undefined_labels": ["A", "B"],
+    "answered_macro_f1": { "numerator": 0, "denominator": 2 }
+  },
+  "abstention": {
+    "N": 2,
+    "G": 1,
+    "U": 1,
+    "D": 1,
+    "exact_match_accuracy": { "numerator": 1, "denominator": 2 },
+    "selective_exact_match_accuracy": { "numerator": 1, "denominator": 1 },
+    "coverage": { "numerator": 1, "denominator": 2 },
+    "label_A": { "support": 1, "answered_support": 0, "tn": 1 }
+  },
+  "all_abstained": {
+    "coverage": { "numerator": 0, "denominator": 1 },
+    "exact_match_accuracy": { "numerator": 0, "denominator": 1 },
+    "answered_status": "no_answered_predictions"
+  },
+  "no_data": { "status": "no_data" },
+  "exhaustive": {
+    "labels": ["A", "B", "C"],
+    "answered_pairs": 64,
+    "whole_abstentions": 8
+  },
+  "equal_binary_counts": {
+    "exact_set_accuracy": { "numerator": 1, "denominator": 2 },
+    "split_set_accuracy": { "numerator": 0, "denominator": 2 }
+  }
+}

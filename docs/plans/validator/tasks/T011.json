@@ -1,0 +1,170 @@
+{
+  "id": "T011",
+  "title": "Load exact bytes and bind every evidence entry deterministically",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#cli-and-run-artifacts",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#evidence-bindings-and-replay",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Every source evidence entry is loaded once with an exact digest and deterministic stored destination.",
+  "dependencies": [
+    {
+      "task": "T004",
+      "requires": "Checked source/provenance structures"
+    },
+    {
+      "task": "T003",
+      "requires": "ArtifactDigest"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/artifacts.rs",
+      "purpose": "Snapshot reads, SHA-256, source-relative evidence resolution"
+    },
+    {
+      "path": "src/model/common.rs",
+      "purpose": "Snapshot manifest and evidence binding records"
+    }
+  ],
+  "interfaces": [
+    "Input: input-file paths and source definitions; output: exact snapshot bytes and indexed evidence records.",
+    "Source IDs sort by UTF-8 bytes, evidence by array index; global ordinal paths evidence/n.bin.",
+    "Original source paths are resolved only for new submissions; replay consumes bindings instead."
+  ],
+  "acceptance_criteria": [
+    "Same-basename and repeated-path entries are copied separately; parent-relative source paths are allowed at ingestion.",
+    "Missing files return E_IO; paths/hashes are supplied to validation without moving filesystem access into validation.",
+    "Manifest binds source ID, index, original path, stored path, digest; declared but unused sources/evidence are retained."
+  ],
+  "verification": [
+    {
+      "id": "evidence_ordinal_binding",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib evidence_ordinal_binding -- --nocapture",
+      "expected": "Exact expected ordering and distinct copies for repeated/basename-collision paths."
+    },
+    {
+      "id": "artifact_exact_bytes",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib artifact_exact_bytes -- --nocapture",
+      "expected": "Independent digest of loaded/copied bytes matches manifest."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V151",
+    "V152",
+    "V153",
+    "V154",
+    "V155",
+    "V156",
+    "V157",
+    "V158",
+    "V159",
+    "V160",
+    "V161",
+    "V162",
+    "V163",
+    "V164",
+    "V165",
+    "V166",
+    "V167",
+    "V168",
+    "V169",
+    "V170",
+    "V171",
+    "V172",
+    "V173",
+    "V197",
+    "V198",
+    "V199",
+    "V200",
+    "V201",
+    "V202",
+    "V203",
+    "V204",
+    "V205",
+    "V206",
+    "V207",
+    "V208",
+    "V209",
+    "E08",
+    "AC7",
+    "DM10"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T004",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T004",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T003",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T003",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.lock"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

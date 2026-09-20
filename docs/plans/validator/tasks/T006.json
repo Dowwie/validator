@@ -1,0 +1,249 @@
+{
+  "id": "T006",
+  "title": "Align selected episodes into a checked single-label evaluation",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#evaluation-configuration",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#decode-validate-align-then-score",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Scoring receives a complete, sorted selected population with one expected target and prediction per episode.",
+  "dependencies": [
+    {
+      "task": "T005",
+      "requires": "Validated single-label predictions"
+    },
+    {
+      "task": "T003",
+      "requires": "IDs, targets and vocabulary"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/common.rs",
+      "purpose": "Population and EvaluationConfig shared records"
+    },
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "SingleLabelEvaluation with private aligned rows"
+    },
+    {
+      "path": "src/validation.rs",
+      "purpose": "Decode/validate/digest/align entry point"
+    }
+  ],
+  "interfaces": [
+    "Input: dataset/prediction/config bytes plus supplied exact-byte dataset digest; no filesystem access.",
+    "Output: closed ValidatedEvaluation::SingleLabel owning vocabulary/sources/population/legal policy/rows.",
+    "Caller cannot manufacture an evaluation from arbitrary vectors; constructors stay with model invariants."
+  ],
+  "acceptance_criteria": [
+    "Validate all golden and prediction records before selection; duplicate/missing/extra IDs are fatal.",
+    "Absent episode_ids selects all; [] selects none; selected IDs must exist; prediction IDs equal selection exactly.",
+    "Sort UUID bytes, preserve unselected IDs/counts, population description/role/parent identity; digest mismatch is E_PROVENANCE."
+  ],
+  "verification": [
+    {
+      "id": "population_alignment",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib population_alignment -- --nocapture",
+      "expected": "Selection/all/empty and ID mismatch cases have exact counts or correct error."
+    },
+    {
+      "id": "validate_before_selection",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib validate_before_selection -- --nocapture",
+      "expected": "An invalid unselected golden record cannot be hidden by selection."
+    },
+    {
+      "id": "dataset_digest_binding",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib dataset_digest_binding -- --nocapture",
+      "expected": "Changed dataset bytes reject predictions."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V091",
+    "V092",
+    "V093",
+    "V094",
+    "V095",
+    "V096",
+    "V097",
+    "V098",
+    "V099",
+    "V100",
+    "V101",
+    "V102",
+    "V103",
+    "V104",
+    "V105",
+    "V106",
+    "V107",
+    "V108",
+    "V109",
+    "V110",
+    "V231",
+    "V232",
+    "V233",
+    "V234",
+    "V235",
+    "V236",
+    "V237",
+    "V238",
+    "V239",
+    "V240",
+    "V241",
+    "V242",
+    "V243",
+    "V244",
+    "V245",
+    "V246",
+    "V247",
+    "V248",
+    "S13",
+    "S14",
+    "S17",
+    "S18",
+    "M16",
+    "AC1",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D037",
+    "D038",
+    "D039",
+    "D040",
+    "D041",
+    "D042",
+    "D043",
+    "D044",
+    "D045",
+    "D046",
+    "D047",
+    "D048",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "D061",
+    "D062",
+    "D063",
+    "D064",
+    "DM05"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T005",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T005",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T003",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T003",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.lock"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

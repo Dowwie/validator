@@ -1,0 +1,165 @@
+{
+  "id": "T007",
+  "title": "Implement checked metric arithmetic and explicit status precedence",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#undefined-values",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Metrics report honest applicability, denominators, units, and nonnumeric states without invalid JSON.",
+  "dependencies": [
+    {
+      "task": "T001",
+      "requires": "Numerical constants and errors"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/common.rs",
+      "purpose": "MetricResult with finite/status/population/ratio fields"
+    },
+    {
+      "path": "src/evaluation.rs",
+      "purpose": "Shared checked counts, ratios, macro status, bin arithmetic"
+    }
+  ],
+  "interfaces": [
+    "MetricResult holds finite value or typed status; numerator/denominator are explicit for ratios.",
+    "Population scope is selected/answered and unit episode/label_decision; raw_answered is bin-only scope.",
+    "Checked addition/multiplication and finite arithmetic failures return E_NUMERIC, not a null success value."
+  ],
+  "acceptance_criteria": [
+    "Apply absence before empty population, then answered-only status and zero denominator; macro zero-fill only for the two named nonempty macro metrics.",
+    "Positive infinite log loss serializes null plus +infinity marker; nonfinite unintended arithmetic fails.",
+    "Counts stay exact nonnegative integers, including N*K and micro-F1 expressions."
+  ],
+  "verification": [
+    {
+      "id": "metric_status_precedence",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib metric_status_precedence -- --nocapture",
+      "expected": "All status branches preserve value, units, populations, and ratio fields."
+    },
+    {
+      "id": "count_overflow_is_error",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib count_overflow_is_error -- --nocapture",
+      "expected": "Injected count limits fail without wrapping."
+    },
+    {
+      "id": "macro_undefined_classes",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib macro_undefined_classes -- --nocapture",
+      "expected": "Undefined class F1 is identified; empty population is not zero-filled."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V101",
+    "V102",
+    "V103",
+    "V104",
+    "V105",
+    "V106",
+    "V107",
+    "V108",
+    "V109",
+    "V110",
+    "V119",
+    "V120",
+    "V121",
+    "V122",
+    "V123",
+    "V124",
+    "V125",
+    "V126",
+    "V127",
+    "V128",
+    "V249",
+    "V250",
+    "V251",
+    "V252",
+    "V253",
+    "V254",
+    "AC4",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T001",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T001",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T001",
+      "path": "rust-toolchain.toml"
+    },
+    {
+      "from": "T001",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/error.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/model.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

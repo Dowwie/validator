@@ -1,0 +1,16 @@
+[package]
+name = "validator"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98.1"
+
+[dependencies]
+serde = { version = "1.0.229", default-features = false, features = ["derive", "std"] }
+serde_json = { version = "1.0.151", default-features = false, features = ["arbitrary_precision", "raw_value", "std"] }
+rustix = { version = "1.1.4", default-features = false, features = ["fs", "std"] }
+sha2 = { version = "0.10.9", default-features = false }
+uuid = { version = "1.26.1", default-features = false, features = ["std", "v7"] }
+time = { version = "0.3.47", default-features = false, features = ["formatting", "std"] }
+
+[dev-dependencies]
+jsonschema = "0.37.4"

@@ -1,0 +1,103 @@
+{
+  "id": "T030",
+  "title": "Calculate an independent hard-label oracle from frozen native sources",
+  "authority": "Ratified",
+  "phase": "acceptance_inputs",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#frozen-practical-acceptance-case",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#single-label-hard-decisions",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Practical hard-label expected values are independent of Validator and its preparation implementation.",
+  "dependencies": [
+    {
+      "task": "T028",
+      "requires": "Frozen inputs and ID map"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "scripts/acceptance/oracle_chord.py",
+      "purpose": "Independent native-route counting; use python-dev skill"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/expected.json",
+      "purpose": "Independent matrices/counts/cohorts/transitions and known failures"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Method and historical difference explanation"
+    }
+  ],
+  "interfaces": [
+    "Oracle author reads frozen raw native outputs/references and mapping, not src/, evaluator output, or prepare_chord.py.",
+    "Use exact integer/rational count calculations; independently interpret frozen documented native route.",
+    "Report native recovered Choice outputs separately from older strict accepted-response projections."
+  ],
+  "acceptance_criteria": [
+    "603 references yield independently computed Choice/Score matrices, hard metrics, recovered/regressed IDs and per-cohort counts.",
+    "Expected failures and a targeted subset are identified without selecting based on desired improvement.",
+    "Explain discrepancies from historical report using native recovery, population and route; do not force agreement."
+  ],
+  "verification": [
+    {
+      "id": "independent_native_oracle",
+      "kind": "documented_check",
+      "procedure": "Run python scripts/acceptance/oracle_chord.py --bundle <frozen-root> --out <expected.json> using only raw frozen files and ID map; record hash and independently review integer/rational counts and route.",
+      "expected": "603 references yield independently computed Choice/Score matrices, hard metrics, recovered/regressed IDs and per-cohort counts. Expected failures and a targeted subset are identified without selecting based on desired improvement. Explain discrepancies from historical report using native recovery, population and route; do not force agreement."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "independent oracle author",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V223",
+    "V224",
+    "V225",
+    "V226",
+    "V227",
+    "V228",
+    "V229",
+    "V230",
+    "V342",
+    "V343",
+    "V344",
+    "V345",
+    "V346",
+    "V347",
+    "V348",
+    "V349",
+    "V350"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T028",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-manifest.json"
+    },
+    {
+      "from": "T028",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-id-map.json"
+    },
+    {
+      "from": "T028",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "id": "T014",
+  "title": "Wire check and evaluate through the thin CLI",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#cli-and-run-artifacts",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#package-and-source-layout",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "The built executable checks and evaluates valid single-label input through the same validation path.",
+  "dependencies": [
+    {
+      "task": "T006",
+      "requires": "Validated alignment"
+    },
+    {
+      "task": "T010",
+      "requires": "Input schema contract"
+    },
+    {
+      "task": "T012",
+      "requires": "Safe publication"
+    },
+    {
+      "task": "T013",
+      "requires": "Typed reports and receipts"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/app.rs",
+      "purpose": "Coordinate load/validate/check/evaluate"
+    },
+    {
+      "path": "src/lib.rs",
+      "purpose": "Small documented application API"
+    },
+    {
+      "path": "src/main.rs",
+      "purpose": "Binary cli invocation and exit only"
+    },
+    {
+      "path": "src/cli.rs",
+      "purpose": "Arguments, stdout document and exit handling"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Actual process tests"
+    }
+  ],
+  "interfaces": [
+    "Application API accepts explicit paths/options and returns typed result/error, independent of CLI.",
+    "CLI emits exactly one versioned JSON document for every operational success/failure; diagnostics avoid sensitive values.",
+    "App supplies UUIDv7/UTC RFC3339 timestamp; check performs evidence/policy/alignment validation without metrics/publication."
+  ],
+  "acceptance_criteria": [
+    "check performs no scoring or writes; evaluate publishes exact snapshots and returns result_path to report.json and exact result_sha256.",
+    "Unknown arguments/settings fail; help/version work; poor performance/no_data exit 0.",
+    "Process tests run Cargo binary in temporary directories and exercise exits 0/2/3 plus error mapping unit tests for 4."
+  ],
+  "verification": [
+    {
+      "id": "cli_check_evaluate",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli cli_check_evaluate -- --nocapture",
+      "expected": "Single JSON stdout, expected exits, stderr separation and filesystem effects."
+    },
+    {
+      "id": "cli_help_version_errors",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli cli_help_version_errors -- --nocapture",
+      "expected": "Help/version exempt; malformed arguments structured and safe."
+    },
+    {
+      "id": "receipt_hash_matches_report",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli receipt_hash_matches_report -- --nocapture",
+      "expected": "Independent SHA-256 of actual report equals receipt."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V151",
+    "V152",
+    "V153",
+    "V154",
+    "V155",
+    "V156",
+    "V157",
+    "V158",
+    "V159",
+    "V160",
+    "V161",
+    "V162",
+    "V163",
+    "V164",
+    "V165",
+    "V166",
+    "V167",
+    "V168",
+    "V169",
+    "V170",
+    "V171",
+    "V172",
+    "V173",
+    "V174",
+    "V175",
+    "V176",
+    "V177",
+    "V178",
+    "V179",
+    "V180",
+    "V181",
+    "V182",
+    "V183",
+    "V184",
+    "V185",
+    "V186",
+    "V187",
+    "V188",
+    "V189",
+    "V190",
+    "V191",
+    "V192",
+    "V193",
+    "V194",
+    "V195",
+    "V196",
+    "S26",
+    "S27",
+    "S29",
+    "AC8"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T006",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T010",
+      "path": "schemas/v2/golden.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "schemas/v2/predictions.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "schemas/v2/config.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T012",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/receipt.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/error.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "tests/conformance.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Format, complete locked tests and release build pass on the pinned toolchain. Run the exact warning-denied Clippy command and record its real status and exact residual symbols; only the owner-enumerated private dead_code contracts awaiting T015-T021 consumers may remain staged. No other warning, bypass, suppression, artificial consumer/export, changed tolerance or weakened oracle is accepted. The full warning-free gate remains mandatory at T027 and T035.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

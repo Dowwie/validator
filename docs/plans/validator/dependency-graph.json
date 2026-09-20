@@ -1,0 +1,792 @@
+{
+  "authority": "Ratified",
+  "phases": {
+    "backbone": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016"
+    ],
+    "steel_thread_gate": [
+      "T017"
+    ],
+    "extension": [
+      "T018",
+      "T019",
+      "T020",
+      "T021",
+      "T022",
+      "T023"
+    ],
+    "verification": [
+      "T024",
+      "T025",
+      "T026",
+      "T027"
+    ],
+    "acceptance_inputs": [
+      "T028",
+      "T029",
+      "T030",
+      "T031"
+    ],
+    "delivery": [
+      "T032"
+    ],
+    "practical_acceptance": [
+      "T033",
+      "T034"
+    ],
+    "release_gate": [
+      "T035"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "T001",
+      "contract": "docs/plans/validator/tasks/T001.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "T002",
+      "contract": "docs/plans/validator/tasks/T002.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T003",
+      "contract": "docs/plans/validator/tasks/T003.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "T004",
+      "contract": "docs/plans/validator/tasks/T004.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T005",
+      "contract": "docs/plans/validator/tasks/T005.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T006",
+      "contract": "docs/plans/validator/tasks/T006.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T007",
+      "contract": "docs/plans/validator/tasks/T007.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "T008",
+      "contract": "docs/plans/validator/tasks/T008.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T009",
+      "contract": "docs/plans/validator/tasks/T009.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T010",
+      "contract": "docs/plans/validator/tasks/T010.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T011",
+      "contract": "docs/plans/validator/tasks/T011.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T012",
+      "contract": "docs/plans/validator/tasks/T012.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T013",
+      "contract": "docs/plans/validator/tasks/T013.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T014",
+      "contract": "docs/plans/validator/tasks/T014.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T015",
+      "contract": "docs/plans/validator/tasks/T015.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T016",
+      "contract": "docs/plans/validator/tasks/T016.json",
+      "phase": "backbone",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T017",
+      "contract": "docs/plans/validator/tasks/T017.json",
+      "phase": "steel_thread_gate",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "T018",
+      "contract": "docs/plans/validator/tasks/T018.json",
+      "phase": "extension",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T019",
+      "contract": "docs/plans/validator/tasks/T019.json",
+      "phase": "extension",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T020",
+      "contract": "docs/plans/validator/tasks/T020.json",
+      "phase": "extension",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T021",
+      "contract": "docs/plans/validator/tasks/T021.json",
+      "phase": "extension",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T022",
+      "contract": "docs/plans/validator/tasks/T022.json",
+      "phase": "extension",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T023",
+      "contract": "docs/plans/validator/tasks/T023.json",
+      "phase": "extension",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T024",
+      "contract": "docs/plans/validator/tasks/T024.json",
+      "phase": "verification",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T025",
+      "contract": "docs/plans/validator/tasks/T025.json",
+      "phase": "verification",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T026",
+      "contract": "docs/plans/validator/tasks/T026.json",
+      "phase": "verification",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T027",
+      "contract": "docs/plans/validator/tasks/T027.json",
+      "phase": "verification",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T028",
+      "contract": "docs/plans/validator/tasks/T028.json",
+      "phase": "acceptance_inputs",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "T029",
+      "contract": "docs/plans/validator/tasks/T029.json",
+      "phase": "acceptance_inputs",
+      "effort_hours_estimate": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": "T030",
+      "contract": "docs/plans/validator/tasks/T030.json",
+      "phase": "acceptance_inputs",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T031",
+      "contract": "docs/plans/validator/tasks/T031.json",
+      "phase": "acceptance_inputs",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "T032",
+      "contract": "docs/plans/validator/tasks/T032.json",
+      "phase": "delivery",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "T033",
+      "contract": "docs/plans/validator/tasks/T033.json",
+      "phase": "practical_acceptance",
+      "effort_hours_estimate": [
+        3,
+        5
+      ]
+    },
+    {
+      "id": "T034",
+      "contract": "docs/plans/validator/tasks/T034.json",
+      "phase": "practical_acceptance",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "T035",
+      "contract": "docs/plans/validator/tasks/T035.json",
+      "phase": "release_gate",
+      "effort_hours_estimate": [
+        2,
+        4
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "T001",
+      "to": "T002",
+      "requires": "Error type and serde dependency features"
+    },
+    {
+      "from": "T001",
+      "to": "T003",
+      "requires": "Model constants and errors"
+    },
+    {
+      "from": "T002",
+      "to": "T004",
+      "requires": "Strict source DTOs"
+    },
+    {
+      "from": "T003",
+      "to": "T004",
+      "requires": "Source IDs and shared records"
+    },
+    {
+      "from": "T002",
+      "to": "T005",
+      "requires": "Private output DTOs"
+    },
+    {
+      "from": "T003",
+      "to": "T005",
+      "requires": "Vocabulary-owned targets"
+    },
+    {
+      "from": "T004",
+      "to": "T005",
+      "requires": "Checked source definitions"
+    },
+    {
+      "from": "T005",
+      "to": "T006",
+      "requires": "Validated single-label predictions"
+    },
+    {
+      "from": "T003",
+      "to": "T006",
+      "requires": "IDs, targets and vocabulary"
+    },
+    {
+      "from": "T001",
+      "to": "T007",
+      "requires": "Numerical constants and errors"
+    },
+    {
+      "from": "T006",
+      "to": "T008",
+      "requires": "Validated single-label input"
+    },
+    {
+      "from": "T007",
+      "to": "T008",
+      "requires": "Checked metric helpers"
+    },
+    {
+      "from": "T008",
+      "to": "T009",
+      "requires": "Typed single-label result/evidence shape"
+    },
+    {
+      "from": "T005",
+      "to": "T009",
+      "requires": "Checked categorical and confidence values"
+    },
+    {
+      "from": "T007",
+      "to": "T009",
+      "requires": "Metric/bin helpers"
+    },
+    {
+      "from": "T001",
+      "to": "T010",
+      "requires": "Pinned schema validator development dependency"
+    },
+    {
+      "from": "T004",
+      "to": "T011",
+      "requires": "Checked source/provenance structures"
+    },
+    {
+      "from": "T003",
+      "to": "T011",
+      "requires": "ArtifactDigest"
+    },
+    {
+      "from": "T011",
+      "to": "T012",
+      "requires": "Exact files and manifest"
+    },
+    {
+      "from": "T008",
+      "to": "T013",
+      "requires": "Hard results"
+    },
+    {
+      "from": "T009",
+      "to": "T013",
+      "requires": "Probability/signals"
+    },
+    {
+      "from": "T011",
+      "to": "T013",
+      "requires": "Manifest/source definitions"
+    },
+    {
+      "from": "T006",
+      "to": "T014",
+      "requires": "Validated alignment"
+    },
+    {
+      "from": "T010",
+      "to": "T014",
+      "requires": "Input schema contract"
+    },
+    {
+      "from": "T012",
+      "to": "T014",
+      "requires": "Safe publication"
+    },
+    {
+      "from": "T013",
+      "to": "T014",
+      "requires": "Typed reports and receipts"
+    },
+    {
+      "from": "T014",
+      "to": "T015",
+      "requires": "Published run format and app API"
+    },
+    {
+      "from": "T015",
+      "to": "T016",
+      "requires": "Verified replay"
+    },
+    {
+      "from": "T013",
+      "to": "T016",
+      "requires": "Concrete report metrics"
+    },
+    {
+      "from": "T012",
+      "to": "T016",
+      "requires": "Comparison publication"
+    },
+    {
+      "from": "T016",
+      "to": "T017",
+      "requires": "All four real command paths"
+    },
+    {
+      "from": "T017",
+      "to": "T018",
+      "requires": "Accepted architecture gate"
+    },
+    {
+      "from": "T004",
+      "to": "T018",
+      "requires": "Shared source/observation types"
+    },
+    {
+      "from": "T006",
+      "to": "T018",
+      "requires": "Shared selection/alignment"
+    },
+    {
+      "from": "T018",
+      "to": "T019",
+      "requires": "Validated multi-label inputs"
+    },
+    {
+      "from": "T007",
+      "to": "T019",
+      "requires": "Checked arithmetic/statuses"
+    },
+    {
+      "from": "T019",
+      "to": "T020",
+      "requires": "Concrete multi-label result shape"
+    },
+    {
+      "from": "T018",
+      "to": "T020",
+      "requires": "Checked unchanged marginals"
+    },
+    {
+      "from": "T013",
+      "to": "T020",
+      "requires": "Existing strict check and report schema contracts"
+    },
+    {
+      "from": "T015",
+      "to": "T020",
+      "requires": "Existing inspection schema and verified replay boundary"
+    },
+    {
+      "from": "T017",
+      "to": "T020",
+      "requires": "Accepted shared CLI backbone and real process harness"
+    },
+    {
+      "from": "T018",
+      "to": "T021",
+      "requires": "Both legal policy types"
+    },
+    {
+      "from": "T009",
+      "to": "T021",
+      "requires": "Single-label working signals"
+    },
+    {
+      "from": "T020",
+      "to": "T021",
+      "requires": "Complete multi-label evaluator"
+    },
+    {
+      "from": "T016",
+      "to": "T022",
+      "requires": "Shared comparison identity/delta/provenance"
+    },
+    {
+      "from": "T020",
+      "to": "T022",
+      "requires": "Concrete multi-label results"
+    },
+    {
+      "from": "T022",
+      "to": "T023",
+      "requires": "Both concrete comparisons"
+    },
+    {
+      "from": "T021",
+      "to": "T023",
+      "requires": "Both final-policy paths"
+    },
+    {
+      "from": "T023",
+      "to": "T024",
+      "requires": "Complete command/result alternatives"
+    },
+    {
+      "from": "T010",
+      "to": "T024",
+      "requires": "Input schema suite"
+    },
+    {
+      "from": "T013",
+      "to": "T024",
+      "requires": "Output schema foundation"
+    },
+    {
+      "from": "T021",
+      "to": "T025",
+      "requires": "Both policies"
+    },
+    {
+      "from": "T022",
+      "to": "T025",
+      "requires": "Both comparison branches"
+    },
+    {
+      "from": "T023",
+      "to": "T026",
+      "requires": "Full replay/comparison surfaces"
+    },
+    {
+      "from": "T024",
+      "to": "T027",
+      "requires": "All schema contracts"
+    },
+    {
+      "from": "T025",
+      "to": "T027",
+      "requires": "Independent numerical audit"
+    },
+    {
+      "from": "T026",
+      "to": "T027",
+      "requires": "Integrity audit"
+    },
+    {
+      "from": "T028",
+      "to": "T029",
+      "requires": "Frozen source manifest, reference snapshot and ID map"
+    },
+    {
+      "from": "T028",
+      "to": "T030",
+      "requires": "Frozen inputs and ID map"
+    },
+    {
+      "from": "T027",
+      "to": "T032",
+      "requires": "Verified public implementation"
+    },
+    {
+      "from": "T031",
+      "to": "T032",
+      "requires": "Synthetic worked example"
+    },
+    {
+      "from": "T027",
+      "to": "T033",
+      "requires": "Integrated conformance gate"
+    },
+    {
+      "from": "T029",
+      "to": "T033",
+      "requires": "Reproducible canonical real case"
+    },
+    {
+      "from": "T030",
+      "to": "T033",
+      "requires": "Independent oracle"
+    },
+    {
+      "from": "T032",
+      "to": "T033",
+      "requires": "Installed CLI and operator docs"
+    },
+    {
+      "from": "T027",
+      "to": "T034",
+      "requires": "Integrated conformance gate"
+    },
+    {
+      "from": "T031",
+      "to": "T034",
+      "requires": "Frozen multi-label bundle and oracle"
+    },
+    {
+      "from": "T032",
+      "to": "T034",
+      "requires": "Installed CLI and docs"
+    },
+    {
+      "from": "T033",
+      "to": "T035",
+      "requires": "Fresh single-label acceptance"
+    },
+    {
+      "from": "T034",
+      "to": "T035",
+      "requires": "Fresh multi-label acceptance"
+    }
+  ],
+  "topological_order": [
+    "T001",
+    "T028",
+    "T031",
+    "T002",
+    "T003",
+    "T007",
+    "T010",
+    "T029",
+    "T030",
+    "T004",
+    "T005",
+    "T011",
+    "T006",
+    "T012",
+    "T008",
+    "T009",
+    "T013",
+    "T014",
+    "T015",
+    "T016",
+    "T017",
+    "T018",
+    "T019",
+    "T020",
+    "T021",
+    "T022",
+    "T023",
+    "T025",
+    "T024",
+    "T026",
+    "T027",
+    "T032",
+    "T033",
+    "T034",
+    "T035"
+  ],
+  "critical_path_by_upper_estimate": [
+    "T001",
+    "T002",
+    "T004",
+    "T005",
+    "T006",
+    "T008",
+    "T009",
+    "T013",
+    "T014",
+    "T015",
+    "T016",
+    "T017",
+    "T018",
+    "T019",
+    "T020",
+    "T022",
+    "T023",
+    "T024",
+    "T027",
+    "T032",
+    "T033",
+    "T035"
+  ],
+  "critical_path_upper_engineer_hours": 110,
+  "total_engineer_hours_range": [
+    104,
+    172
+  ],
+  "estimate_limits": "Rough focused engineer-hours including local tests; not agent wall time, staffed schedule, approval, or budget. Shared-file contention and rework can change the path. Independent verification can add effort beyond these estimates; authorize/reassess resource bounds before execution."
+}

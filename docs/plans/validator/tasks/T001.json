@@ -1,0 +1,138 @@
+{
+  "id": "T001",
+  "title": "Pin the Rust package and establish typed errors and numerical constants",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    2,
+    3
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#rust-and-dependency-conventions",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#evidence-bindings-and-replay",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#source-organization-and-ownership",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "The single package compiles with reproducible tools and typed errors that preserve their CLI category.",
+  "dependencies": [
+
+  ],
+  "artifacts": [
+    {
+      "path": "Cargo.toml",
+      "purpose": "Package/MSRV and minimal dependencies"
+    },
+    {
+      "path": "Cargo.lock",
+      "purpose": "Exact dependency resolution"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "purpose": "Exact tested stable compiler, rustfmt, clippy"
+    },
+    {
+      "path": "src/lib.rs",
+      "purpose": "Documented library boundary with deny(missing_docs)"
+    },
+    {
+      "path": "src/error.rs",
+      "purpose": "Typed diagnostic codes and exit categories"
+    },
+    {
+      "path": "src/model.rs",
+      "purpose": "Shared wire/spec/numerical/bin constants"
+    }
+  ],
+  "interfaces": [
+    "Error stores stable code/stage/path/affected IDs and safe message; no payload interpolation.",
+    "Shared constants include wire 2, specification version, categorical sum tolerance 1e-9, fixture tolerance, ten-bin convention.",
+    "No new CLI command or empty module is introduced until its behavior exists."
+  ],
+  "acceptance_criteria": [
+    "Exact stable toolchain and actual host are recorded; MSRV is the minimum compiler actually tested.",
+    "All specified error codes retain exit 2/3/4 classification and serialize finite valid JSON.",
+    "No production panic/unwrap/expect, bypass attributes, asynchronous runtime, or extra package."
+  ],
+  "verification": [
+    {
+      "id": "typed_error_categories",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib typed_error_categories -- --nocapture",
+      "expected": "All stable codes map to the specified exit category without parsing messages."
+    },
+    {
+      "id": "safe_error_serialization",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib safe_error_serialization -- --nocapture",
+      "expected": "Opaque input and credential sentinel values do not appear in errors."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V197",
+    "V198",
+    "V199",
+    "V200",
+    "V201",
+    "V202",
+    "V203",
+    "V204",
+    "V205",
+    "V206",
+    "V207",
+    "V208",
+    "V209",
+    "V231",
+    "V232",
+    "V233",
+    "V234",
+    "V235",
+    "V236",
+    "V237",
+    "V238",
+    "V239",
+    "V240",
+    "V241",
+    "V242",
+    "V243",
+    "V244",
+    "V245",
+    "V246",
+    "V247",
+    "V248",
+    "V249",
+    "V250",
+    "V251",
+    "V252",
+    "V253",
+    "V254",
+    "DOD3",
+    "D061",
+    "D062",
+    "D063",
+    "D064"
+  ],
+  "input_artifacts": [
+
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

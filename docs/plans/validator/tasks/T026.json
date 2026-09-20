@@ -1,0 +1,273 @@
+{
+  "id": "T026",
+  "title": "Verify artifact integrity under hostile and late-failure conditions",
+  "authority": "Ratified",
+  "phase": "verification",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#evidence-bindings-and-replay",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#verification-and-acceptance",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "An independent verifier demonstrates immutable and contained artifact behavior for both task kinds.",
+  "dependencies": [
+    {
+      "task": "T023",
+      "requires": "Full replay/comparison surfaces"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/app.rs",
+      "purpose": "Required fixed multi-label replay-tolerance and resolved inspection-source corrections"
+    },
+    {
+      "path": "src/artifacts.rs",
+      "purpose": "Owning-module filesystem regression tests"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Input/result/evidence tampering matrix and exact source-origin proof"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Race, relocation, privacy, inspection-source schema and exit tests"
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "purpose": "Required resolved selected-source inspection contract"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Integrity evidence"
+    }
+  ],
+  "interfaces": [
+    "Use isolated local fixtures; mutate only owned test runs.",
+    "Test missing/extra/duplicate/swapped evidence bindings, original strings/ordinal paths, changed bytes and escaping symlinks.",
+    "Replay checks metadata and recomputed outputs, with exact structural/count/status comparisons and declared floating tolerance."
+  ],
+  "acceptance_criteria": [
+    "No original-path lookup during replay; same-basename/parent-relative source cases relocate successfully.",
+    "Existing file/directory/symlink destinations cannot be replaced, including concurrent creation; late failure leaves no final result.",
+    "Routine stdout/stderr/error/report does not expose input/evidence sentinels; inspection returns exact selected payload and integer.",
+    "Exit classifications cover actual filesystem, validation, and replay inconsistency failures."
+  ],
+  "verification": [
+    {
+      "id": "artifact_adversarial_matrix",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance artifact_adversarial_matrix -- --nocapture",
+      "expected": "Every defined corruption produces typed failure, no successful comparison."
+    },
+    {
+      "id": "publication_and_privacy_matrix",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli publication_and_privacy_matrix -- --nocapture",
+      "expected": "Both task kinds preserve no-overwrite, relocation, privacy and exits."
+    },
+    {
+      "id": "case_s15",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s15 -- --nocapture",
+      "expected": "Two source definitions and correct row references; `mixed_source`, source counts of one each, and both origins available in inspection/comparison."
+    },
+    {
+      "id": "case_s16",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s16 -- --nocapture",
+      "expected": "Invalid row reference rejected; comparison exposes definition changes despite equal source-ID strings."
+    },
+    {
+      "id": "case_s18",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s18 -- --nocapture",
+      "expected": "Different digest; existing runs unchanged; incompatible comparison rejected."
+    },
+    {
+      "id": "case_s19",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s19 -- --nocapture",
+      "expected": "Default rejection; explicit paired recomputation with exclusions disclosed."
+    },
+    {
+      "id": "case_s20",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s20 -- --nocapture",
+      "expected": "Hard metrics `no_data` on both sides. Probability statuses respectively `no_data`/`no_data`, `not_applicable`/`not_applicable`, and `no_data`/`not_applicable`; null deltas."
+    },
+    {
+      "id": "case_s22",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s22 -- --nocapture",
+      "expected": "Both ID lists preserved even if headline accuracy is unchanged."
+    },
+    {
+      "id": "case_s23",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s23 -- --nocapture",
+      "expected": "No overwrite or finalized partial result; correct exit category."
+    },
+    {
+      "id": "case_s24",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s24 -- --nocapture",
+      "expected": "Inspection/comparison succeeds from copied evidence alone after original sources become unavailable."
+    },
+    {
+      "id": "case_s25",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s25 -- --nocapture",
+      "expected": "Integrity failure with no lookup of the original evidence path."
+    },
+    {
+      "id": "case_s26",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s26 -- --nocapture",
+      "expected": "`result_path` names the actual result file; independent SHA-256 of its bytes equals `result_sha256`."
+    },
+    {
+      "id": "case_s27",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s27 -- --nocapture",
+      "expected": "No payload in reports/errors; inspection returns the stored selected input as JSON."
+    },
+    {
+      "id": "case_s28",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s28 -- --nocapture",
+      "expected": "Inspection preserves that numeric value; no conversion to rounded binary64."
+    },
+    {
+      "id": "case_m17",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m17 -- --nocapture",
+      "expected": "`neither_correct` plus changed-outcome ID and per-label transition evidence; partial changes are not hidden by exact-match categories."
+    },
+    {
+      "id": "case_m18",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m18 -- --nocapture",
+      "expected": "Same selected population, explicit answered populations/overlap; conditional metric changes are not described as paired model improvement."
+    },
+    {
+      "id": "case_m19",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m19 -- --nocapture",
+      "expected": "Signal applicability retained; present marginals yield `no_data`, absent marginals `not_applicable`."
+    },
+    {
+      "id": "case_e08",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e08 -- --nocapture",
+      "expected": "Strict canonical validation passes; original, prepared, and working values remain distinct and reproducible. No claim that normalization establishes calibration."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V197",
+    "V198",
+    "V199",
+    "V200",
+    "V201",
+    "V202",
+    "V203",
+    "V204",
+    "V205",
+    "V206",
+    "V207",
+    "V208",
+    "V209",
+    "V255",
+    "V256",
+    "V257",
+    "V258",
+    "V259",
+    "V260",
+    "V261",
+    "S25",
+    "V291",
+    "V292",
+    "V314",
+    "V315",
+    "V329",
+    "V330",
+    "V331",
+    "AC7",
+    "DOD2"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T023",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/comparison.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T023",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T023",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T023",
+      "path": "schemas/v2/comparison.schema.json"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

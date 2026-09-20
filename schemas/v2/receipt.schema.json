@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {"$ref": "#/$defs/evaluation"},
+    {"$ref": "#/$defs/comparison"}
+  ],
+  "$defs": {
+    "base": {
+      "type": "object",
+      "required": ["schema_version", "kind", "status", "result_path", "result_sha256"],
+      "properties": {
+        "schema_version": {"const": 2},
+        "kind": {"enum": ["evaluation", "comparison"]},
+        "status": {"const": "complete"},
+        "result_path": {"type": "string", "pattern": "^/"},
+        "result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "evaluation": {
+      "unevaluatedProperties": false,
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {"required": ["run_id"], "properties": {"kind": {"const": "evaluation"}, "run_id": {"type": "string", "format": "uuid"}, "result_path": {"pattern": "^/(?:[^/]+/)*report\\.json$"}}}
+      ]
+    },
+    "comparison": {
+      "unevaluatedProperties": false,
+      "allOf": [
+        {"$ref": "#/$defs/base"},
+        {"required": ["comparison_id"], "properties": {"kind": {"const": "comparison"}, "comparison_id": {"type": "string", "format": "uuid"}, "result_path": {"pattern": "^/(?:[^/]+/)*comparison\\.json$"}}}
+      ]
+    }
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "id": "T013",
+  "title": "Assemble typed run reports and output schemas",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#cli-and-run-artifacts",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Typed reports express every required identity, provenance, population, metric, and episode field.",
+  "dependencies": [
+    {
+      "task": "T008",
+      "requires": "Hard results"
+    },
+    {
+      "task": "T009",
+      "requires": "Probability/signals"
+    },
+    {
+      "task": "T011",
+      "requires": "Manifest/source definitions"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/common.rs",
+      "purpose": "RunManifest, RunReport envelope, check/receipt/inspection identity types"
+    },
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "Concrete single-label report variant"
+    },
+    {
+      "path": "schemas/v2/report.schema.json",
+      "purpose": "Report envelope and concrete alternatives"
+    },
+    {
+      "path": "schemas/v2/check.schema.json",
+      "purpose": "Check result"
+    },
+    {
+      "path": "schemas/v2/receipt.schema.json",
+      "purpose": "Evaluation/comparison receipt"
+    },
+    {
+      "path": "schemas/v2/error.schema.json",
+      "purpose": "Structured error"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Report contract tests"
+    }
+  ],
+  "interfaces": [
+    "Caller supplies UUIDv7 identity/time and exact digests; report assembly does not fetch time/files.",
+    "Fields raw/final/probability/signals carry the concrete task kind; no universal dynamic metric map.",
+    "Source definitions in reports use bound stored evidence paths; prediction snapshot stays unchanged."
+  ],
+  "acceptance_criteria": [
+    "All specified top-level fields and per-label/episode evidence are present, including not_applicable metric families.",
+    "Composition and counts include zero-count unused sources, correct selected/unselected population, and normalization diagnostics.",
+    "Routine report never contains input or raw evidence; opaque configuration remains as explicitly required."
+  ],
+  "verification": [
+    {
+      "id": "single_report_schema",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance single_report_schema -- --nocapture",
+      "expected": "Complete, hard-label-only, empty and evidence-bearing-abstention variants validate."
+    },
+    {
+      "id": "report_sources_and_privacy",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance report_sources_and_privacy -- --nocapture",
+      "expected": "Counts/source rewrites correct; opaque input sentinel absent."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V151",
+    "V152",
+    "V153",
+    "V154",
+    "V155",
+    "V156",
+    "V157",
+    "V158",
+    "V159",
+    "V160",
+    "V161",
+    "V162",
+    "V163",
+    "V164",
+    "V165",
+    "V166",
+    "V167",
+    "V168",
+    "V169",
+    "V170",
+    "V171",
+    "V172",
+    "V173",
+    "V174",
+    "V175",
+    "V176",
+    "V177",
+    "V178",
+    "V179",
+    "V180",
+    "V181",
+    "V182",
+    "V183",
+    "V184",
+    "V185",
+    "V186",
+    "V187",
+    "V188",
+    "V189",
+    "V190",
+    "V191",
+    "V192",
+    "V193",
+    "V194",
+    "V195",
+    "V196",
+    "V231",
+    "V232",
+    "V233",
+    "V234",
+    "V235",
+    "V236",
+    "V237",
+    "V238",
+    "V239",
+    "V240",
+    "V241",
+    "V242",
+    "V243",
+    "V244",
+    "V245",
+    "V246",
+    "V247",
+    "V248",
+    "S15",
+    "AC5",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060",
+    "D061",
+    "D062",
+    "D063",
+    "D064",
+    "DM09"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T008",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T008",
+      "path": "src/evaluation/single_label.rs"
+    },
+    {
+      "from": "T008",
+      "path": "src/evaluation.rs"
+    },
+    {
+      "from": "T008",
+      "path": "tests/fixtures/single-label/expected.json"
+    },
+    {
+      "from": "T008",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T009",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T009",
+      "path": "src/evaluation/single_label.rs"
+    },
+    {
+      "from": "T009",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T011",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T011",
+      "path": "src/model/common.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

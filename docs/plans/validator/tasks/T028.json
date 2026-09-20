@@ -1,0 +1,89 @@
+{
+  "id": "T028",
+  "title": "Freeze private acceptance inputs and persist source episode identities",
+  "authority": "Ratified",
+  "phase": "acceptance_inputs",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#frozen-practical-acceptance-case",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#dataset-preparation-contract",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "The real acceptance oracle and transformations consume immutable identified source files.",
+  "dependencies": [
+
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-manifest.json",
+      "purpose": "Exact frozen paths/digests/counts and review limitations"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-id-map.json",
+      "purpose": "Persistent source-to-episode UUID mapping"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Non-sensitive source freeze references and hashes"
+    }
+  ],
+  "interfaces": [
+    "Inventory exact saved Choice and restored Score raw responses, requests, prompts/configurations and reference/review sources.",
+    "Copy to owner-only protected bundle outside Git before deriving any expected results; hash all frozen sources.",
+    "All 630 source IDs receive stable UUIDs once; use existing UUIDs if available, otherwise persist newly assigned UUIDv7."
+  ],
+  "acceptance_criteria": [
+    "630 unique source cases reconcile with 603 labeled and 27 withheld/unscored, preserving original reasons/reference limitations.",
+    "Both native output routes are recoverable or a named gap blocks complete-run acceptance; never drop a failed projection without checking raw evidence.",
+    "No changes to Chord, operational instruction execution, inference, credentials or private payload publication."
+  ],
+  "verification": [
+    {
+      "id": "frozen_source_inventory",
+      "kind": "documented_check",
+      "procedure": "Independently enumerate the 630 source IDs and reference dispositions; run shasum -a 256 on each frozen file; verify manifest hashes and protected permissions; preserve transcript.",
+      "expected": "630 unique source cases reconcile with 603 labeled and 27 withheld/unscored, preserving original reasons/reference limitations. Both native output routes are recoverable or a named gap blocks complete-run acceptance; never drop a failed projection without checking raw evidence. No changes to Chord, operational instruction execution, inference, credentials or private payload publication."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V223",
+    "V224",
+    "V225",
+    "V226",
+    "V227",
+    "V228",
+    "V229",
+    "V230",
+    "V342",
+    "V343",
+    "V344",
+    "V345",
+    "V346",
+    "V347",
+    "V348",
+    "V349",
+    "V350"
+  ],
+  "input_artifacts": [
+
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "id": "T021",
+  "title": "Apply both task-specific decision policies at exact thresholds",
+  "authority": "Ratified",
+  "phase": "extension",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#evaluation-configuration",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#recorded-outcomes-and-scoring-signals",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Explicit legal policies alter final decisions without changing raw decisions or probability populations.",
+  "dependencies": [
+    {
+      "task": "T018",
+      "requires": "Both legal policy types"
+    },
+    {
+      "task": "T009",
+      "requires": "Single-label working signals"
+    },
+    {
+      "task": "T020",
+      "requires": "Complete multi-label evaluator"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "RejectBelow checked policy"
+    },
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "LabelThresholds checked policy"
+    },
+    {
+      "path": "src/validation.rs",
+      "purpose": "Policy task/completeness/answered preconditions"
+    },
+    {
+      "path": "src/evaluation/single_label.rs",
+      "purpose": "Single-label rejection"
+    },
+    {
+      "path": "src/evaluation/multi_label.rs",
+      "purpose": "Marginal threshold selection"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Boundary policy evidence"
+    },
+    {
+      "path": "schemas/v2/report.schema.json",
+      "purpose": "Effective task-specific policy report alternatives"
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "purpose": "Effective policy and final-decision inspection alternatives"
+    }
+  ],
+  "interfaces": [
+    "RejectBelow uses confidence or working max_probability with finite minimum in [0,1].",
+    "LabelThresholds requires a complete vocabulary map; >= selects a label, below removes it without abstaining.",
+    "Both configured policies require every row answered and required scoring family; no observation promotion."
+  ],
+  "acceptance_criteria": [
+    "Equality passes; immediately adjacent binary64 values behave exactly; all-below marginals produce answered empty set.",
+    "Submitted abstentions remain illegal for these policies even with complete signals; wrong task or missing signal yields typed error.",
+    "Raw losses/metrics stay unchanged; final evidence and rejection reason identify policy effects."
+  ],
+  "verification": [
+    {
+      "id": "decision_policy_boundaries",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance decision_policy_boundaries -- --nocapture",
+      "expected": "All below/equal/above cases and the scored-choice confidence-vs-max case match specification; raw confidence bins retain threshold-rejected answered rows and their IDs."
+    },
+    {
+      "id": "policy_preconditions",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance policy_preconditions -- --nocapture",
+      "expected": "Abstained/wrong-kind/incomplete inputs reject before scoring."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V082",
+    "V083",
+    "V084",
+    "V085",
+    "V091",
+    "V092",
+    "V093",
+    "V094",
+    "V095",
+    "V096",
+    "V097",
+    "V098",
+    "V099",
+    "V100",
+    "V111",
+    "V112",
+    "S09",
+    "S12",
+    "M06",
+    "M07",
+    "M14",
+    "E03",
+    "AC3",
+    "D028",
+    "D029",
+    "D030",
+    "D031",
+    "D032",
+    "D033",
+    "D034",
+    "D035",
+    "D036"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T018",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T009",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T009",
+      "path": "src/evaluation/single_label.rs"
+    },
+    {
+      "from": "T009",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/evaluation/multi_label.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/evaluation.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T020",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T020",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T020",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T020",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T020",
+      "path": "tests/cli.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

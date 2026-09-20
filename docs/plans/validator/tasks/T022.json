@@ -1,0 +1,199 @@
+{
+  "id": "T022",
+  "title": "Add typed multi-label comparison transitions and conditional populations",
+  "authority": "Ratified",
+  "phase": "extension",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#comparison-and-successive-passes",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Multi-label comparison preserves set evidence and label transitions without turning sets into classes.",
+  "dependencies": [
+    {
+      "task": "T016",
+      "requires": "Shared comparison identity/delta/provenance"
+    },
+    {
+      "task": "T020",
+      "requires": "Concrete multi-label results"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/comparison.rs",
+      "purpose": "Multi-label paired comparison branch"
+    },
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "Typed multi-label paired result and transitions"
+    },
+    {
+      "path": "schemas/v2/comparison.schema.json",
+      "purpose": "Multi-label comparison alternative"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Set transition and conditional population cases"
+    },
+    {
+      "path": "src/app.rs",
+      "purpose": "Closed verified multi-label compare dispatch"
+    },
+    {
+      "path": "src/cli.rs",
+      "purpose": "Real multi-label compare process dispatch"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Real binary multi-label comparison evidence"
+    }
+  ],
+  "interfaces": [
+    "Per-label transition states absent/present/abstained; each 3x3 table sums to common N.",
+    "Each episode stores both sources/outcomes/correctness and matched/missed/extra or explicit abstention state.",
+    "Answered-only metrics expose both answered IDs/counts and overlap, not a paired improvement claim."
+  ],
+  "acceptance_criteria": [
+    "A->{B} against {A,B} remains neither_correct but changed; changed ID is retained.",
+    "Whole abstention maps every label to abstained; no power-set enumeration.",
+    "Selected population equality never implies answered population equality; both family populations remain explicit."
+  ],
+  "verification": [
+    {
+      "id": "multi_label_comparison_transitions",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance multi_label_comparison_transitions -- --nocapture",
+      "expected": "Exact expected tables and all correctness/changed ID categories verified."
+    },
+    {
+      "id": "answered_population_overlap",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance answered_population_overlap -- --nocapture",
+      "expected": "Equal selected counts with different answers expose both sides and overlap."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V210",
+    "V211",
+    "V212",
+    "V213",
+    "V214",
+    "V215",
+    "V216",
+    "V217",
+    "V218",
+    "V219",
+    "V220",
+    "V221",
+    "V222",
+    "M17",
+    "M18",
+    "AC6",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T016",
+      "path": "src/comparison.rs"
+    },
+    {
+      "from": "T016",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T016",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T016",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T016",
+      "path": "schemas/v2/comparison.schema.json"
+    },
+    {
+      "from": "T016",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T016",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T016",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/evaluation/multi_label.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/evaluation.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T020",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T020",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T020",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T020",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T020",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T020",
+      "path": "tests/cli.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

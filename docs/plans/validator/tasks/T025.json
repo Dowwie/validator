@@ -1,0 +1,424 @@
+{
+  "id": "T025",
+  "title": "Verify numerical conformance with independent exhaustive oracles",
+  "authority": "Ratified",
+  "phase": "verification",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#verification-and-acceptance",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#structure-acceptance-checks",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Independent arithmetic verifies every metric family and all small hard-decision accounting identities.",
+  "dependencies": [
+    {
+      "task": "T021",
+      "requires": "Both policies"
+    },
+    {
+      "task": "T022",
+      "requires": "Both comparison branches"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/evaluation/multi_label.rs",
+      "purpose": "Required per-label hard-metric population-unit correction"
+    },
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "Required multi-label abstention report serialization correction"
+    },
+    {
+      "path": "schemas/v2/report.schema.json",
+      "purpose": "Required closed multi-label abstention report alternative"
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "purpose": "Synchronized inspected multi-label final-outcome alternative"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Independent enumerations and every numerical conformance case"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Focused literal multi-label abstention report/inspection evidence"
+    },
+    {
+      "path": "tests/fixtures/single-label/expected.json",
+      "purpose": "Independent rational/analytical expectations"
+    },
+    {
+      "path": "tests/fixtures/multi-label/expected.json",
+      "purpose": "Independent marginal and set expectations"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Oracle methods and coverage evidence"
+    }
+  ],
+  "interfaces": [
+    "Enumerate all expected/predicted subsets of a three-label vocabulary (64 pairs), plus whole-episode abstention cases.",
+    "Enumerate short single-label datasets across three classes+abstention and compare to an independently written direct count oracle.",
+    "Never obtain expected numbers by invoking production evaluation; any external oracle version and convention differences are recorded."
+  ],
+  "acceptance_criteria": [
+    "F04, all required numerical table cases, permutation invariance and probability boundary cases are present as named tests.",
+    "All ratios/population counts and undefined/infinite states verified, not only headline accuracy.",
+    "Each implementation task owns its initial tests; this task independently audits/completes them without deleting or weakening assertions."
+  ],
+  "verification": [
+    {
+      "id": "exhaustive_single_label",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance exhaustive_single_label -- --nocapture",
+      "expected": "Direct counts agree across bounded all-choice combinations and record permutations."
+    },
+    {
+      "id": "exhaustive_multi_label",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance exhaustive_multi_label -- --nocapture",
+      "expected": "All 64 set pairs and abstentions satisfy binary identities and exact-set evidence."
+    },
+    {
+      "id": "full_numeric_conformance",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance full_numeric_conformance -- --nocapture",
+      "expected": "All specification numerical oracles covered within the fixed fixture tolerance."
+    },
+    {
+      "id": "case_s01",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s01 -- --nocapture",
+      "expected": "Identity class matrix, accuracy and macro-F1 1, no abstentions."
+    },
+    {
+      "id": "case_s02",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s02 -- --nocapture",
+      "expected": "One off-diagonal cell; A FN 1, B FP 1, exactly one wrong episode."
+    },
+    {
+      "id": "case_s03",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s03 -- --nocapture",
+      "expected": "`D=2,E=1,U=1`, accuracy 1/2, coverage 3/4, selective accuracy 2/3, class coverages `[1/2,1,1]`, macro-F1 1/2."
+    },
+    {
+      "id": "case_s04",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s04 -- --nocapture",
+      "expected": "Accuracy 1; B/C F1 null; macro-F1 1/3 with `contains_undefined_classes`."
+    },
+    {
+      "id": "case_s05",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s05 -- --nocapture",
+      "expected": "Coverage 0; selective metrics null; accuracy 0; no missing-prediction count."
+    },
+    {
+      "id": "case_s06",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s06 -- --nocapture",
+      "expected": "Zero counts; applicable metrics `no_data`; no success-performance claim."
+    },
+    {
+      "id": "case_s07",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s07 -- --nocapture",
+      "expected": "Log loss `-ln(0.7)`, Brier 0.14, argmax accuracy 1."
+    },
+    {
+      "id": "case_s08",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s08 -- --nocapture",
+      "expected": "Infinite log loss status, Brier 2, valid JSON."
+    },
+    {
+      "id": "case_s09",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s09 -- --nocapture",
+      "expected": "Threshold 0.5 rejects on confidence and accepts on maximum probability; probability losses unchanged."
+    },
+    {
+      "id": "case_s10",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s10 -- --nocapture",
+      "expected": "Valid tied choice retained; diagnostic argmax A; raw accuracy follows B."
+    },
+    {
+      "id": "case_s11",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s11 -- --nocapture",
+      "expected": "Input errors, no successful run."
+    },
+    {
+      "id": "case_s12",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s12 -- --nocapture",
+      "expected": "Exact declared policy, including signal 1 in the last bin."
+    },
+    {
+      "id": "case_m01",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m01 -- --nocapture",
+      "expected": "`N=G=2`, exact-match accuracy `1/2`; TP=1, FP=1, FN=1, TN=3 in aggregate; answered micro-F1 `1/2`, macro-F1 `1/3`, Hamming loss `1/3`."
+    },
+    {
+      "id": "case_m02",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m02 -- --nocapture",
+      "expected": "Answered exact match; coverage 1, Hamming loss 0; undefined label/micro-F1 remain null, macro-F1 zero with undefined-class status."
+    },
+    {
+      "id": "case_m03",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m03 -- --nocapture",
+      "expected": "`N=2,G=1,U=1,D=1`; exact-match accuracy `1/2`, selective exact-match accuracy 1, coverage `1/2`; label A has total support 1, answered support 0, TN 1. Abstention contributes no binary decision."
+    },
+    {
+      "id": "case_m04",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m04 -- --nocapture",
+      "expected": "Coverage 0, exact-match accuracy 0 for nonempty selection, answered-only metrics `no_answered_predictions`; no fabricated empty sets."
+    },
+    {
+      "id": "case_m05",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m05 -- --nocapture",
+      "expected": "Values stay unchanged despite sum 1.5; mean binary log loss `(-ln(0.8)-ln(0.3))/2`, mean binary Brier `0.265`."
+    },
+    {
+      "id": "case_m06",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m06 -- --nocapture",
+      "expected": "Final set `{A}`; equality accepted; raw metrics and probability losses unchanged."
+    },
+    {
+      "id": "case_m07",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m07 -- --nocapture",
+      "expected": "Final set empty and answered, not abstained."
+    },
+    {
+      "id": "case_m08",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m08 -- --nocapture",
+      "expected": "Binary losses zero; no `0*ln(0)` or invalid JSON."
+    },
+    {
+      "id": "case_m09",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m09 -- --nocapture",
+      "expected": "Per-label and mean binary log loss positive-infinity statuses; no clipping."
+    },
+    {
+      "id": "case_m10",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m10 -- --nocapture",
+      "expected": "Declared boundary assignment; positive rates follow reference presence, not prediction correctness."
+    },
+    {
+      "id": "case_m11",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m11 -- --nocapture",
+      "expected": "Categorical Brier `0.08`; binary marginal Brier `0.04`. Distinct metric names/scaling retained."
+    },
+    {
+      "id": "case_m12",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m12 -- --nocapture",
+      "expected": "Same per-label confusion counts, but exact-match accuracy `1/2` versus 0. Episode evidence must retain the difference."
+    },
+    {
+      "id": "case_m13",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m13 -- --nocapture",
+      "expected": "Rejection before set conversion or threshold filtering, even when the invalid prediction would be filtered out."
+    },
+    {
+      "id": "case_m14",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m14 -- --nocapture",
+      "expected": "Typed schema/configuration error; no inference or coercion."
+    },
+    {
+      "id": "case_m15",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m15 -- --nocapture",
+      "expected": "Unsupported task/source or field combination rejected."
+    },
+    {
+      "id": "case_m20",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m20 -- --nocapture",
+      "expected": "Same scores and vocabulary-ordered evidence; exact-byte digests can change."
+    },
+    {
+      "id": "case_e01",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e01 -- --nocapture",
+      "expected": "Raw accuracy 0 and coverage 0; log loss `-ln(0.7)`, Brier `0.14`, argmax accuracy 1; chosen probability null; confidence bins `no_answered_predictions` with the excluded episode ID."
+    },
+    {
+      "id": "case_e02",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e02 -- --nocapture",
+      "expected": "Confidence bins count exactly one row; excluded ID disclosed."
+    },
+    {
+      "id": "case_e03",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e03 -- --nocapture",
+      "expected": "Configuration/input error under the existing answered-input policy preconditions; signals do not synthesize an answer."
+    },
+    {
+      "id": "case_e04",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e04 -- --nocapture",
+      "expected": "Coverage 0 and no binary hard decisions; mean binary Brier `0.265` and finite binary log loss over the full selected population."
+    },
+    {
+      "id": "case_e07",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e07 -- --nocapture",
+      "expected": "`E_PROBABILITY`, exit 2, no successful run. No automatic promotion, normalization beyond the fixed tolerance, or fallback."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V255",
+    "V256",
+    "V257",
+    "V258",
+    "V259",
+    "V260",
+    "V261",
+    "V291",
+    "V292",
+    "V314",
+    "V315",
+    "V329",
+    "V330",
+    "V331",
+    "AC4",
+    "DOD2"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T021",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/evaluation/single_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/evaluation/multi_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T021",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T021",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T022",
+      "path": "src/comparison.rs"
+    },
+    {
+      "from": "T022",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T022",
+      "path": "schemas/v2/comparison.schema.json"
+    },
+    {
+      "from": "T022",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T022",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T022",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T022",
+      "path": "tests/cli.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

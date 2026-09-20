@@ -1,0 +1,187 @@
+{
+  "id": "T034",
+  "title": "Run fresh-agent multi-label acceptance with the installed executable",
+  "authority": "Ratified",
+  "phase": "practical_acceptance",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#frozen-practical-acceptance-case",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#definition-of-done",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "A fresh agent completes the second concrete task using the same executable and contracts.",
+  "dependencies": [
+    {
+      "task": "T027",
+      "requires": "Integrated conformance gate"
+    },
+    {
+      "task": "T031",
+      "requires": "Frozen multi-label bundle and oracle"
+    },
+    {
+      "task": "T032",
+      "requires": "Installed CLI and docs"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/dispatches/validator-acceptance/002-owner-to-multi-label.prompt.md",
+      "purpose": "Complete fresh-agent instructions"
+    },
+    {
+      "path": "docs/dispatches/validator-acceptance/002-multi-label-to-owner.response.md",
+      "purpose": "Full substantive verification handoff"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/multi-label/operator-evidence.json",
+      "purpose": "Command/stdout/stderr/exit/hash/result evidence"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Multi-label practical verdict"
+    }
+  ],
+  "interfaces": [
+    "Same no-implementation/no-scoring restriction as T033; use docs/schemas/frozen expected results.",
+    "Exercise preparation, check, two evaluations, structured failure discovery/inspection, default and intersection comparisons.",
+    "Use separate protected run/evidence output directories; no run output is copied into public fixtures."
+  ],
+  "acceptance_criteria": [
+    "Exact-set/binary/probability metrics and known transitions match oracle; empty sets and abstention are visibly distinct.",
+    "Partial selection and answered overlap are disclosed; all result receipts independently hash correctly.",
+    "Commands/output/exits/hash evidence and usability failures are saved before returning the response path."
+  ],
+  "verification": [
+    {
+      "id": "fresh_agent_multi_acceptance",
+      "kind": "documented_check",
+      "procedure": "Dispatch fresh context with synthetic frozen inputs, docs/schemas/oracle; save all command outputs/exits/hashes and compare set/probability/transition values to oracle without scoring code.",
+      "expected": "Exact-set/binary/probability metrics and known transitions match oracle; empty sets and abstention are visibly distinct. Partial selection and answered overlap are disclosed; all result receipts independently hash correctly. Commands/output/exits/hash evidence and usability failures are saved before returning the response path."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "fresh acceptance agent",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "AC5",
+    "AC8",
+    "V342",
+    "V343",
+    "V344",
+    "V345",
+    "V346",
+    "V347",
+    "V348",
+    "V349",
+    "V350",
+    "DOD2",
+    "DOD4"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T027",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T027",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T027",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T027",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/golden.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/baseline.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/candidate.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/config.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/targeted-config.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/targeted-predictions.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/expected.json"
+    },
+    {
+      "from": "T031",
+      "path": "tests/fixtures/acceptance-multi/manifest.json"
+    },
+    {
+      "from": "T032",
+      "path": "README.md"
+    },
+    {
+      "from": "T032",
+      "path": "docs/usage.md"
+    },
+    {
+      "from": "T032",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

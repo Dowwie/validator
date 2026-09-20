@@ -1,0 +1,346 @@
+{
+  "id": "T024",
+  "title": "Audit all nine schema contracts against positive and adversarial outputs",
+  "authority": "Ratified",
+  "phase": "verification",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "The published schemas are complete machine contracts rather than permissive success-only validators.",
+  "dependencies": [
+    {
+      "task": "T023",
+      "requires": "Complete command/result alternatives"
+    },
+    {
+      "task": "T010",
+      "requires": "Input schema suite"
+    },
+    {
+      "task": "T013",
+      "requires": "Output schema foundation"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "schemas/v2/golden.schema.json",
+      "purpose": "Final golden contract"
+    },
+    {
+      "path": "schemas/v2/predictions.schema.json",
+      "purpose": "Final prediction contract"
+    },
+    {
+      "path": "schemas/v2/config.schema.json",
+      "purpose": "Final config contract"
+    },
+    {
+      "path": "schemas/v2/report.schema.json",
+      "purpose": "Both report variants and required metrics"
+    },
+    {
+      "path": "schemas/v2/comparison.schema.json",
+      "purpose": "Both paired variants"
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "purpose": "Both inspection variants"
+    },
+    {
+      "path": "schemas/v2/check.schema.json",
+      "purpose": "Check counts/identity fields"
+    },
+    {
+      "path": "schemas/v2/receipt.schema.json",
+      "purpose": "Result file/hash receipt"
+    },
+    {
+      "path": "schemas/v2/error.schema.json",
+      "purpose": "Stable typed diagnostics"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Schema mutation cases"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Validate every emitted document"
+    }
+  ],
+  "interfaces": [
+    "Independent verifier derives required fields from spec, not by generating schemas only from implementation output.",
+    "Each concrete alternative prohibits task-incompatible fields; missing required metric families fail.",
+    "Schema dialect and local reference resolution work offline with pinned test tooling."
+  ],
+  "acceptance_criteria": [
+    "All input/output operations and status variants validate; systematically deleting required fields or mutating task/status/types is rejected.",
+    "Schema tests cover ratios, populations, typed abstention columns, no_data/not_applicable/infinity, observation shapes and source bindings.",
+    "No additionalProperties escape hatch admits unsupported extension/plugin data outside allowed opaque fields."
+  ],
+  "verification": [
+    {
+      "id": "all_schema_contracts",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance all_schema_contracts -- --nocapture",
+      "expected": "Nine schemas load offline; positive documents and required-field mutation negatives pass."
+    },
+    {
+      "id": "cli_stdout_schema_matrix",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli cli_stdout_schema_matrix -- --nocapture",
+      "expected": "Every success/error output is a single schema-valid JSON document."
+    },
+    {
+      "id": "case_s13",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s13 -- --nocapture",
+      "expected": "Specific diagnostics; no silent repair or scoring subset."
+    },
+    {
+      "id": "case_s14",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s14 -- --nocapture",
+      "expected": "Invalid run; absence never becomes abstention."
+    },
+    {
+      "id": "case_s17",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s17 -- --nocapture",
+      "expected": "Same calculations and sorted evidence; byte digests can differ."
+    },
+    {
+      "id": "case_s21",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s21 -- --nocapture",
+      "expected": "Valid class accepted; structural defects rejected; no claim of verified reference settlement."
+    },
+    {
+      "id": "case_s29",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_s29 -- --nocapture",
+      "expected": "Published schemas validate every result; one JSON document on stdout; stable typed fields, statuses, receipts, and errors."
+    },
+    {
+      "id": "case_m16",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m16 -- --nocapture",
+      "expected": "Respectively alignment error, answered set, explicit unanswered outcome, and probability error."
+    },
+    {
+      "id": "case_m21",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_m21 -- --nocapture",
+      "expected": "Rejection with no fallback interpretation. Legally shaped but unreviewed reference sets remain a preparation responsibility."
+    },
+    {
+      "id": "case_e05",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e05 -- --nocapture",
+      "expected": "Scalar and outcome retained; no override to `MATCH`. Distribution is scored only if also submitted as canonical scoring evidence."
+    },
+    {
+      "id": "case_e06",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e06 -- --nocapture",
+      "expected": "Successful hard-label evaluation with unchanged observation values; probability metrics `not_applicable`. Preparation receipt discloses the omission."
+    },
+    {
+      "id": "case_e09",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e09 -- --nocapture",
+      "expected": "Neither scalar replacement nor automatic failure; no scalar consistency equation is part of Validator's scoring contract."
+    },
+    {
+      "id": "case_e10",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e10 -- --nocapture",
+      "expected": "First case is inspection-only; second receives the specified binary metrics. No implicit task conversion."
+    },
+    {
+      "id": "case_e11",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e11 -- --nocapture",
+      "expected": "Typed input/provenance error; no silent omission."
+    },
+    {
+      "id": "case_e12",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e12 -- --nocapture",
+      "expected": "Observation is unavailable without imputation; incomplete scoring family is rejected."
+    },
+    {
+      "id": "case_e13",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance case_e13 -- --nocapture",
+      "expected": "Schema error; no synthesized choice or abstention."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V174",
+    "V175",
+    "V176",
+    "V177",
+    "V178",
+    "V179",
+    "V180",
+    "V181",
+    "V182",
+    "V183",
+    "V184",
+    "V185",
+    "V186",
+    "V187",
+    "V188",
+    "V189",
+    "V190",
+    "V191",
+    "V192",
+    "V193",
+    "V194",
+    "V195",
+    "V196",
+    "V255",
+    "V256",
+    "V257",
+    "V258",
+    "V259",
+    "V260",
+    "V261",
+    "S29",
+    "V291",
+    "V292",
+    "V314",
+    "V315",
+    "V329",
+    "V330",
+    "V331",
+    "AC5",
+    "AC8",
+    "DOD2",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T023",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/comparison.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T023",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T023",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T023",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T023",
+      "path": "schemas/v2/comparison.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "schemas/v2/golden.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "schemas/v2/predictions.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "schemas/v2/config.schema.json"
+    },
+    {
+      "from": "T010",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/receipt.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/error.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "tests/conformance.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "id": "T033",
+  "title": "Run fresh-agent single-label acceptance with the installed executable",
+  "authority": "Ratified",
+  "phase": "practical_acceptance",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#frozen-practical-acceptance-case",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#definition-of-done",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "A fresh agent completes the real saved-output workflow through installed CLI and documentation only.",
+  "dependencies": [
+    {
+      "task": "T027",
+      "requires": "Integrated conformance gate"
+    },
+    {
+      "task": "T029",
+      "requires": "Reproducible canonical real case"
+    },
+    {
+      "task": "T030",
+      "requires": "Independent oracle"
+    },
+    {
+      "task": "T032",
+      "requires": "Installed CLI and operator docs"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/dispatches/validator-acceptance/001-owner-to-single-label.prompt.md",
+      "purpose": "Complete bounded fresh-agent instructions"
+    },
+    {
+      "path": "docs/dispatches/validator-acceptance/001-single-label-to-owner.response.md",
+      "purpose": "Full substantive verification handoff"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/operator-evidence.json",
+      "purpose": "Command/stdout/stderr/exit/hash/result evidence"
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Criterion-to-evidence links and verdict"
+    }
+  ],
+  "interfaces": [
+    "No implementation reads or scoring-code authorship; deterministic preparation code is permitted.",
+    "Run preparation twice, check/evaluate both native hard-label artifacts, locate/inspect a known failure and compare against independent oracle.",
+    "Run explicit cohort selections and targeted intersection; exercise strict rejection of a nonconforming scoring vector."
+  ],
+  "acceptance_criteria": [
+    "603/27 population accounting, source differences and native route preservation match frozen oracle/receipt.",
+    "Commands, exits, all result hashes and expected/actual metrics preserved; payload-bearing outputs stay protected.",
+    "Report any undocumented step or required code knowledge as a failed usability gate; no claimed full-population improvement from targeted work."
+  ],
+  "verification": [
+    {
+      "id": "fresh_agent_single_acceptance",
+      "kind": "documented_check",
+      "procedure": "Dispatch fresh context with operator docs, schemas, frozen manifest and independent oracle only; save exact commands, stdout/stderr, exits and hashes for all operations and compare values to oracle without scoring code.",
+      "expected": "603/27 population accounting, source differences and native route preservation match frozen oracle/receipt. Commands, exits, all result hashes and expected/actual metrics preserved; payload-bearing outputs stay protected. Report any undocumented step or required code knowledge as a failed usability gate; no claimed full-population improvement from targeted work."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "fresh acceptance agent",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "AC5",
+    "AC8",
+    "V342",
+    "V343",
+    "V344",
+    "V345",
+    "V346",
+    "V347",
+    "V348",
+    "V349",
+    "V350",
+    "DOD2",
+    "DOD4"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T027",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T027",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T027",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T027",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T027",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T029",
+      "path": "scripts/acceptance/prepare_chord.py"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/golden.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-full.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-random400.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-supplements230.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-targeted.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/preparation-receipt.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-random400.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-supplements230.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-targeted.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-random400.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-supplements230.json"
+    },
+    {
+      "from": "T029",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-targeted.json"
+    },
+    {
+      "from": "T030",
+      "path": "scripts/acceptance/oracle_chord.py"
+    },
+    {
+      "from": "T030",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/expected.json"
+    },
+    {
+      "from": "T030",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T032",
+      "path": "README.md"
+    },
+    {
+      "from": "T032",
+      "path": "docs/usage.md"
+    },
+    {
+      "from": "T032",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

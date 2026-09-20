@@ -1,0 +1,210 @@
+{
+  "id": "T004",
+  "title": "Validate sources and retain typed observations with preparation bindings",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#canonical-prediction-artifact",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#retained-classifier-observations",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#shared-records-and-typed-task-data",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Source evidence and observations preserve meaning without becoming scoring inputs.",
+  "dependencies": [
+    {
+      "task": "T002",
+      "requires": "Strict source DTOs"
+    },
+    {
+      "task": "T003",
+      "requires": "Source IDs and shared records"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/common.rs",
+      "purpose": "SourceDefinition, Observation, ObservationSet/Definition, PreparationDescriptor and complete Prediction<Output> record"
+    },
+    {
+      "path": "src/validation.rs",
+      "purpose": "Source/name/kind and preparation-index validation"
+    }
+  ],
+  "interfaces": [
+    "Input: source definitions and row observation DTOs; output: checked source map and ObservationSet.",
+    "Closed Observation variants: Scalar, Bernoulli, ReportedConfidence, Categorical, LabelMarginals.",
+    "Preparation evidence_indices bind unique in-range source evidence-array entries; filesystem verification belongs to T011.",
+    "Construct Prediction<Output> with episode/source IDs, concrete output and a real checked ObservationSet; no raw-value or empty-type placeholder. This record moves from T003 because it depends on T004 observation semantics."
+  ],
+  "acceptance_criteria": [
+    "Observation numbers must be finite; bounded variants use [0,1]; vector keys are nonblank and vectors nonempty.",
+    "Observed categorical sums are not normalized or bound to task vocabulary; omitted observations remain unavailable.",
+    "Unknown observation names/kind mismatches use E_PROVENANCE; invalid observation numeric values use E_OBSERVATION; unknown shape/kind uses schema error.",
+    "Source metadata and descriptor shapes are strict; unused source definitions are retained."
+  ],
+  "verification": [
+    {
+      "id": "observation_contracts",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib observation_contracts -- --nocapture",
+      "expected": "Every variant validates and retains exact meaning, including sum 0.99 and scalar/mean disagreement."
+    },
+    {
+      "id": "source_preparation_bindings",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib source_preparation_bindings -- --nocapture",
+      "expected": "Blank/unknown sources, missing definitions, duplicate/out-of-range/empty evidence indices fail."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V070",
+    "V071",
+    "V072",
+    "V073",
+    "V074",
+    "V075",
+    "V076",
+    "V077",
+    "V078",
+    "V079",
+    "V080",
+    "V081",
+    "V086",
+    "V087",
+    "V088",
+    "V089",
+    "V090",
+    "S16",
+    "E05",
+    "E06",
+    "E08",
+    "E09",
+    "E10",
+    "E11",
+    "E12",
+    "AC1",
+    "AC2",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D016",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D028",
+    "D029",
+    "D030",
+    "D031",
+    "D032",
+    "D033",
+    "D034",
+    "D035",
+    "D036",
+    "DM07",
+    "DM08",
+    "DM09",
+    "DM10"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T002",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T002",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T002",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T002",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T002",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T003",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T003",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.lock"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

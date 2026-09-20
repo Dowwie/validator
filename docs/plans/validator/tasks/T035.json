@@ -1,0 +1,151 @@
+{
+  "id": "T035",
+  "title": "Audit accepted evidence and close the full definition of done",
+  "authority": "Ratified",
+  "phase": "release_gate",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#definition-of-done",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#structure-acceptance-checks",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "AGENTS.md",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Project completion is asserted only after every contract and independent acceptance gate is evidenced.",
+  "dependencies": [
+    {
+      "task": "T033",
+      "requires": "Fresh single-label acceptance"
+    },
+    {
+      "task": "T034",
+      "requires": "Fresh multi-label acceptance"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Final AC/conformance/structure/DoD evidence map"
+    },
+    {
+      "path": "docs/artifact-index.md",
+      "purpose": "Exact artifact authority and discovery entries"
+    },
+    {
+      "path": "session-notes.md",
+      "purpose": "Durable baseline and delivery decisions"
+    },
+    {
+      "path": "README.md",
+      "purpose": "Verified final installation/version/limits"
+    }
+  ],
+  "interfaces": [
+    "Integrator reads every saved verifier response before acceptance; an agent message alone is insufficient.",
+    "Traceability rows point to implemented locations, named tests, actual commands/exits, fixture/result hashes and review evidence.",
+    "Final code changes invalidate affected proof; rerun affected checks then the four mandated full commands on the delivered revision."
+  ],
+  "acceptance_criteria": [
+    "No unverified requirement, omitted case, failed gate, unindexed accepted artifact or unresolved observable-contract choice remains.",
+    "Public tests have no private/runtime-service dependency; protected bundle and repeatable install are available.",
+    "All local index links resolve, git diff --check passes, source/code/schema/fixture hashes identify delivered state, and Fizzy closes only after verification."
+  ],
+  "verification": [
+    {
+      "id": "release_evidence_audit",
+      "kind": "documented_check",
+      "procedure": "Read every saved verification response and acceptance-record row; verify current source/schema/fixture hashes; run the four full pinned-toolchain checks, link/index audit and git diff --check.",
+      "expected": "No unverified requirement, omitted case, failed gate, unindexed accepted artifact or unresolved observable-contract choice remains. Public tests have no private/runtime-service dependency; protected bundle and repeatable install are available. All local index links resolve, git diff --check passes, source/code/schema/fixture hashes identify delivered state, and Fizzy closes only after verification."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "independent verifier",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V001",
+    "V002",
+    "V003",
+    "V005",
+    "V006",
+    "V007",
+    "V008",
+    "V009",
+    "V010",
+    "V011",
+    "V012",
+    "V013",
+    "V014",
+    "V015",
+    "V016",
+    "V017",
+    "V018",
+    "V019",
+    "V020",
+    "V021",
+    "V022",
+    "V023",
+    "V024",
+    "V025",
+    "V332",
+    "V333",
+    "V351",
+    "DOD1",
+    "DOD2",
+    "DOD5",
+    "V357",
+    "D001",
+    "D002"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T033",
+      "path": "docs/dispatches/validator-acceptance/001-owner-to-single-label.prompt.md"
+    },
+    {
+      "from": "T033",
+      "path": "docs/dispatches/validator-acceptance/001-single-label-to-owner.response.md"
+    },
+    {
+      "from": "T033",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/operator-evidence.json"
+    },
+    {
+      "from": "T033",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T034",
+      "path": "docs/dispatches/validator-acceptance/002-owner-to-multi-label.prompt.md"
+    },
+    {
+      "from": "T034",
+      "path": "docs/dispatches/validator-acceptance/002-multi-label-to-owner.response.md"
+    },
+    {
+      "from": "T034",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/multi-label/operator-evidence.json"
+    },
+    {
+      "from": "T034",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

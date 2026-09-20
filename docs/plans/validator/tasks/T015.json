@@ -1,0 +1,162 @@
+{
+  "id": "T015",
+  "title": "Verify replay and expose explicit selected-episode inspection",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#evidence-bindings-and-replay",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#cli-and-run-artifacts",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#source-organization-and-ownership",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Inspection trusts a run only after verifying its snapshots, evidence, and recomputed results.",
+  "dependencies": [
+    {
+      "task": "T014",
+      "requires": "Published run format and app API"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/artifacts.rs",
+      "purpose": "Contained reads and binding/digest verification"
+    },
+    {
+      "path": "src/app.rs",
+      "purpose": "Replay through validation/evaluation; inspect coordination"
+    },
+    {
+      "path": "src/cli.rs",
+      "purpose": "Inspect dispatch"
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "purpose": "Typed selected-episode inspection output"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Tamper/relocation replay tests"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Inspection process tests"
+    }
+  ],
+  "interfaces": [
+    "Replay resolves snapshots and evidence only inside the run after symlink resolution; never dereference original evidence paths.",
+    "Verify complete one-to-one source/index/original/path/digest bindings and report source rewrites.",
+    "App reruns the exact validation/evaluation path; structural/status/count differences are exact, finite result tolerance is fixed."
+  ],
+  "acceptance_criteria": [
+    "Relocation succeeds with original sources unavailable; damaged snapshots/evidence and inconsistent stored results fail.",
+    "inspect only accepts selected episode IDs and returns full opaque input, expected/original/final prediction and configuration.",
+    "Opaque large integers preserved; no internal evaluator API accepts unvalidated replay JSON."
+  ],
+  "verification": [
+    {
+      "id": "relocated_run_inspection",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli relocated_run_inspection -- --nocapture",
+      "expected": "Successful inspection without original evidence and unchanged large integer."
+    },
+    {
+      "id": "replay_binding_and_result_tampering",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance replay_binding_and_result_tampering -- --nocapture",
+      "expected": "Missing/extra/swapped bindings, hash damage, escaping symlinks, result tampering rejected."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V151",
+    "V152",
+    "V153",
+    "V154",
+    "V155",
+    "V156",
+    "V157",
+    "V158",
+    "V159",
+    "V160",
+    "V161",
+    "V162",
+    "V163",
+    "V164",
+    "V165",
+    "V166",
+    "V167",
+    "V168",
+    "V169",
+    "V170",
+    "V171",
+    "V172",
+    "V173",
+    "V197",
+    "V198",
+    "V199",
+    "V200",
+    "V201",
+    "V202",
+    "V203",
+    "V204",
+    "V205",
+    "V206",
+    "V207",
+    "V208",
+    "V209",
+    "S23",
+    "S24",
+    "S25",
+    "S27",
+    "S28",
+    "AC5",
+    "AC7",
+    "DM09"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T014",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T014",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T014",
+      "path": "src/main.rs"
+    },
+    {
+      "from": "T014",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T014",
+      "path": "tests/cli.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

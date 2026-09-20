@@ -1,0 +1,152 @@
+{
+  "id": "T008",
+  "title": "Compute single-label matrices and hard-decision evidence",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#single-label-hard-decisions",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#verification-and-acceptance",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "As-recorded raw/final results include the K by K+1 matrix and every specified class and aggregate metric.",
+  "dependencies": [
+    {
+      "task": "T006",
+      "requires": "Validated single-label input"
+    },
+    {
+      "task": "T007",
+      "requires": "Checked metric helpers"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "SingleLabelResults and typed episode evidence"
+    },
+    {
+      "path": "src/evaluation/single_label.rs",
+      "purpose": "Pure hard-decision accounting"
+    },
+    {
+      "path": "src/evaluation.rs",
+      "purpose": "Closed evaluation dispatch"
+    },
+    {
+      "path": "tests/fixtures/single-label/expected.json",
+      "purpose": "Independent numerical constants including F04"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Library hard-metric cases"
+    }
+  ],
+  "interfaces": [
+    "Evaluator borrows SingleLabelEvaluation; never raw DTO/JSON.",
+    "Typed columns distinguish literal ABSTAIN label from abstention.",
+    "Episode evidence contains targets/raw/final/correctness/source/observations without opaque input."
+  ],
+  "acceptance_criteria": [
+    "All matrix/accounting identities hold; wrong A-to-B counts once; support includes abstentions.",
+    "Accuracy, wrong/abstention rates, coverage, selective accuracy/risk and per-class/macro metrics match independent rational oracles.",
+    "F04 yields accuracy 5/8, macro-F1 131/210; thread yields accuracy 1/2, coverage 3/4, macro-F1 1/2."
+  ],
+  "verification": [
+    {
+      "id": "single_matrix_identities",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance single_matrix_identities -- --nocapture",
+      "expected": "Every specified identity and per-class denominator matches an independent count."
+    },
+    {
+      "id": "f04_asymmetric_oracle",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance f04_asymmetric_oracle -- --nocapture",
+      "expected": "5/8 and 131/210 within fixed fixture tolerance."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V111",
+    "V112",
+    "V113",
+    "V114",
+    "V115",
+    "V116",
+    "V117",
+    "V118",
+    "V119",
+    "V120",
+    "V121",
+    "V122",
+    "V123",
+    "V124",
+    "V125",
+    "V126",
+    "V127",
+    "V128",
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "AC4",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060",
+    "D061",
+    "D062",
+    "D063",
+    "D064"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T006",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T006",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T007",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T007",
+      "path": "src/evaluation.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

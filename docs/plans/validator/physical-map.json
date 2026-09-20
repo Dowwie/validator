@@ -1,0 +1,1018 @@
+{
+  "authority": "Ratified",
+  "purpose": "Exact planned artifact ownership and shared-file conflicts; paths need not exist before implementation.",
+  "artifacts": [
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-random400.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Exactly aligned prediction subset bound to the full golden file"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-supplements230.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Exactly aligned prediction subset bound to the full golden file"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-targeted.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Exactly aligned prediction subset bound to the full golden file"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Native selected-choice observations and outcomes"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-full.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Development role/population"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-random400.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Explicit representative cohort"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-supplements230.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Explicit challenge cohort"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-targeted.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Explicit targeted pass"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/expected.json",
+      "writers": [
+        "T030"
+      ],
+      "purposes": [
+        "Independent matrices/counts/cohorts/transitions and known failures"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/golden.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "603 complete labeled inputs"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/operator-evidence.json",
+      "writers": [
+        "T033"
+      ],
+      "purposes": [
+        "Command/stdout/stderr/exit/hash/result evidence"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/preparation-receipt.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Mappings, counts, exclusions, numerical omissions, hashes and affected IDs"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-random400.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Exactly aligned prediction subset bound to the full golden file"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-supplements230.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Exactly aligned prediction subset bound to the full golden file"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-targeted.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Exactly aligned prediction subset bound to the full golden file"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score.json",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Native scalar-derived observations and outcomes"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-id-map.json",
+      "writers": [
+        "T028"
+      ],
+      "purposes": [
+        "Persistent source-to-episode UUID mapping"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-manifest.json",
+      "writers": [
+        "T028"
+      ],
+      "purposes": [
+        "Exact frozen paths/digests/counts and review limitations"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/multi-label/operator-evidence.json",
+      "writers": [
+        "T034"
+      ],
+      "purposes": [
+        "Command/stdout/stderr/exit/hash/result evidence"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "Cargo.lock",
+      "writers": [
+        "T001",
+        "T002",
+        "T003"
+      ],
+      "purposes": [
+        "Exact dependency resolution",
+        "Record explicit serialization feature/dependency resolution changes",
+        "Record UUID dependency resolution explicitly"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "Cargo.toml",
+      "writers": [
+        "T001",
+        "T002",
+        "T003"
+      ],
+      "purposes": [
+        "Package/MSRV and minimal dependencies",
+        "Enable only serialization features necessary for exact opaque numbers and strict decoding",
+        "Use an established UUID primitive with only required parsing features"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "README.md",
+      "writers": [
+        "T032",
+        "T035"
+      ],
+      "purposes": [
+        "Concise declarative overview, tested installation and limits",
+        "Verified final installation/version/limits"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "writers": [
+        "T017",
+        "T025",
+        "T026",
+        "T027",
+        "T028",
+        "T030",
+        "T032",
+        "T033",
+        "T034",
+        "T035"
+      ],
+      "purposes": [
+        "Architecture gate evidence, not release claim",
+        "Oracle methods and coverage evidence",
+        "Integrity evidence",
+        "Structural review and pinned build evidence",
+        "Non-sensitive source freeze references and hashes",
+        "Method and historical difference explanation",
+        "Installation/toolchain/version evidence",
+        "Criterion-to-evidence links and verdict",
+        "Multi-label practical verdict",
+        "Final AC/conformance/structure/DoD evidence map"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "docs/artifact-index.md",
+      "writers": [
+        "T035"
+      ],
+      "purposes": [
+        "Exact artifact authority and discovery entries"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "docs/dispatches/validator-acceptance/001-owner-to-single-label.prompt.md",
+      "writers": [
+        "T033"
+      ],
+      "purposes": [
+        "Complete bounded fresh-agent instructions"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "docs/dispatches/validator-acceptance/001-single-label-to-owner.response.md",
+      "writers": [
+        "T033"
+      ],
+      "purposes": [
+        "Full substantive verification handoff"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "docs/dispatches/validator-acceptance/002-multi-label-to-owner.response.md",
+      "writers": [
+        "T034"
+      ],
+      "purposes": [
+        "Full substantive verification handoff"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "docs/dispatches/validator-acceptance/002-owner-to-multi-label.prompt.md",
+      "writers": [
+        "T034"
+      ],
+      "purposes": [
+        "Complete fresh-agent instructions"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "docs/usage.md",
+      "writers": [
+        "T032"
+      ],
+      "purposes": [
+        "Canonical preparation/check/evaluate/inspect/compare workflows and schemas"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "writers": [
+        "T001"
+      ],
+      "purposes": [
+        "Exact tested stable compiler, rustfmt, clippy"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "schemas/v2/check.schema.json",
+      "writers": [
+        "T013",
+        "T020",
+        "T024"
+      ],
+      "purposes": [
+        "Check result",
+        "Concrete multi-label check alternative",
+        "Check counts/identity fields"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/comparison.schema.json",
+      "writers": [
+        "T016",
+        "T022",
+        "T024",
+        "T023"
+      ],
+      "purposes": [
+        "Typed paired single-label contract",
+        "Multi-label comparison alternative",
+        "Both paired variants",
+        "Intersection population and exclusion alternatives"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/config.schema.json",
+      "writers": [
+        "T010",
+        "T024"
+      ],
+      "purposes": [
+        "Closed policy variants and selection fields",
+        "Final config contract"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/error.schema.json",
+      "writers": [
+        "T013",
+        "T024"
+      ],
+      "purposes": [
+        "Structured error",
+        "Stable typed diagnostics"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/golden.schema.json",
+      "writers": [
+        "T010",
+        "T024"
+      ],
+      "purposes": [
+        "Both golden task alternatives",
+        "Final golden contract"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "writers": [
+        "T015",
+        "T020",
+        "T024",
+        "T021",
+        "T025",
+        "T026"
+      ],
+      "purposes": [
+        "Typed selected-episode inspection output",
+        "Concrete multi-label inspection alternative",
+        "Both inspection variants",
+        "Effective policy and final-decision inspection alternatives",
+        "Literal multi-label abstention final-outcome evidence",
+        "Resolved selected-source definition in inspection output"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/predictions.schema.json",
+      "writers": [
+        "T010",
+        "T024"
+      ],
+      "purposes": [
+        "Prediction/source/observation/preparation tagged shapes",
+        "Final prediction contract"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/receipt.schema.json",
+      "writers": [
+        "T013",
+        "T024"
+      ],
+      "purposes": [
+        "Evaluation/comparison receipt",
+        "Result file/hash receipt"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "schemas/v2/report.schema.json",
+      "writers": [
+        "T013",
+        "T020",
+        "T024",
+        "T021",
+        "T025"
+      ],
+      "purposes": [
+        "Report envelope and concrete alternatives",
+        "Concrete multi-label report and metric alternative",
+        "Both report variants and required metrics",
+        "Effective task-specific policy report alternatives",
+        "Literal multi-label abstention status and null set differences"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "scripts/acceptance/oracle_chord.py",
+      "writers": [
+        "T030"
+      ],
+      "purposes": [
+        "Independent native-route counting; use python-dev skill"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "scripts/acceptance/prepare_chord.py",
+      "writers": [
+        "T029"
+      ],
+      "purposes": [
+        "Deterministic source-to-canonical conversion; use python-dev skill"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "session-notes.md",
+      "writers": [
+        "T035"
+      ],
+      "purposes": [
+        "Durable baseline and delivery decisions"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "src/app.rs",
+      "writers": [
+        "T014",
+        "T015",
+        "T016",
+        "T020",
+        "T022",
+        "T023",
+        "T026",
+        "T027"
+      ],
+      "purposes": [
+        "Coordinate load/validate/check/evaluate",
+        "Replay through validation/evaluation; inspect coordination",
+        "Verify two runs and publish comparison",
+        "Shared command/replay integration for both modes",
+        "Closed verified multi-label compare dispatch",
+        "Intersection comparison API wiring",
+        "Fixed multi-label replay-tolerance and resolved inspection-source corrections",
+        "Inspection disclosure from validated Episode-owned opaque input"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/artifacts.rs",
+      "writers": [
+        "T011",
+        "T012",
+        "T015",
+        "T016",
+        "T026"
+      ],
+      "purposes": [
+        "Snapshot reads, SHA-256, source-relative evidence resolution",
+        "Temporary sibling publication and cleanup tests",
+        "Contained reads and binding/digest verification",
+        "Shared atomic no-replace comparison publication",
+        "Owning-module filesystem regression tests"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/cli.rs",
+      "writers": [
+        "T014",
+        "T015",
+        "T016",
+        "T020",
+        "T023",
+        "T022"
+      ],
+      "purposes": [
+        "Arguments, stdout document and exit handling",
+        "Inspect dispatch",
+        "Compare dispatch",
+        "Shared multi-label command dispatch",
+        "Explicit --intersection flag",
+        "Real multi-label compare process dispatch"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/comparison.rs",
+      "writers": [
+        "T016",
+        "T022",
+        "T023"
+      ],
+      "purposes": [
+        "Pure compatibility, metrics/deltas, transitions",
+        "Multi-label paired comparison branch",
+        "Intersection and exclusions"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/error.rs",
+      "writers": [
+        "T001"
+      ],
+      "purposes": [
+        "Typed diagnostic codes and exit categories"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "src/evaluation.rs",
+      "writers": [
+        "T007",
+        "T008",
+        "T019",
+        "T020"
+      ],
+      "purposes": [
+        "Shared checked counts, ratios, macro status, bin arithmetic",
+        "Closed evaluation dispatch",
+        "Multi-label dispatch",
+        "Complete report dispatch"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/evaluation/multi_label.rs",
+      "writers": [
+        "T019",
+        "T020",
+        "T021",
+        "T025"
+      ],
+      "purposes": [
+        "Answered-only binary and exact-set accounting",
+        "Binary losses and per-label bins",
+        "Marginal threshold selection",
+        "Per-label hard-metric population-unit correction"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/evaluation/single_label.rs",
+      "writers": [
+        "T008",
+        "T009",
+        "T021"
+      ],
+      "purposes": [
+        "Pure hard-decision accounting",
+        "Losses, deterministic argmax, bins and ECE",
+        "Single-label rejection"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/lib.rs",
+      "writers": [
+        "T001",
+        "T002",
+        "T014",
+        "T020",
+        "T027"
+      ],
+      "purposes": [
+        "Documented library boundary with deny(missing_docs)",
+        "Declare the implemented validation module without widening the public application API",
+        "Small documented application API",
+        "Concrete multi-label application API wiring",
+        "Documented public application API checks"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/main.rs",
+      "writers": [
+        "T014"
+      ],
+      "purposes": [
+        "Binary cli invocation and exit only"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "src/model.rs",
+      "writers": [
+        "T001",
+        "T003",
+        "T018",
+        "T027"
+      ],
+      "purposes": [
+        "Shared wire/spec/numerical/bin constants",
+        "Closed task declaration and re-exports",
+        "Closed concrete task dispatch",
+        "Real checked task-definition admission"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/model/common.rs",
+      "writers": [
+        "T003",
+        "T004",
+        "T006",
+        "T007",
+        "T011",
+        "T013",
+        "T023",
+        "T027"
+      ],
+      "purposes": [
+        "Checked IDs, vocabulary, label indexes, Episode and Outcome records; Prediction is implemented with ObservationSet in T004",
+        "SourceDefinition, Observation, ObservationSet/Definition, PreparationDescriptor and complete Prediction<Output> record",
+        "Population and EvaluationConfig shared records",
+        "MetricResult with finite/status/population/ratio fields",
+        "Snapshot manifest and evidence binding records",
+        "RunManifest, RunReport envelope, check/receipt/inspection identity types",
+        "Checked restriction preserving identity/availability",
+        "Episode-owned checked rows and production/test helper boundary"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/model/multi_label.rs",
+      "writers": [
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T023",
+        "T025",
+        "T027"
+      ],
+      "purposes": [
+        "LabelSet, LabelMarginals, MultiLabelOutput/Policy/Evaluation",
+        "MultiLabelResults and episode differences",
+        "Marginal probability and signal result types",
+        "LabelThresholds checked policy",
+        "Typed multi-label paired result and transitions",
+        "Multi-label restricted evaluation",
+        "Public multi-label abstention report serialization",
+        "Episode-owned rows and required checked task integration"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/model/single_label.rs",
+      "writers": [
+        "T005",
+        "T006",
+        "T008",
+        "T009",
+        "T013",
+        "T016",
+        "T021",
+        "T023",
+        "T027"
+      ],
+      "purposes": [
+        "SingleLabelOutput, CategoricalDistribution, ReportedConfidence, as-recorded policy",
+        "SingleLabelEvaluation with private aligned rows",
+        "SingleLabelResults and typed episode evidence",
+        "Categorical probability and signal result types",
+        "Concrete single-label report variant",
+        "Typed single-label comparison results",
+        "RejectBelow checked policy",
+        "Single-label restricted evaluation",
+        "Episode-owned rows and direct signal-availability path"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/validation.rs",
+      "writers": [
+        "T002",
+        "T004",
+        "T005",
+        "T006",
+        "T018",
+        "T021",
+        "T027"
+      ],
+      "purposes": [
+        "Pure decoding entry",
+        "Source/name/kind and preparation-index validation",
+        "Single-label output conversion and artifact-wide signal checks",
+        "Decode/validate/digest/align entry point",
+        "Multi-label conversion and shared alignment reuse",
+        "Policy task/completeness/answered preconditions",
+        "Checked task and opaque-input episode construction"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "src/validation/wire.rs",
+      "writers": [
+        "T002",
+        "T018",
+        "T027"
+      ],
+      "purposes": [
+        "Private tagged DTOs and recursive duplicate-key rejection",
+        "Concrete multi-label DTO paths",
+        "Concrete schema-version decoding and enforcement"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "tests/cli.rs",
+      "writers": [
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T020",
+        "T023",
+        "T024",
+        "T026",
+        "T027",
+        "T022",
+        "T025"
+      ],
+      "purposes": [
+        "Actual process tests",
+        "Inspection process tests",
+        "Compare receipts",
+        "Full moved-run process scenario",
+        "Shared multi-label command process evidence",
+        "Intersection process behavior",
+        "Validate every emitted document",
+        "Race, relocation, privacy, inspection-source schema and exit tests",
+        "Offline process acceptance coverage",
+        "Real binary multi-label comparison evidence",
+        "Focused literal multi-label abstention report and inspection evidence"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "tests/conformance.rs",
+      "writers": [
+        "T008",
+        "T009",
+        "T010",
+        "T013",
+        "T015",
+        "T016",
+        "T020",
+        "T021",
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T027"
+      ],
+      "purposes": [
+        "Library hard-metric cases",
+        "Independent signal and loss cases",
+        "Positive and negative schema tests",
+        "Report contract tests",
+        "Tamper/relocation replay tests",
+        "Paired comparison oracles",
+        "Real multi-label accounting and marginal integration cases",
+        "Boundary policy evidence",
+        "Set transition and conditional population cases",
+        "Intersection combinations",
+        "Schema mutation cases",
+        "Independent enumerations and every numerical conformance case",
+        "Input/result/evidence tampering matrix and exact source-origin proof",
+        "Exact acceptance/structure case assigned by source coverage"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/baseline.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Baseline sets/abstention and full marginals"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/candidate.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Comparable revised outcomes"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/config.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Full-population as-recorded config"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/expected.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Independent counts/losses/transitions"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/golden.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Complete multi-label references and opaque input"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/manifest.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Exact fixture hashes and oracle derivation"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/targeted-config.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Explicit overlapping selection"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/targeted-predictions.json",
+      "writers": [
+        "T031"
+      ],
+      "purposes": [
+        "Matching subset prediction artifact"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/multi-label/expected.json",
+      "writers": [
+        "T019",
+        "T025"
+      ],
+      "purposes": [
+        "Independent expected results",
+        "Independent marginal and set expectations"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "tests/fixtures/single-label/expected.json",
+      "writers": [
+        "T008",
+        "T025"
+      ],
+      "purposes": [
+        "Independent numerical constants including F04",
+        "Independent rational/analytical expectations"
+      ],
+      "requires_write_coordination": true
+    },
+    {
+      "path": "tests/fixtures/steel-thread/baseline.json",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "Baseline predictions with signals and observations"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/steel-thread/candidate.json",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "Candidate predictions"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/steel-thread/config.json",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "As-recorded config"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/steel-thread/expected.json",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "Independent rational/analytical oracle"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/steel-thread/golden.json",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "Fixed four-episode golden inputs"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/steel-thread/source-a/evidence.bin",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "Synthetic same-basename evidence"
+      ],
+      "requires_write_coordination": false
+    },
+    {
+      "path": "tests/fixtures/steel-thread/source-b/evidence.bin",
+      "writers": [
+        "T017"
+      ],
+      "purposes": [
+        "Second synthetic evidence"
+      ],
+      "requires_write_coordination": false
+    }
+  ]
+}

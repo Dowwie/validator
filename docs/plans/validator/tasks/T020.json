@@ -1,0 +1,289 @@
+{
+  "id": "T020",
+  "title": "Compute marginal losses and per-label probability bins",
+  "authority": "Ratified",
+  "phase": "extension",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#multi-label-probability-metrics-and-diagnostics",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Both task kinds execute through the same commands while retaining distinct probability semantics.",
+  "dependencies": [
+    {
+      "task": "T019",
+      "requires": "Concrete multi-label result shape"
+    },
+    {
+      "task": "T018",
+      "requires": "Checked unchanged marginals"
+    },
+    {
+      "task": "T013",
+      "requires": "Existing strict check and report schema contracts"
+    },
+    {
+      "task": "T015",
+      "requires": "Existing inspection schema and verified replay boundary"
+    },
+    {
+      "task": "T017",
+      "requires": "Accepted shared CLI backbone and real process harness"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "Marginal probability and signal result types"
+    },
+    {
+      "path": "src/evaluation/multi_label.rs",
+      "purpose": "Binary losses and per-label bins"
+    },
+    {
+      "path": "src/evaluation.rs",
+      "purpose": "Complete report dispatch"
+    },
+    {
+      "path": "src/app.rs",
+      "purpose": "Shared command/replay integration for both modes"
+    },
+    {
+      "path": "src/cli.rs",
+      "purpose": "Real check/evaluate/inspect process dispatch for both modes"
+    },
+    {
+      "path": "src/lib.rs",
+      "purpose": "Small application API wiring for concrete multi-label results"
+    },
+    {
+      "path": "schemas/v2/check.schema.json",
+      "purpose": "Strict concrete multi-label check result alternative"
+    },
+    {
+      "path": "schemas/v2/report.schema.json",
+      "purpose": "Strict concrete multi-label report alternative"
+    },
+    {
+      "path": "schemas/v2/inspection.schema.json",
+      "purpose": "Strict concrete multi-label inspection alternative"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Real T019 hard-accounting and T020 marginal application cases"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Real shared-command multi-label process evidence"
+    }
+  ],
+  "interfaces": [
+    "Observed binary branch computes -ln(p) or -ln_1p(-p); never 0*ln(0).",
+    "Per-label losses count N label decisions; means count N*K; signals use selected IDs and reference positivity.",
+    "No multi-label argmax, confidence, ECE, or joint set probability is synthesized."
+  ],
+  "acceptance_criteria": [
+    "[0.8,0.7] with reference {A} yields mean Brier .265 and (-ln(.8)-ln(.3))/2, including on abstention.",
+    "Zero-probability observed outcomes yield explicit infinity; empty absent labels with zero marginals yield zero loss.",
+    "One-label binary Brier .04 differs from two-class categorical .08; bins at 0/.1/1 follow presence, not correctness.",
+    "Check/evaluate/inspect/replay accept both concrete tasks without duplicate I/O logic."
+    ,
+    "Actual multi-label check/report/inspection documents validate against strict published schema alternatives."
+  ],
+  "verification": [
+    {
+      "id": "marginal_loss_and_bins",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance marginal_loss_and_bins -- --nocapture",
+      "expected": "Finite/infinite and boundary oracles pass without cross-label normalization."
+    },
+    {
+      "id": "shared_commands_multi_label",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli shared_commands_multi_label -- --nocapture",
+      "expected": "Check, evaluate and inspect use the shared CLI/app/artifact path for multi-label inputs; T022 owns paired multi-label comparison."
+    }
+  ],
+  "integration_gate_verification": [
+    "cargo test --locked --lib multi_label_checked_admission -- --nocapture",
+    "cargo test --locked --lib cross_task_boundaries -- --nocapture",
+    "cargo test --locked --test conformance multi_label_hard_oracles -- --nocapture",
+    "cargo test --locked --test conformance equal_counts_distinct_exact_sets -- --nocapture",
+    "cargo test --locked --test conformance marginal_loss_and_bins -- --nocapture",
+    "cargo test --locked --test cli shared_commands_multi_label -- --nocapture"
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V111",
+    "V112",
+    "V145",
+    "V146",
+    "V147",
+    "V148",
+    "V149",
+    "V150",
+    "M05",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "E04",
+    "E10",
+    "AC2",
+    "AC4",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060",
+    "D061",
+    "D062",
+    "D063",
+    "D064",
+    "DM01",
+    "DM07"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T019",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T019",
+      "path": "src/evaluation/multi_label.rs"
+    },
+    {
+      "from": "T019",
+      "path": "src/evaluation.rs"
+    },
+    {
+      "from": "T019",
+      "path": "tests/fixtures/multi-label/expected.json"
+    },
+    {
+      "from": "T018",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/receipt.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/error.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T015",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T015",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T015",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T015",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T015",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T015",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/golden.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/baseline.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/candidate.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/config.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/expected.json"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/source-a/evidence.bin"
+    },
+    {
+      "from": "T017",
+      "path": "tests/fixtures/steel-thread/source-b/evidence.bin"
+    },
+    {
+      "from": "T017",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T017",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All six T018-T020 named filters are listed by Cargo and execute with nonzero expected test counts; conformance and process filters use the real public application path.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

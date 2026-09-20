@@ -1,0 +1,162 @@
+{
+  "id": "T019",
+  "title": "Compute multi-label hard metrics and exact episode differences",
+  "authority": "Ratified",
+  "phase": "extension",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#multi-label-hard-decisions",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#reports-and-metric-reuse",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Exact-set outcomes and answered label-decision counts remain separately interpretable.",
+  "dependencies": [
+    {
+      "task": "T018",
+      "requires": "Validated multi-label inputs"
+    },
+    {
+      "task": "T007",
+      "requires": "Checked arithmetic/statuses"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "MultiLabelResults and episode differences"
+    },
+    {
+      "path": "src/evaluation/multi_label.rs",
+      "purpose": "Answered-only binary and exact-set accounting"
+    },
+    {
+      "path": "src/evaluation.rs",
+      "purpose": "Multi-label dispatch"
+    },
+    {
+      "path": "tests/fixtures/multi-label/expected.json",
+      "purpose": "Independent expected results"
+    }
+  ],
+  "interfaces": [
+    "Evaluator accepts only MultiLabelEvaluation and borrows it.",
+    "Raw/final evidence reports matched/missed/extra in vocabulary order; abstention has null sets and status abstained.",
+    "Support uses N references; answered_support/predicted_support and TP/FP/FN/TN use G answers."
+  ],
+  "acceptance_criteria": [
+    "For each label four counts sum to G; totals sum to G*K; exact matches and coverage obey specified identities.",
+    "All set, selective, micro/macro and Hamming metrics carry the right scope, unit and denominators.",
+    "All-abstained/empty populations and empty answered sets retain correct null/zero/status distinctions."
+  ],
+  "verification": [
+    {
+      "id": "multi_label_hard_oracles",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance multi_label_hard_oracles -- --nocapture",
+      "expected": "Specified two-episode and empty/abstained cases match independent rational results."
+    },
+    {
+      "id": "equal_counts_distinct_exact_sets",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance equal_counts_distinct_exact_sets -- --nocapture",
+      "expected": "Equal binary aggregates cannot hide different exact-set accuracy."
+    }
+  ],
+  "integration_evidence_boundary": "T019 runs owning-module hard-accounting tests with nonzero counts. Its two named conformance filters require T020's real application path; T020 implements and runs them through the public API. T019 must not claim zero-selected, facade, source-inclusion, or widened-export evidence.",
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V111",
+    "V112",
+    "V119",
+    "V120",
+    "V121",
+    "V122",
+    "V123",
+    "V124",
+    "V125",
+    "V126",
+    "V127",
+    "V128",
+    "V138",
+    "V139",
+    "V140",
+    "V141",
+    "V142",
+    "V143",
+    "V144",
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M12",
+    "M16",
+    "M20",
+    "AC4",
+    "D037",
+    "D038",
+    "D039",
+    "D040",
+    "D041",
+    "D042",
+    "D043",
+    "D044",
+    "D045",
+    "D046",
+    "D047",
+    "D048",
+    "D056",
+    "D057",
+    "D058",
+    "D059",
+    "D060",
+    "DM03",
+    "DM05",
+    "DM11"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T018",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T018",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T007",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T007",
+      "path": "src/evaluation.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "Owning-module hard-accounting tests execute now with nonzero counts. The two named conformance filters are implemented and run through the real application API at T020; T019 never claims a zero-selected or facade result.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

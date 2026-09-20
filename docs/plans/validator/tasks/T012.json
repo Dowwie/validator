@@ -1,0 +1,143 @@
+{
+  "id": "T012",
+  "title": "Publish complete artifact directories without replacing destinations",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#evidence-bindings-and-replay",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Run and comparison publication is atomic with respect to destination existence and never overwrites inputs.",
+  "dependencies": [
+    {
+      "task": "T011",
+      "requires": "Exact files and manifest"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/artifacts.rs",
+      "purpose": "Temporary sibling publication and cleanup tests"
+    }
+  ],
+  "interfaces": [
+    "Input: complete serialized result and snapshot/evidence bytes; output: immutable destination plus exact result file digest.",
+    "Temporary sibling and host-supported no-replace operation are required; ordinary exists-then-rename is forbidden.",
+    "Filesystem failures stay typed; no retry/fallback publication mode."
+  ],
+  "acceptance_criteria": [
+    "A racing destination creator wins safely: existing file/directory/symlink remains unchanged and publication fails.",
+    "Validation or injected late write failure leaves no final success directory; cleanup handles only owned temporary artifacts.",
+    "On the tested host, run directory permissions protect full snapshots and receipt paths are absolute."
+  ],
+  "verification": [
+    {
+      "id": "publish_no_replace_race",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib publish_no_replace_race -- --nocapture",
+      "expected": "Concurrent destination creation cannot be overwritten."
+    },
+    {
+      "id": "publish_late_failure",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib publish_late_failure -- --nocapture",
+      "expected": "No final result after injected write failure; source bytes unchanged."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V151",
+    "V152",
+    "V153",
+    "V154",
+    "V155",
+    "V156",
+    "V157",
+    "V158",
+    "V159",
+    "V160",
+    "V161",
+    "V162",
+    "V163",
+    "V164",
+    "V165",
+    "V166",
+    "V167",
+    "V168",
+    "V169",
+    "V170",
+    "V171",
+    "V172",
+    "V173",
+    "V174",
+    "V175",
+    "V176",
+    "V177",
+    "V178",
+    "V179",
+    "V180",
+    "V181",
+    "V182",
+    "V183",
+    "V184",
+    "V185",
+    "V186",
+    "V187",
+    "V188",
+    "V189",
+    "V190",
+    "V191",
+    "V192",
+    "V193",
+    "V194",
+    "V195",
+    "V196",
+    "V197",
+    "V198",
+    "V199",
+    "V200",
+    "V201",
+    "V202",
+    "V203",
+    "V204",
+    "V205",
+    "V206",
+    "V207",
+    "V208",
+    "V209",
+    "S23",
+    "AC7"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T011",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T011",
+      "path": "src/model/common.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

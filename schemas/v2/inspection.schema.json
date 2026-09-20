@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "status", "identity", "episode_id", "input", "expected", "prediction", "source", "final_outcome", "observations", "probability", "reported_confidence", "configuration"],
+  "properties": {
+    "schema_version": {"const": 2},
+    "kind": {"const": "inspection"},
+    "status": {"const": "complete"},
+    "identity": {"$ref": "#/$defs/identity"},
+    "episode_id": {"$ref": "#/$defs/id"},
+    "input": true,
+    "expected": {"oneOf": [{"$ref": "#/$defs/class"}, {"$ref": "#/$defs/labels"}]},
+    "prediction": true,
+    "source": {"$ref": "#/$defs/source"},
+    "final_outcome": true,
+    "observations": {"$ref": "#/$defs/reportObservations"},
+    "probability": true,
+    "reported_confidence": true,
+    "configuration": {"$ref": "#/$defs/configuration"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"expected": {"properties": {"type": {"const": "class"}}}}},
+      "then": {
+        "properties": {
+          "prediction": {"$ref": "#/$defs/singlePrediction"},
+          "source": {"$ref": "#/$defs/source"},
+          "final_outcome": {"oneOf": [{"$ref": "#/$defs/class"}, {"$ref": "#/$defs/abstention"}]},
+          "probability": {"$ref": "#/$defs/singleProbability"},
+          "reported_confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+          "configuration": {"$ref": "#/$defs/singleConfiguration"}
+        }
+      },
+      "else": {
+        "properties": {
+          "prediction": {"$ref": "#/$defs/multiPrediction"},
+          "source": {"$ref": "#/$defs/classifierSource"},
+          "final_outcome": {"$ref": "#/$defs/multiOutcome"},
+          "probability": {"$ref": "#/$defs/multiProbability"},
+          "reported_confidence": {"type": "null"},
+          "configuration": {"$ref": "#/$defs/multiConfiguration"}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "text": {"type": "string", "pattern": ".*\\S.*"},
+    "id": {"type": "string", "format": "uuid"},
+    "probabilityValue": {"type": "number", "minimum": 0, "maximum": 1},
+    "configuration": {"anyOf": [{"$ref": "#/$defs/singleConfiguration"}, {"$ref": "#/$defs/multiConfiguration"}]},
+    "singleConfiguration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "population", "role", "decision"],
+      "properties": {
+        "schema_version": {"const": 2}, "population": {"$ref": "#/$defs/text"},
+        "role": {"enum": ["development", "held_out"]}, "parent_run_id": {"$ref": "#/$defs/id"},
+        "episode_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "decision": {"oneOf": [
+          {"type": "object", "additionalProperties": false, "required": ["type"], "properties": {"type": {"const": "as_recorded"}}},
+          {"type": "object", "additionalProperties": false, "required": ["type", "signal", "minimum"], "properties": {"type": {"const": "reject_below"}, "signal": {"enum": ["confidence", "max_probability"]}, "minimum": {"$ref": "#/$defs/probabilityValue"}}}
+        ]}
+      }
+    },
+    "multiConfiguration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "population", "role", "decision"],
+      "properties": {
+        "schema_version": {"const": 2}, "population": {"$ref": "#/$defs/text"},
+        "role": {"enum": ["development", "held_out"]}, "parent_run_id": {"$ref": "#/$defs/id"},
+        "episode_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "decision": {"oneOf": [
+          {"type": "object", "additionalProperties": false, "required": ["type"], "properties": {"type": {"const": "as_recorded"}}},
+          {"type": "object", "additionalProperties": false, "required": ["type", "thresholds"], "properties": {"type": {"const": "label_thresholds"}, "thresholds": {"type": "object", "minProperties": 1, "propertyNames": {"$ref": "#/$defs/text"}, "additionalProperties": {"$ref": "#/$defs/probabilityValue"}}}}
+        ]}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "created_at", "validator_version", "specification_version"],
+      "properties": {
+        "run_id": {"$ref": "#/$defs/id"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "validator_version": {"$ref": "#/$defs/text"},
+        "specification_version": {"$ref": "#/$defs/text"},
+        "parent_run_id": {"type": ["string", "null"], "format": "uuid"}
+      }
+    },
+    "class": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "label"],
+      "properties": {"type": {"const": "class"}, "label": {"$ref": "#/$defs/text"}}
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "labels"],
+      "properties": {"type": {"const": "labels"}, "labels": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}}}
+    },
+    "abstention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {"type": {"const": "abstention"}, "reason": {"type": ["string", "null"], "pattern": ".*\\S.*"}}
+    },
+    "multiOutcome": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "labels", "matched", "missed", "extra", "correct"],
+          "properties": {
+            "type": {"const": "labels"},
+            "labels": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+            "matched": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+            "missed": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+            "extra": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/text"}},
+            "correct": {"type": "boolean"}
+          }
+        },
+        {"$ref": "#/$defs/multiAbstention"}
+      ]
+    },
+    "multiAbstention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "reason", "status", "matched", "missed", "extra"],
+      "properties": {
+        "type": {"const": "abstention"},
+        "reason": {"type": ["string", "null"], "pattern": ".*\\S.*"},
+        "status": {"const": "abstained"},
+        "matched": {"type": "null"},
+        "missed": {"type": "null"},
+        "extra": {"type": "null"}
+      }
+    },
+    "observation": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"const": "scalar"}, "value": {"type": "number"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "value"], "properties": {"kind": {"enum": ["bernoulli", "reported_confidence"]}, "value": {"$ref": "#/$defs/probabilityValue"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "values"], "properties": {"kind": {"enum": ["categorical", "label_marginals"]}, "values": {"$ref": "#/$defs/probabilityMap"}}}
+      ]
+    },
+    "reportObservations": {"type": "object", "propertyNames": {"$ref": "#/$defs/text"}, "additionalProperties": {"$ref": "#/$defs/observation"}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["kind", "model", "configuration", "evidence", "observations"], "properties": {"kind": {"enum": ["classifier", "scored_choice"]}, "model": {"$ref": "#/$defs/text"}, "configuration": {"type": "object", "additionalProperties": true}, "question_id": {"type": ["string", "null"], "pattern": ".*\\S.*"}, "evidence": {"type": "array", "items": {"type": "string", "pattern": "^evidence/(0|[1-9][0-9]*)\\.bin$"}}, "observations": {"type": "object", "additionalProperties": {"$ref": "#/$defs/sourceObservation"}}, "preparation": {"$ref": "#/$defs/preparation"}}},
+    "classifierSource": {"allOf": [{"$ref": "#/$defs/source"}, {"properties": {"kind": {"const": "classifier"}}}]},
+    "sourceObservation": {"type": "object", "additionalProperties": false, "required": ["kind", "description"], "properties": {"kind": {"enum": ["scalar", "bernoulli", "reported_confidence", "categorical", "label_marginals"]}, "description": {"$ref": "#/$defs/text"}, "question_id": {"type": ["string", "null"], "pattern": ".*\\S.*"}}},
+    "preparation": {"type": "object", "additionalProperties": false, "required": ["method", "version", "configuration", "evidence_indices"], "properties": {"method": {"$ref": "#/$defs/text"}, "version": {"$ref": "#/$defs/text"}, "configuration": {"type": "object", "additionalProperties": true}, "evidence_indices": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0}}}},
+    "probabilityMap": {"type": "object", "minProperties": 1, "propertyNames": {"$ref": "#/$defs/text"}, "additionalProperties": {"$ref": "#/$defs/probabilityValue"}},
+    "singlePrediction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_id", "outcome"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "source_id": {"$ref": "#/$defs/text"},
+        "outcome": {"oneOf": [{"$ref": "#/$defs/class"}, {"$ref": "#/$defs/abstention"}]},
+        "probabilities": {"type": "object", "additionalProperties": false, "required": ["kind", "values"], "properties": {"kind": {"const": "categorical"}, "values": {"$ref": "#/$defs/probabilityMap"}}},
+        "confidence": {"$ref": "#/$defs/probabilityValue"},
+        "observations": {"$ref": "#/$defs/reportObservations"}
+      }
+    },
+    "multiPrediction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_id", "outcome"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "source_id": {"$ref": "#/$defs/text"},
+        "outcome": {"oneOf": [{"$ref": "#/$defs/labels"}, {"$ref": "#/$defs/abstention"}]},
+        "probabilities": {"type": "object", "additionalProperties": false, "required": ["kind", "values"], "properties": {"kind": {"const": "label_marginals"}, "values": {"$ref": "#/$defs/probabilityMap"}}},
+        "observations": {"$ref": "#/$defs/reportObservations"}
+      }
+    },
+    "singleProbability": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["submitted", "working", "argmax", "max_probability", "chosen_probability", "choice_argmax_disagreement", "argmax_correct"],
+          "properties": {
+            "submitted": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/probabilityValue"}},
+            "working": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/probabilityValue"}},
+            "argmax": {"$ref": "#/$defs/text"},
+            "max_probability": {"$ref": "#/$defs/probabilityValue"},
+            "chosen_probability": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+            "choice_argmax_disagreement": {"type": ["boolean", "null"]},
+            "argmax_correct": {"type": "boolean"}
+          }
+        }
+      ]
+    },
+    "multiProbability": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "object", "additionalProperties": false, "required": ["marginals"], "properties": {"marginals": {"$ref": "#/$defs/probabilityMap"}}}
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "id": "T031",
+  "title": "Freeze a synthetic multi-label practical bundle and independent oracle",
+  "authority": "Ratified",
+  "phase": "acceptance_inputs",
+  "effort_hours_estimate": [
+    2,
+    4
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#frozen-practical-acceptance-case",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#multi-label-hard-decisions",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#multi-label-probability-metrics-and-diagnostics",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "A public immutable practical case exercises multi-label semantics without private files or production-derived expected values.",
+  "dependencies": [
+
+  ],
+  "artifacts": [
+    {
+      "path": "tests/fixtures/acceptance-multi/golden.json",
+      "purpose": "Complete multi-label references and opaque input"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/baseline.json",
+      "purpose": "Baseline sets/abstention and full marginals"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/candidate.json",
+      "purpose": "Comparable revised outcomes"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/config.json",
+      "purpose": "Full-population as-recorded config"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/targeted-config.json",
+      "purpose": "Explicit overlapping selection"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/targeted-predictions.json",
+      "purpose": "Matching subset prediction artifact"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/expected.json",
+      "purpose": "Independent counts/losses/transitions"
+    },
+    {
+      "path": "tests/fixtures/acceptance-multi/manifest.json",
+      "purpose": "Exact fixture hashes and oracle derivation"
+    }
+  ],
+  "interfaces": [
+    "Include overlapping expected/predicted sets, empty answered sets, whole abstention with complete marginals, a known failure, two runs and partial selection overlap.",
+    "Oracle author calculates counts/rational Brier/analytical logs and transitions without reading production scoring.",
+    "Freeze input bytes before expected calculations; manifest hashes exclude itself and do not create circular digest dependencies."
+  ],
+  "acceptance_criteria": [
+    "Explicit expected raw/final metrics, losses/statuses, selected/answered IDs, recovered/regressed/changed IDs and label transitions exist.",
+    "At least one failure can be located by structured correctness and inspected; intersection excludes known IDs.",
+    "No generated run output committed as a fixture; only input/oracle evidence is public."
+  ],
+  "verification": [
+    {
+      "id": "independent_multi_bundle",
+      "kind": "documented_check",
+      "procedure": "Freeze fixture hashes, manually derive each expected count and rational Brier plus analytic log expression, and have a separate reviewer reconcile all oracle entries before using Validator.",
+      "expected": "Explicit expected raw/final metrics, losses/statuses, selected/answered IDs, recovered/regressed/changed IDs and label transitions exist. At least one failure can be located by structured correctness and inspected; intersection excludes known IDs. No generated run output committed as a fixture; only input/oracle evidence is public."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "independent oracle author",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V342",
+    "V343",
+    "V344",
+    "V345",
+    "V346",
+    "V347",
+    "V348",
+    "V349",
+    "V350"
+  ],
+  "input_artifacts": [
+
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

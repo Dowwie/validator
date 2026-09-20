@@ -1,0 +1,179 @@
+{
+  "id": "T010",
+  "title": "Publish strict schemas for all three canonical input contracts",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#canonical-golden-dataset",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#canonical-prediction-artifact",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#evaluation-configuration",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Agents can validate the complete wire-v2 input shapes without guessing from examples.",
+  "dependencies": [
+    {
+      "task": "T001",
+      "requires": "Pinned schema validator development dependency"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "schemas/v2/golden.schema.json",
+      "purpose": "Both golden task alternatives"
+    },
+    {
+      "path": "schemas/v2/predictions.schema.json",
+      "purpose": "Prediction/source/observation/preparation tagged shapes"
+    },
+    {
+      "path": "schemas/v2/config.schema.json",
+      "purpose": "Closed policy variants and selection fields"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Positive and negative schema tests"
+    }
+  ],
+  "interfaces": [
+    "Use a published explicit JSON Schema dialect and local references; record choice in schema metadata and session notes.",
+    "Both task alternatives are specified now; cross-document/vocabulary/count/hash constraints remain runtime checks.",
+    "Closed variants reject extra fields; opaque input/config remain genuinely opaque."
+  ],
+  "acceptance_criteria": [
+    "Schemas accept every legal example and reject unsupported tags/version/fields, wrong target and probability shapes.",
+    "No schema can require scoring signals merely because observations exist.",
+    "Schema tests identify cross-record, vocabulary, digest and numerical constraints that require runtime checks; T024 verifies full runtime/schema parity after both task validators exist."
+  ],
+  "verification": [
+    {
+      "id": "input_schema_contract",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance input_schema_contract -- --nocapture",
+      "expected": "Valid/invalid input documents agree with the intended shape contract."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V004",
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V174",
+    "V175",
+    "V176",
+    "V177",
+    "V178",
+    "V179",
+    "V180",
+    "V181",
+    "V182",
+    "V183",
+    "V184",
+    "V185",
+    "V186",
+    "V187",
+    "V188",
+    "V189",
+    "V190",
+    "V191",
+    "V192",
+    "V193",
+    "V194",
+    "V195",
+    "V196"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T001",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T001",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T001",
+      "path": "rust-toolchain.toml"
+    },
+    {
+      "from": "T001",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/error.rs"
+    },
+    {
+      "from": "T001",
+      "path": "src/model.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

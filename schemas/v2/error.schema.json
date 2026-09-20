@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "status", "code", "stage", "affected_ids", "message"],
+  "properties": {
+    "schema_version": {"const": 2},
+    "kind": {"const": "error"},
+    "status": {"const": "error"},
+    "code": {"enum": ["E_PARSE", "E_SCHEMA", "E_ID", "E_DUPLICATE_ID", "E_LABEL", "E_PROBABILITY", "E_CONFIDENCE", "E_CONFIG", "E_ALIGNMENT", "E_OBSERVATION", "E_PROVENANCE", "E_COMPARISON", "E_IO", "E_OUTPUT_EXISTS", "E_NUMERIC", "E_INVARIANT"]},
+    "stage": {"enum": ["parse", "schema", "validation", "configuration", "alignment", "replay", "comparison", "filesystem", "numeric", "accounting"]},
+    "path": {"type": "string", "minLength": 1},
+    "affected_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "format": "uuid"}},
+    "message": {"type": "string", "minLength": 1}
+  }
+}

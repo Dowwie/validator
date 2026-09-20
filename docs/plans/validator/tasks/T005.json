@@ -1,0 +1,263 @@
+{
+  "id": "T005",
+  "title": "Validate single-label outputs and complete scoring families",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#canonical-prediction-artifact",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#scored-choice-profile",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#validation-and-numerical-rules",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#task-specific-structures",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Only valid categorical scoring signals enter the single-label evaluator; observations remain separate.",
+  "dependencies": [
+    {
+      "task": "T002",
+      "requires": "Private output DTOs"
+    },
+    {
+      "task": "T003",
+      "requires": "Vocabulary-owned targets"
+    },
+    {
+      "task": "T004",
+      "requires": "Checked source definitions"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "SingleLabelOutput, CategoricalDistribution, ReportedConfidence, as-recorded policy"
+    },
+    {
+      "path": "src/validation.rs",
+      "purpose": "Single-label output conversion and artifact-wide signal checks"
+    }
+  ],
+  "interfaces": [
+    "CategoricalDistribution retains submitted binary64 values separately from normalized working values in vocabulary order.",
+    "SingleLabelOutput contains Outcome<LabelIndex> plus optional scoring probability/confidence.",
+    "SignalAvailability is calculated over the entire submitted artifact before selection, independently of observations."
+  ],
+  "acceptance_criteria": [
+    "Exactly every vocabulary key is required; finite [0,1], positive sum, abs(sum-1)<=1e-9; normalize only accepted near-unit vectors.",
+    "General classifiers retain non-argmax decisions and signals on abstentions; scored_choice requires question ID, class, confidence, distribution, and a tied maximum.",
+    "Each scoring family is independently all-or-none across all sources; empty submitted artifacts have neither family."
+  ],
+  "verification": [
+    {
+      "id": "categorical_admission",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib categorical_admission -- --nocapture",
+      "expected": "Missing/extra keys, wrong kinds, booleans/strings, sum errors fail without clipping or repair."
+    },
+    {
+      "id": "scored_choice_ties",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib scored_choice_ties -- --nocapture",
+      "expected": "Any exact maximum is legal; contradictory selections rejected."
+    },
+    {
+      "id": "artifact_signal_completeness",
+      "kind": "automated",
+      "target": "lib",
+      "command": "cargo test --locked --lib artifact_signal_completeness -- --nocapture",
+      "expected": "No partial scoring family; abstentions retain valid signals."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V064",
+    "V065",
+    "V066",
+    "V067",
+    "V068",
+    "V069",
+    "V070",
+    "V071",
+    "V072",
+    "V073",
+    "V074",
+    "V075",
+    "V076",
+    "V077",
+    "V078",
+    "V079",
+    "V080",
+    "V081",
+    "V082",
+    "V083",
+    "V084",
+    "V085",
+    "V086",
+    "V087",
+    "V088",
+    "V089",
+    "V090",
+    "V101",
+    "V102",
+    "V103",
+    "V104",
+    "V105",
+    "V106",
+    "V107",
+    "V108",
+    "V109",
+    "V110",
+    "S10",
+    "S11",
+    "S13",
+    "E05",
+    "E06",
+    "E07",
+    "E08",
+    "E12",
+    "AC1",
+    "AC2",
+    "AC3",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012",
+    "D013",
+    "D014",
+    "D015",
+    "D016",
+    "D017",
+    "D018",
+    "D019",
+    "D020",
+    "D021",
+    "D022",
+    "D023",
+    "D024",
+    "D025",
+    "D026",
+    "D027",
+    "D028",
+    "D029",
+    "D030",
+    "D031",
+    "D032",
+    "D033",
+    "D034",
+    "D035",
+    "D036",
+    "D037",
+    "D038",
+    "D039",
+    "D040",
+    "D041",
+    "D042",
+    "D043",
+    "D044",
+    "D045",
+    "D046",
+    "D047",
+    "D048",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "DM04",
+    "DM08"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T002",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T002",
+      "path": "src/validation/wire.rs"
+    },
+    {
+      "from": "T002",
+      "path": "src/lib.rs"
+    },
+    {
+      "from": "T002",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T002",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T003",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T003",
+      "path": "src/model.rs"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.toml"
+    },
+    {
+      "from": "T003",
+      "path": "Cargo.lock"
+    },
+    {
+      "from": "T004",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T004",
+      "path": "src/validation.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

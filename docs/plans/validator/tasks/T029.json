@@ -1,0 +1,212 @@
+{
+  "id": "T029",
+  "title": "Prepare native Choice and Score artifacts reproducibly",
+  "authority": "Ratified",
+  "phase": "acceptance_inputs",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#dataset-preparation-contract",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#frozen-practical-acceptance-case",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "The frozen native classification routes become canonical hard-label inputs with all available observations preserved.",
+  "dependencies": [
+    {
+      "task": "T028",
+      "requires": "Frozen source manifest, reference snapshot and ID map"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "scripts/acceptance/prepare_chord.py",
+      "purpose": "Deterministic source-to-canonical conversion; use python-dev skill"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/golden.json",
+      "purpose": "603 complete labeled inputs"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice.json",
+      "purpose": "Native selected-choice observations and outcomes"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score.json",
+      "purpose": "Native scalar-derived observations and outcomes"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-full.json",
+      "purpose": "Development role/population"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-random400.json",
+      "purpose": "Explicit representative cohort"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-supplements230.json",
+      "purpose": "Explicit challenge cohort"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/config-targeted.json",
+      "purpose": "Explicit targeted pass"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/preparation-receipt.json",
+      "purpose": "Mappings, counts, exclusions, numerical omissions, hashes and affected IDs"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-random400.json",
+      "purpose": "Exactly aligned prediction subset bound to the full golden file"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-supplements230.json",
+      "purpose": "Exactly aligned prediction subset bound to the full golden file"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/choice-targeted.json",
+      "purpose": "Exactly aligned prediction subset bound to the full golden file"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-random400.json",
+      "purpose": "Exactly aligned prediction subset bound to the full golden file"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-supplements230.json",
+      "purpose": "Exactly aligned prediction subset bound to the full golden file"
+    },
+    {
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/score-targeted.json",
+      "purpose": "Exactly aligned prediction subset bound to the full golden file"
+    }
+  ],
+  "interfaces": [
+    "Use only frozen bundle and persisted ID map; separate gold/reference notes from classifier-visible payload.",
+    "Source configuration retains actual prompt/question/model differences; observation-only sources are classifier, not falsely scored_choice.",
+    "Freeze Score mapping boundaries/ties from source code/evidence; attach script/raw/receipt evidence and PreparationDescriptor for derived outcome."
+  ],
+  "acceptance_criteria": [
+    "Two identical executions produce identical canonical bytes and receipts; source files remain byte-identical.",
+    "Preserve scalars, distributions, confidence where available, three auxiliary Bernoulli observations, full payload and native routes even when argmax disagrees.",
+    "Omit probability scoring on every row with explicit reason; retain native values and all 603 outcomes; 27 exclusions are fully accounted.",
+    "Selection inputs include exact prediction subsets bound to the same whole golden bytes; cannot silently filter during evaluation."
+  ],
+  "verification": [
+    {
+      "id": "preparation_reproducibility",
+      "kind": "documented_check",
+      "procedure": "Run python scripts/acceptance/prepare_chord.py --bundle <frozen-root> --out <fresh-output> twice in separate directories; compare exact hashes of all canonical outputs and receipts and all frozen source hashes. For cohort artifacts use --selection <config-path>; it emits the exactly aligned prediction subset.",
+      "expected": "Two identical executions produce identical canonical bytes and receipts; source files remain byte-identical. Preserve scalars, distributions, confidence where available, three auxiliary Bernoulli observations, full payload and native routes even when argmax disagrees. Omit probability scoring on every row with explicit reason; retain native values and all 603 outcomes; 27 exclusions are fully accounted. Selection inputs include exact prediction subsets bound to the same whole golden bytes; cannot silently filter during evaluation."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V070",
+    "V071",
+    "V072",
+    "V073",
+    "V074",
+    "V075",
+    "V076",
+    "V077",
+    "V078",
+    "V079",
+    "V080",
+    "V081",
+    "V101",
+    "V102",
+    "V103",
+    "V104",
+    "V105",
+    "V106",
+    "V107",
+    "V108",
+    "V109",
+    "V110",
+    "V223",
+    "V224",
+    "V225",
+    "V226",
+    "V227",
+    "V228",
+    "V229",
+    "V230",
+    "E05",
+    "E06",
+    "AC3",
+    "V342",
+    "V343",
+    "V344",
+    "V345",
+    "V346",
+    "V347",
+    "V348",
+    "V349",
+    "V350",
+    "D003",
+    "D004",
+    "D005",
+    "D006",
+    "D037",
+    "D038",
+    "D039",
+    "D040",
+    "D041",
+    "D042",
+    "D043",
+    "D044",
+    "D045",
+    "D046",
+    "D047",
+    "D048"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T028",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-manifest.json"
+    },
+    {
+      "from": "T028",
+      "path": "/Users/dowwie/.local/share/validator/acceptance/chord630/source-id-map.json"
+    },
+    {
+      "from": "T028",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

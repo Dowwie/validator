@@ -1,0 +1,217 @@
+{
+  "id": "T016",
+  "title": "Compare verified single-label runs on identical populations",
+  "authority": "Ratified",
+  "phase": "backbone",
+  "effort_hours_estimate": [
+    4,
+    6
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#comparison-and-successive-passes",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#machine-interface",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Default comparison pairs identical selected populations and exposes changes without an overall winner.",
+  "dependencies": [
+    {
+      "task": "T015",
+      "requires": "Verified replay"
+    },
+    {
+      "task": "T013",
+      "requires": "Concrete report metrics"
+    },
+    {
+      "task": "T012",
+      "requires": "Comparison publication"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/comparison.rs",
+      "purpose": "Pure compatibility, metrics/deltas, transitions"
+    },
+    {
+      "path": "src/artifacts.rs",
+      "purpose": "Reuse the existing private atomic no-replace publisher for comparison.json"
+    },
+    {
+      "path": "src/app.rs",
+      "purpose": "Verify two runs and publish comparison"
+    },
+    {
+      "path": "src/cli.rs",
+      "purpose": "Compare dispatch"
+    },
+    {
+      "path": "schemas/v2/comparison.schema.json",
+      "purpose": "Typed paired single-label contract"
+    },
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "Typed single-label comparison results"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Paired comparison oracles"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Compare receipts"
+    }
+  ],
+  "interfaces": [
+    "Input: two verified validated evaluations/reports plus caller-supplied comparison identity.",
+    "Require equal golden digest/task/ordered labels/roles/numerical semantics/selected IDs.",
+    "Typed metric pairs preserve both statuses, candidate-minus-baseline delta only if both defined, and metric direction."
+  ],
+  "acceptance_criteria": [
+    "All four correctness categories and changed outcomes have exact IDs/counts; full typed class+abstention transition matrix sums to N.",
+    "Source IDs remain local to each side; definition/configuration/observation/preparation differences are explicit even if IDs match.",
+    "Raw/final/probability families remain separate; answered-only comparisons disclose each answered population and overlap.",
+    "Comparison stores source run IDs/report hashes and returns receipt hashing comparison.json."
+  ],
+  "verification": [
+    {
+      "id": "single_comparison_transitions",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance single_comparison_transitions -- --nocapture",
+      "expected": "Recovered/regressed changes retained even with equal headline accuracy."
+    },
+    {
+      "id": "comparison_compatibility_and_deltas",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance comparison_compatibility_and_deltas -- --nocapture",
+      "expected": "Incompatible pairs reject; undefined/macro/infinite metrics have null delta and reason."
+    },
+    {
+      "id": "cli_compare_receipt",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli cli_compare_receipt -- --nocapture",
+      "expected": "One versioned receipt names/hashes actual comparison file."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V151",
+    "V152",
+    "V153",
+    "V154",
+    "V155",
+    "V156",
+    "V157",
+    "V158",
+    "V159",
+    "V160",
+    "V161",
+    "V162",
+    "V163",
+    "V164",
+    "V165",
+    "V166",
+    "V167",
+    "V168",
+    "V169",
+    "V170",
+    "V171",
+    "V172",
+    "V173",
+    "V210",
+    "V211",
+    "V212",
+    "V213",
+    "V214",
+    "V215",
+    "V216",
+    "V217",
+    "V218",
+    "V219",
+    "V220",
+    "V221",
+    "V222",
+    "S15",
+    "S16",
+    "S18",
+    "S22",
+    "S26",
+    "AC6",
+    "AC8"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T015",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T015",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T015",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T015",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T015",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T015",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/common.rs"
+    },
+    {
+      "from": "T013",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/receipt.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "schemas/v2/error.schema.json"
+    },
+    {
+      "from": "T013",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T012",
+      "path": "src/artifacts.rs"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

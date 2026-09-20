@@ -1,0 +1,390 @@
+{
+  "id": "T027",
+  "title": "Verify module boundaries and the locked offline public test suite",
+  "authority": "Ratified",
+  "phase": "verification",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#package-and-source-layout",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#rust-and-dependency-conventions",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-v1.md#test-placement-and-build-checks",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#source-organization-and-ownership",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "The integrated public implementation meets its Rust structure, build and offline reproducibility contract.",
+  "dependencies": [
+    {
+      "task": "T024",
+      "requires": "All schema contracts"
+    },
+    {
+      "task": "T025",
+      "requires": "Independent numerical audit"
+    },
+    {
+      "task": "T026",
+      "requires": "Integrity audit"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/acceptance/validator-v1.md",
+      "purpose": "Structural review and pinned build evidence"
+    },
+    {
+      "path": "src/model.rs",
+      "purpose": "Real checked task-definition admission and closed dispatch"
+    },
+    {
+      "path": "src/model/common.rs",
+      "purpose": "Episode-owned checked rows and production/test helper boundary"
+    },
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "Episode-owned single-label rows and direct signal-availability path"
+    },
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "Episode-owned multi-label rows and required checked task integration"
+    },
+    {
+      "path": "src/validation.rs",
+      "purpose": "Checked task and opaque-input episode construction at admission"
+    },
+    {
+      "path": "src/validation/wire.rs",
+      "purpose": "Concrete schema-version decoding and enforcement"
+    },
+    {
+      "path": "src/app.rs",
+      "purpose": "Public inspection disclosure from validated Episode-owned opaque input"
+    },
+    {
+      "path": "src/lib.rs",
+      "purpose": "Documented public application API checks"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Offline process acceptance coverage"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Exact acceptance/structure case assigned by source coverage"
+    }
+  ],
+  "interfaces": [
+    "Review crate module imports and signatures explicitly; Cargo alone cannot enforce intra-crate direction.",
+    "Use prepared locked dependencies; disconnect external services for test execution; no global executable/private data.",
+    "Inventory every planned test ID against cargo test -- --list, rejecting missing or zero-test evidence."
+  ],
+  "acceptance_criteria": [
+    "Pinned fmt, Clippy -D warnings, test, doc-test, and release build commands all pass without bypasses.",
+    "Private DTO/model construction, closed task dispatch, separate observation/scoring types, no foreign label indexes and no cloned opaque metric payloads are reviewed.",
+    "Every clause/conformance/structure row in the planning coverage map has actual accepted proof; no generic task completion substitutes for missing evidence."
+  ],
+  "verification": [
+    {
+      "id": "offline_cli_contract",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli offline_cli_contract -- --nocapture",
+      "expected": "All commands work on saved public inputs without network/credentials."
+    },
+    {
+      "id": "structure_dm01",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm01 -- --nocapture",
+      "expected": "- Both task kinds use the same CLI operations, manifest, ID alignment, provenance,\n  and artifact publication without duplicate implementations of those rules."
+    },
+    {
+      "id": "structure_dm02",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm02 -- --nocapture",
+      "expected": "- Checked construction rejects cross-kind targets, probabilities, and policies;\n  evaluator signatures prevent cross-kind input at compile time."
+    },
+    {
+      "id": "structure_dm03",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm03 -- --nocapture",
+      "expected": "- Reordering submitted label sets preserves scores and canonical report ordering;\n  duplicate labels fail before any conversion to a set."
+    },
+    {
+      "id": "structure_dm04",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm04 -- --nocapture",
+      "expected": "- Marginals such as `[0.9,0.8]` remain valid and unchanged; the same numbers are\n  invalid as a categorical distribution."
+    },
+    {
+      "id": "structure_dm05",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm05 -- --nocapture",
+      "expected": "- Empty set, abstention, missing row, and missing marginal key take four distinct\n  paths with the required evidence or error."
+    },
+    {
+      "id": "structure_dm06",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm06 -- --nocapture",
+      "expected": "- Restricting a run to zero episodes retains probability applicability."
+    },
+    {
+      "id": "structure_dm07",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm07 -- --nocapture",
+      "expected": "- Evidence-bearing abstentions retain distributions and observations. Probability\n  metrics use the selected population; confidence/correctness diagnostics use raw\n  answered episodes and disclose their included/excluded IDs."
+    },
+    {
+      "id": "structure_dm08",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm08 -- --nocapture",
+      "expected": "- Observed categorical `[0.5,0.49]` is retained without normalization; the same\n  vector in a scoring field fails validation. No implicit observation-to-signal\n  conversion or error-recovery path is available."
+    },
+    {
+      "id": "structure_dm09",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm09 -- --nocapture",
+      "expected": "- Scalar and auxiliary observations round-trip with their definitions and source\n  references but do not generate unsupported target types or metrics."
+    },
+    {
+      "id": "structure_dm10",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm10 -- --nocapture",
+      "expected": "- Broken observation definitions and preparation bindings fail before scoring."
+    },
+    {
+      "id": "structure_dm11",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm11 -- --nocapture",
+      "expected": "- Per-label counts do not replace episode records: equal aggregate counts can\n  coexist with different exact-set accuracy."
+    },
+    {
+      "id": "structure_dm12",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance structure_dm12 -- --nocapture",
+      "expected": "- Unsupported counts, mixed task kinds, partial labels, and per-label abstentions\n  are rejected without adding extension hooks or inferred interpretations."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V005",
+    "V006",
+    "V007",
+    "V008",
+    "V009",
+    "V010",
+    "V011",
+    "V012",
+    "V013",
+    "V014",
+    "V015",
+    "V016",
+    "V017",
+    "V018",
+    "V019",
+    "V020",
+    "V021",
+    "V022",
+    "V023",
+    "V024",
+    "V025",
+    "V231",
+    "V232",
+    "V233",
+    "V234",
+    "V235",
+    "V236",
+    "V237",
+    "V238",
+    "V239",
+    "V240",
+    "V241",
+    "V242",
+    "V243",
+    "V244",
+    "V245",
+    "V246",
+    "V247",
+    "V248",
+    "V249",
+    "V250",
+    "V251",
+    "V252",
+    "V253",
+    "V254",
+    "V255",
+    "V256",
+    "V257",
+    "V258",
+    "V259",
+    "V260",
+    "V261",
+    "V291",
+    "V292",
+    "V314",
+    "V315",
+    "V329",
+    "V330",
+    "V331",
+    "AC8",
+    "DOD2",
+    "DOD3",
+    "D003",
+    "D004",
+    "D005",
+    "D006",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "D061",
+    "D062",
+    "D063",
+    "D064",
+    "DM01",
+    "DM02"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T024",
+      "path": "schemas/v2/golden.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/predictions.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/config.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/comparison.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/check.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/receipt.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "schemas/v2/error.schema.json"
+    },
+    {
+      "from": "T024",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T024",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T025",
+      "path": "src/evaluation/multi_label.rs"
+    },
+    {
+      "from": "T025",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T025",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T025",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T025",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T025",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T025",
+      "path": "tests/fixtures/single-label/expected.json"
+    },
+    {
+      "from": "T025",
+      "path": "tests/fixtures/multi-label/expected.json"
+    },
+    {
+      "from": "T025",
+      "path": "docs/acceptance/validator-v1.md"
+    },
+    {
+      "from": "T026",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T026",
+      "path": "src/artifacts.rs"
+    },
+    {
+      "from": "T026",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T026",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T026",
+      "path": "schemas/v2/inspection.schema.json"
+    },
+    {
+      "from": "T026",
+      "path": "docs/acceptance/validator-v1.md"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

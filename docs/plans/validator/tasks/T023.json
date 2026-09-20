@@ -1,0 +1,212 @@
+{
+  "id": "T023",
+  "title": "Restrict verified populations for explicit intersection comparisons",
+  "authority": "Ratified",
+  "phase": "extension",
+  "effort_hours_estimate": [
+    3,
+    5
+  ],
+  "context": [
+    {
+      "source": "docs/specs/validator-v1.md#comparison-and-successive-passes",
+      "use": "Read the entire linked section; normative details override this task summary."
+    },
+    {
+      "source": "docs/specs/validator-data-model.md#decode-validate-align-then-score",
+      "use": "Read the entire linked section; normative details override this task summary."
+    }
+  ],
+  "outcome": "Intersection comparisons recompute the same paired rows and retain original artifact-wide signal availability.",
+  "dependencies": [
+    {
+      "task": "T022",
+      "requires": "Both concrete comparisons"
+    },
+    {
+      "task": "T021",
+      "requires": "Both final-policy paths"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "src/model/common.rs",
+      "purpose": "Checked restriction preserving identity/availability"
+    },
+    {
+      "path": "src/model/single_label.rs",
+      "purpose": "Single-label restricted evaluation"
+    },
+    {
+      "path": "src/model/multi_label.rs",
+      "purpose": "Multi-label restricted evaluation"
+    },
+    {
+      "path": "src/comparison.rs",
+      "purpose": "Intersection and exclusions"
+    },
+    {
+      "path": "src/cli.rs",
+      "purpose": "Explicit --intersection flag"
+    },
+    {
+      "path": "tests/conformance.rs",
+      "purpose": "Intersection combinations"
+    },
+    {
+      "path": "tests/cli.rs",
+      "purpose": "Intersection process behavior"
+    },
+    {
+      "path": "src/app.rs",
+      "purpose": "Intersection comparison API wiring"
+    },
+    {
+      "path": "schemas/v2/comparison.schema.json",
+      "purpose": "Intersection population and exclusion alternatives"
+    }
+  ],
+  "interfaces": [
+    "Validated restriction accepts existing IDs only, borrows/owns payload once, and retains task/vocabulary/provenance/policy.",
+    "No synthetic prediction file or re-decoding shortcut is allowed for restriction.",
+    "Compared and both excluded ID lists/counts are deterministic and explicit."
+  ],
+  "acceptance_criteria": [
+    "Default mismatched selections reject; --intersection accepts only same golden/task/roles/semantics.",
+    "Empty intersections distinguish probability/probability, label/label, and mixed availability independently for each side and each task.",
+    "No_data/not_applicable produce null deltas with reason; targeted results make no full-population improvement claim."
+  ],
+  "verification": [
+    {
+      "id": "intersection_recomputation",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance intersection_recomputation -- --nocapture",
+      "expected": "Metrics computed on shared IDs, not original aggregate results."
+    },
+    {
+      "id": "empty_intersection_availability",
+      "kind": "automated",
+      "target": "conformance",
+      "command": "cargo test --locked --test conformance empty_intersection_availability -- --nocapture",
+      "expected": "All availability combinations preserve exact statuses and null deltas."
+    },
+    {
+      "id": "cli_intersection",
+      "kind": "automated",
+      "target": "cli",
+      "command": "cargo test --locked --test cli cli_intersection -- --nocapture",
+      "expected": "Flag routing and receipts/exclusions verified."
+    }
+  ],
+  "handoff_contract": "docs/plans/validator/execution-contract.md",
+  "implementation_role": "developer",
+  "verification_role": "independent verifier",
+  "requirement_ids": [
+    "V091",
+    "V092",
+    "V093",
+    "V094",
+    "V095",
+    "V096",
+    "V097",
+    "V098",
+    "V099",
+    "V100",
+    "V210",
+    "V211",
+    "V212",
+    "V213",
+    "V214",
+    "V215",
+    "V216",
+    "V217",
+    "V218",
+    "V219",
+    "V220",
+    "V221",
+    "V222",
+    "S19",
+    "S20",
+    "M19",
+    "AC6",
+    "D049",
+    "D050",
+    "D051",
+    "D052",
+    "D053",
+    "D054",
+    "D055",
+    "DM06"
+  ],
+  "input_artifacts": [
+    {
+      "from": "T022",
+      "path": "src/comparison.rs"
+    },
+    {
+      "from": "T022",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T022",
+      "path": "schemas/v2/comparison.schema.json"
+    },
+    {
+      "from": "T022",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T022",
+      "path": "src/app.rs"
+    },
+    {
+      "from": "T022",
+      "path": "src/cli.rs"
+    },
+    {
+      "from": "T022",
+      "path": "tests/cli.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/model/single_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/model/multi_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/validation.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/evaluation/single_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "src/evaluation/multi_label.rs"
+    },
+    {
+      "from": "T021",
+      "path": "tests/conformance.rs"
+    },
+    {
+      "from": "T021",
+      "path": "schemas/v2/report.schema.json"
+    },
+    {
+      "from": "T021",
+      "path": "schemas/v2/inspection.schema.json"
+    }
+  ],
+  "verification_responsibility": "A different agent from the implementation author reruns evidence and reviews every acceptance criterion; integrator accepts only the saved response.",
+  "common_completion_checks": [
+    "All listed artifacts contain implemented behavior or required evidence; no placeholders.",
+    "All tests assigned to this task are listed by Cargo and execute with a nonzero expected test count. Compound conformance/structure cases have explicit later audit test owners in coverage.json; implementers still test each local invariant now.",
+    "Relevant fmt/Clippy/test/build checks pass on the pinned toolchain; no bypass, changed tolerance or weakened oracle.",
+    "Saved response records exact input/source/output hashes, commands, exit codes, expected/actual results, and unresolved failures.",
+    "New or changed-authority artifacts are indexed; operational state is updated in Fizzy after acceptance."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "ids": [
+    "01995c20-7d00-7000-8000-000000000001",
+    "01995c20-7d00-7000-8000-000000000002",
+    "01995c20-7d00-7000-8000-000000000003",
+    "01995c20-7d00-7000-8000-000000000004"
+  ],
+  "baseline": {
+    "counts": {"D": 2, "E": 1, "U": 1},
+    "accuracy": {"numerator": 2, "denominator": 4},
+    "wrong_class_rate": {"numerator": 1, "denominator": 4},
+    "abstention_rate": {"numerator": 1, "denominator": 4},
+    "coverage": {"numerator": 3, "denominator": 4},
+    "selective_accuracy": {"numerator": 2, "denominator": 3},
+    "selective_risk": {"numerator": 1, "denominator": 3},
+    "class_coverages": [{"numerator": 1, "denominator": 2}, {"numerator": 1, "denominator": 1}, {"numerator": 1, "denominator": 1}],
+    "macro_f1": {"numerator": 1, "denominator": 2}
+  },
+  "probability": {
+    "brier": {"numerator": 3, "denominator": 10},
+    "log_loss": {"formula": "(-2*ln(0.7)-ln(0.3)-ln(0.8))/4", "decimal": 0.53511656087940263},
+    "argmax_accuracy": {"numerator": 3, "denominator": 4},
+    "included_ids": [
+      "01995c20-7d00-7000-8000-000000000001",
+      "01995c20-7d00-7000-8000-000000000002",
+      "01995c20-7d00-7000-8000-000000000003",
+      "01995c20-7d00-7000-8000-000000000004"
+    ]
+  },
+  "confidence": {
+    "included_ids": [
+      "01995c20-7d00-7000-8000-000000000001",
+      "01995c20-7d00-7000-8000-000000000003",
+      "01995c20-7d00-7000-8000-000000000004"
+    ],
+    "excluded_ids": ["01995c20-7d00-7000-8000-000000000002"]
+  },
+  "transitions": {
+    "recovered": ["01995c20-7d00-7000-8000-000000000002", "01995c20-7d00-7000-8000-000000000003"],
+    "regressed": ["01995c20-7d00-7000-8000-000000000001"],
+    "both_correct": ["01995c20-7d00-7000-8000-000000000004"],
+    "neither_correct": []
+  }
+}
