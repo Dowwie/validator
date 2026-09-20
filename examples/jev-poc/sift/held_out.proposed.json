@@ -1,0 +1,187 @@
+{
+  "cases": [
+    {
+      "case_id": "sift-108-00",
+      "challenge": "hospital-operator",
+      "family_id": "sift-108",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "Our pharmacy coordination software is sold on subscription to the organization operating six hospitals."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "relevant",
+        "type": "class"
+      },
+      "rationale": "A hospital operator is an included buyer under the explicit objective.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-108-01",
+      "challenge": "hospital-operator",
+      "family_id": "sift-108",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "We operate six hospitals and pay a vendor for pharmacy coordination software. None of our services involve selling software."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "irrelevant",
+        "type": "class"
+      },
+      "rationale": "Operating hospitals and buying software is not selling software.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-109-00",
+      "challenge": "free-paid",
+      "family_id": "sift-109",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "The community edition is free; hospitals can also purchase our supported enterprise software license now."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "relevant",
+        "type": "class"
+      },
+      "rationale": "A free edition does not negate the explicit paid hospital offering.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-109-01",
+      "challenge": "free-paid",
+      "family_id": "sift-109",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "Our hospital checklist software is permanently free to everyone. We accept donations but offer no paid software, license, or subscription."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "irrelevant",
+        "type": "class"
+      },
+      "rationale": "Donations are not a paid offering under this rubric.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-110-00",
+      "challenge": "historical-renewal",
+      "family_id": "sift-110",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "We continue to sell our clinical messaging platform to hospitals; last month a hospital renewed its paid license."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "relevant",
+        "type": "class"
+      },
+      "rationale": "Continuing sales and a current paid renewal are explicit.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-110-01",
+      "challenge": "historical-renewal",
+      "family_id": "sift-110",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "We once sold clinical messaging software to hospitals, but discontinued it and ended every license two years ago."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "irrelevant",
+        "type": "class"
+      },
+      "rationale": "The only hospital activity is historical and explicitly ended.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-111-00",
+      "challenge": "mixed-markets",
+      "family_id": "sift-111",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "Most of our business is retail analytics, but our separate ward-capacity software is currently sold to hospitals."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "relevant",
+        "type": "class"
+      },
+      "rationale": "A smaller hospital product line still meets the inclusion rule.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    },
+    {
+      "case_id": "sift-111-01",
+      "challenge": "mixed-markets",
+      "family_id": "sift-111",
+      "model_input": {
+        "query": "Find affirmative evidence that the described company currently sells or licenses its own software to hospitals. Keep descriptions of a current paid offering available to hospitals, including hospital operators. Exclude buyers, free-only offerings, services without a software offering, canceled or future-only plans, and offerings explicitly limited to non-hospital customers. Mere hospital keywords or a denial do not qualify.",
+        "text": "Most of our business is retail analytics. Our plan to develop hospital ward-capacity software starts next year; no product exists yet."
+      },
+      "partition": "held_out",
+      "proposed_expected": {
+        "label": "irrelevant",
+        "type": "class"
+      },
+      "rationale": "A future plan is not a current software offering.",
+      "review": {
+        "method": null,
+        "reviewer": null,
+        "state": "pending"
+      }
+    }
+  ],
+  "configuration": {
+    "baseline_threshold": 0.5,
+    "candidate_threshold": 0.7,
+    "partition_policy": "paired families separated before any model response"
+  },
+  "creator": "assistant",
+  "dataset_name": "sift-affirmative-sales-v1",
+  "example": "sift",
+  "reference_authority": "proposed_synthetic",
+  "review_status": "proposed; single-assistant authored, no independent human approval",
+  "rubric": "Affirmative current paid own-software offering to hospitals; see README.md for exact exclusions.",
+  "schema_version": 1,
+  "source": {
+    "commit": "966de12e2bb5f94d47886ee51f30a07ec8ef1607",
+    "repository": "kbhuw/jev-sift"
+  },
+  "task": {
+    "kind": "single_label",
+    "labels": [
+      "irrelevant",
+      "relevant"
+    ]
+  }
+}

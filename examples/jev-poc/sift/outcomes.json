@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "status": "offline_worked_example_verified",
+  "source_base": "058d5cb8765610f53dd0d0facdb6fe4c40c950a6",
+  "live_model_calls": 0,
+  "human_approvals_created": 0,
+  "python_tests": 55,
+  "capture_path_assertions": 13,
+  "existing_adapter_profiles_replayed": 10,
+  "existing_jgrep_arms_replayed": 6,
+  "existing_jgrep_comparisons_replayed": 4,
+  "existing_native_application_assertions_replayed": 58,
+  "native_threshold_comparison": {
+    "origin": "synthetic_fixture",
+    "cases": 6,
+    "quality_claim": null,
+    "baseline_matrix": [
+      [
+        0,
+        2,
+        1
+      ],
+      [
+        1,
+        2,
+        0
+      ]
+    ],
+    "candidate_matrix": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        2,
+        1,
+        0
+      ]
+    ],
+    "matrix_row_order": [
+      "irrelevant",
+      "relevant"
+    ],
+    "matrix_column_order": [
+      "irrelevant",
+      "relevant",
+      "abstention"
+    ],
+    "recovered_case_ids": [
+      "sift-100-01"
+    ],
+    "regressed_case_ids": [
+      "sift-101-00"
+    ],
+    "operational_no_decisions": 1,
+    "independent_accounting_check": "passed",
+    "identical_golden_bytes": true
+  },
+  "validator_sha256": "bf33ab4a1ca16ee7cf985ff6d83bacf58344b452580639ddd0ce4c7ad0898dab",
+  "tested_source_sha256": {
+    "examples/jev-poc/capture_sift.mjs": "9e5b29d45331a04368b5ffd8675c2a4158b0aeb39edcd13b38ef9d69f845e768",
+    "examples/jev-poc/sift/run.py": "d8f94ca6f0f5edd16f38127f79851972c8c6bf1851346f2dcf164b18e93196ab",
+    "examples/jev-poc/sift/test-capture.mjs": "33296fe4767c7fb31e7831dd67643cb46fdcc70e99e1411e02fbe41d5a41b60e",
+    "examples/jev-poc/test_sift_worked.py": "ff070f6a3396306ad39096c2bd0b3fc38b4635d4be0cf3159ce4450e1e972373",
+    "examples/jev-poc/sift/development.proposed.json": "a1446d20ae444773c9d15a448aca8af1130809eccc5f58296ba6e448632a9560",
+    "examples/jev-poc/sift/held_out.proposed.json": "005b0a6bd9b05ce7dd5ef07fea942884a2c78800da3f83cf4627fff8e8b48abd"
+  },
+  "logs_sha256": {
+    "python-tests.log": "ea55444b8e254b23213baeadf19460e8bc36f8befa9d472c94c95a363775a6c2",
+    "full-replay.log": "3bfe1caa3a37f87a151b4b87e9a092c76a28f1e10bbe3259ac5664964e306f23",
+    "native-replay.log": "3b82a108532a15f30cc67de85a8309e1e7b78016f429ed6c5b31c0f2f0e06fdc"
+  },
+  "capture_sha256": "5900c13099f931a91d57e4ddb993239e4c426cd08bac897ab2ecff53a3c6f702",
+  "capture_test_record_sha256": "0a34a79d105610ad9f69f9d6723ecaf768f5f1c8b14acfb5ebc14fa064155e8b",
+  "comparison_summary_sha256": "1d1644201a5d240f21404f84a5bb50018feaa8c8554f2156a6d7f3c3cdfda772",
+  "comparison_evidence_manifest_sha256": "17da00213ee3109a65c079c451fc0c61abd01a3836289b3f9f173e612f260727",
+  "preflight": {
+    "status": "blocked",
+    "partition": "development",
+    "cases": 16,
+    "book_sha256": "a1446d20ae444773c9d15a448aca8af1130809eccc5f58296ba6e448632a9560",
+    "pending_case_ids": [
+      "sift-100-00",
+      "sift-100-01",
+      "sift-101-00",
+      "sift-101-01",
+      "sift-102-00",
+      "sift-102-01",
+      "sift-103-00",
+      "sift-103-01",
+      "sift-104-00",
+      "sift-104-01",
+      "sift-105-00",
+      "sift-105-01",
+      "sift-106-00",
+      "sift-106-01",
+      "sift-107-00",
+      "sift-107-01"
+    ],
+    "checks": {
+      "all_references_human_approved": false,
+      "provider_key_present": false,
+      "validator_executable_present": true,
+      "upstream_source_present": true
+    },
+    "model_calls": 0,
+    "limits": "Presence checks only; capture verifies the source pin. Connectivity/key validity are not tested."
+  },
+  "limitations": [
+    "New references remain proposals, authored by one assistant.",
+    "Fixture responses test software; they do not estimate Jev accuracy.",
+    "No TypeSafe/Jev execution connector or environment credentials were available; local external DNS is unavailable.",
+    "Current-head CI evidence is separate from this local record."
+  ]
+}

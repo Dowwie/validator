@@ -3,3 +3,6 @@
 # Generated local PoC work; upstream evidence and outcomes are deliberately tracked.
 /examples/jev-poc/__pycache__/
 /examples/jev-poc/work/
+
+# Nested example caches are transient, not evidence.
+/examples/jev-poc/**/__pycache__/

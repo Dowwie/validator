@@ -97,6 +97,12 @@ jobs:
         run: |
           set -euo pipefail
           python3 examples/jev-poc/native/verify.py --sources target/native-runtimes --validator target/native-core/validator --out target/native-proof 2>&1 | tee target/native-proof.log
+      - name: Sift capture-to-review worked example, without inference
+        shell: bash
+        run: |
+          set -euo pipefail
+          node examples/jev-poc/sift/test-capture.mjs target/native-runtimes/sift target/sift-capture-proof | tee target/sift-capture-proof.log
+          python3 examples/jev-poc/sift/run.py compare --book target/sift-capture-proof/capture.json.book.json --capture target/sift-capture-proof/capture.json --validator target/native-core/validator --out target/sift-review-proof --fixture | tee target/sift-review-proof.log
       - name: Package source and dependency bytes for offline execution
         shell: bash
         run: |
@@ -119,5 +125,9 @@ jobs:
           path: |
             target/native-proof/
             target/native-proof.log
+            target/sift-capture-proof/
+            target/sift-capture-proof.log
+            target/sift-review-proof/
+            target/sift-review-proof.log
           if-no-files-found: error
           retention-days: 14

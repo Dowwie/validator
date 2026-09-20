@@ -5,6 +5,22 @@ acceptance or production-accuracy claim. The implementation is described in the
 [example README](../../examples/jev-poc/README.md); machine results and exact source
 hashes are in [outcomes.json](../../examples/jev-poc/outcomes.json).
 
+## Current scope at this continuation
+
+| Evidence | State | What it establishes |
+|---|---|---|
+| jgrep: six recorded arms / four comparisons | Executed | Replay against 20 author-fixture references, not a new benchmark |
+| Ten application-output adapter profiles | Executed with synthetic replies | Canonical preparation and native artifact behavior |
+| Sift, Foreman, Router original implementation boundaries | Executed with fixture replies | Source/schema/runtime compatibility, not model accuracy |
+| Sift capture-to-review worked example | Executed with fixture replies | Exact request/reference binding, two threshold runs, inspected disagreements |
+| Focused Sift references | 16 development + 8 held-out proposals | Reviewable cases; no human approval yet |
+| New live Jev accuracy / held-out improvement claim | Not executed | Requires actual approval and provider access |
+
+The original 846-case proposal generator is unchanged. The focused Sift packet is
+a separate 24-case diagnostic, not 24 newly approved references. The latest bounded
+execution summary is [Sift outcomes](../../examples/jev-poc/sift/outcomes.json).
+The sections below retain earlier test counts as historical execution evidence.
+
 ## Executed
 
 The [GitHub Actions run](https://github.com/Dowwie/validator/actions/runs/35527639676) applied the proposed example changes to
@@ -78,23 +94,25 @@ per-command `--help`/`-h` works, and required output destinations are explicit.
 The numerical core, schemas, metrics and persisted run contracts are unchanged.
 Unknown commands still return the existing machine error contract.
 
-## Not completed
+## Remaining product proof
 
-There are no new Jev accuracy measurements for Sift, Foreman, Upwork, tax, generic
-classification, filing, compaction, routing or jev-align. Their current outcomes
-are source-shaped synthetic adapter proofs and pending-reference proposals.
-The live Sift runner is provided but not live-tested. Other application-native
-capture runners and full upstream runtime integration tests are not implemented.
+No new live Jev accuracy measurements or human-approved references have been
+produced in this PR. jgrep uses existing author-fixture labels and recorded model
+answers. Sift now has a focused reference packet, actual capture-path regression,
+and a capture-to-review command; authentic provider execution and reference
+approval still remain. Native integration checks for Sift/Foreman and the router's
+24-case deterministic policy suite are complete, not outstanding.
 
-The optional new jgrep cases, tax page-kind extension, router policy-fixture suite,
-full-registry tax capture, independent semantic review, production distributions,
-and optimization experiments remain unexecuted. The router draft uses a family-
-preserving 39/21 split rather than forcing the planned 40/20. Template correlation
-and synthetic-reference bias limit every drafted corpus.
+Upwork, tax, classifier.dev, filing, compaction and jev-align still have
+output-shape adapters rather than their complete application-native live capture
+integrations. Optional new jgrep cases, tax page-kind/full-registry capture,
+independent semantic review and optimization experiments remain unexecuted.
+The router proposal retains its family-preserving 39/21 split.
 
-The next substantive proof is a human-reviewed Sift subset through the provided
-bounded capture runner, followed by native run → review → recommend. No task
-management, autonomous remediation, gold revision, or provider telemetry was added.
+The first newly measured product proof remains a genuinely reviewed Sift subset,
+real provider capture, and run → review → recommend. See the
+[Sift worked example](../../examples/jev-poc/sift/README.md) rather than inferring
+current status from the chronological execution notes below.
 
 ## Local sandbox continuation — 2026-09-20
 
@@ -136,3 +154,30 @@ router's planned deterministic-fixture slice and add real application-boundary
 coverage for Sift and Foreman. They do not complete live accuracy experiments,
 remaining capture runners, semantic reference review, or optional dataset expansion.
 The measurement core and third-party source remain unchanged.
+
+## Focused Sift continuation — 2026-09-20
+
+The earlier yes/no query could make negative evidence useful under Sift's actual
+relevance instruction. The new proposed task explicitly requests **affirmative
+current paid own-software sales evidence to hospitals**. This is a premeasurement
+semantic correction, not a measured performance gain. Development and held-out
+proposals are separate files and all review declarations remain pending.
+
+The new comparison entry point delegates all metrics to the existing executable,
+binds each request to the exact captured reference snapshot, preserves operational
+no-decisions, and writes a case-level review plus evidence manifest. Capture now
+stops on authentication rejection, preserves the original invalid-JSON error path,
+and distinguishes an interrupted attempted case from never-attempted cases.
+
+Local execution passed 55 Python tests (40 existing + 15 new), 13 actual-capture
+path assertions with explicitly synthetic transport, and the two-threshold native
+comparison on six fixture cases. Its independently specified fixture has one
+recovery, one regression and one operational no-decision; none is a Jev quality
+claim. No numerical-core or wire-schema changes were made. Current-head CI is
+recorded by the PR checks separately from this local result.
+
+This sandbox has no configured provider key or external DNS, and plugin discovery
+found no TypeSafe/Jev execution connector. No secret values were searched for or
+recorded. A preflight therefore records those prerequisites as unmet rather than
+manufacturing predictions or a human approval. The runnable next commands and the
+compact development review packet are in the Sift entry point.

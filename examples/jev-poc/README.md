@@ -16,6 +16,8 @@ There are three intentionally separate evidence categories:
   is pending. The generator is readable and deterministic; its related templates
   are not a representative production benchmark. No new human approval is claimed.
 
+For the focused end-to-end Sift path, start with [the Sift worked example](sift/README.md).
+
 See [the execution record](../../docs/acceptance/jev-poc-execution.md) and
 [outcomes.json](outcomes.json) for the exact executed scope and limitations.
 
@@ -73,8 +75,9 @@ Related examples stay in one partition. The router split deliberately becomes
 39/21 to preserve its three-case families; the plan's 40/20 target is not followed
 at the expense of leakage. Tax uses a restricted fixture vocabulary: expand and
 freeze it against the full upstream registry before unrestricted live capture.
-The 42-case tax page-kind extension, new 48-case jgrep set, and router's 24 pure
-policy fixtures are not implemented in this slice.
+The 42-case tax page-kind extension and new 48-case jgrep set remain unimplemented.
+The router's 24 policy fixtures and native Sift/Foreman checks are implemented;
+see the native-boundary section below.
 
 Review each case's input, proposed target and rationale independently. Mark an
 actually approved case's review as:
@@ -164,7 +167,8 @@ of being silently normalized. The core's admission requirements stay strict.
 ## Optional bounded Sift capture
 
 This invokes the pinned upstream `classify` and `createProvider` implementations,
-not a rewritten model prompt. It has been syntax-checked and dry-run tested;
+not a rewritten model prompt. It has been exercised end-to-end with explicitly synthetic transport replies,
+including request/reference binding and interruption/error cases;
 **a live provider call has not been exercised in this execution**.
 
 ```sh
@@ -191,9 +195,10 @@ are request/time limits, **not a billing guarantee**. A partial capture is retai
 as incomplete and preparation refuses it. Output files are reserved with no
 replacement and owner-only permissions before any model call.
 
-Other application-native live capture runners, expanded production-quality
-corpora, optimization loops and full runtime integration tests are not implemented.
-Their saved output shapes can already be imported. Nothing in these examples
+Application-native live capture runners beyond Sift, expanded corpora, and
+optimization loops remain unimplemented. Router, Sift and Foreman now have the
+bounded native integration tests described below; these are not live model tests.
+Other applications' saved output shapes can already be imported. Nothing in these examples
 launches coding workers, moves user documents, performs trades, opens issues, or
 changes task state. The review boundary remains **run → review → recommend**.
 
