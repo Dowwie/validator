@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   verify:
@@ -32,7 +33,7 @@ jobs:
       - name: Native tests, formatting, and lint
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           rustup toolchain install 1.98.1 --profile minimal --component rustfmt --component clippy
           rustup show 2>&1 | tee target/poc-evidence/toolchain.log
           cargo fmt --all -- --check 2>&1 | tee target/poc-evidence/fmt.log
@@ -43,7 +44,7 @@ jobs:
       - name: Example tests and recorded-output replay
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           python3 -m pip install 'jsonschema==4.25.1'
           python3 -m unittest discover -s examples/jev-poc -p 'test_*.py' -v 2>&1 | tee target/poc-evidence/example-tests.log
           python3 examples/jev-poc/poc.py verify --validator target/debug/validator --upstream examples/jev-poc/upstream --out target/poc-evidence/runs 2>&1 | tee target/poc-evidence/example-replay.log
@@ -59,6 +60,7 @@ jobs:
           retention-days: 14
 
   native-runtimes:
+    needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -83,6 +85,18 @@ jobs:
           PINS
           npm ci --prefix target/native-runtimes/router --ignore-scripts --no-audit --no-fund
           npm ci --prefix target/native-runtimes/sift --ignore-scripts --no-audit --no-fund
+          python3 -m pip install 'pydantic==2.13.4'
+      - name: Obtain the verified native binary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name jev-poc-evidence --dir target/native-core
+          chmod 700 target/native-core/validator
+      - name: Test original applications and native Validator, without inference
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 examples/jev-poc/native/verify.py --sources target/native-runtimes --validator target/native-core/validator --out target/native-proof 2>&1 | tee target/native-proof.log
       - name: Package source and dependency bytes for offline execution
         shell: bash
         run: |
@@ -95,5 +109,74 @@ jobs:
           path: |
             target/native-runtimes.tar.gz
             target/native-runtimes.sha256
+          if-no-files-found: error
+          retention-days: 7
+      - name: Preserve native boundary evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-application-proof
+          path: |
+            target/native-proof/
+            target/native-proof.log
+          if-no-files-found: error
+          retention-days: 14
+
+  # Temporary documentation-only transfer; no upstream code runs in this job.
+  # Produces three blobs but never changes a branch. Removed in the next commit.
+  document-blobs:
+    needs: native-runtimes
+    if: github.repository == 'Dowwie/validator' && github.event.pull_request.head.ref == 'examples/jev-poc-execution' && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Prepare exact append-only documentation blobs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib,re,urllib.request
+          root=pathlib.Path.cwd()
+          patch=json.loads((root/'examples/jev-poc/native/doc-patch.json').read_text())
+          paths={'examples/jev-poc/README.md','docs/acceptance/jev-poc-execution.md'}
+          assert set(patch['append']) == paths
+          files={}
+          for path,change in patch['append'].items():
+              old=(root/path).read_bytes()
+              assert hashlib.sha256(old).hexdigest()==change['before_sha256']
+              files[path]=old.decode()+change['append']
+          path='docs/artifact-index.md'
+          old=(root/path).read_bytes()
+          assert hashlib.sha256(old).hexdigest()==patch['index_before_sha256']
+          rows=patch['index_rows']; assert len(rows)==6
+          for row in rows:
+              links=re.findall(r'\]\(([^)]+)\)',row)
+              assert len(links)==1 and links[0].startswith('../examples/jev-poc/native/')
+              assert (root/'docs'/links[0]).is_file()
+              assert row not in old.decode()
+          lines=old.decode().splitlines(keepends=True)
+          anchor=next(i for i,line in enumerate(lines) if '[Jev PoC machine outcomes]' in line)
+          lines[anchor+1:anchor+1]=[row+'\n' for row in rows]
+          files[path]=''.join(lines).replace('Read-only-permission native Rust and offline example verification; no live provider calls or source publication.', 'Read-only native Rust, recorded-response replay and pinned upstream application-boundary verification; no live inference.')
+          result={}
+          for path,text in files.items():
+              request=urllib.request.Request('https://api.github.com/repos/Dowwie/validator/git/blobs',data=json.dumps({'content':text,'encoding':'utf-8'}).encode(),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'validator-doc-publication'},method='POST')
+              with urllib.request.urlopen(request,timeout=30) as response:
+                  value=json.load(response)
+              result[path]={'sha':value['sha'],'sha256':hashlib.sha256(text.encode()).hexdigest()}
+          pathlib.Path('doc-blobs.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result,indent=2))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-doc-blobs
+          path: doc-blobs.json
           if-no-files-found: error
           retention-days: 7

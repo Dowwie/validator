@@ -1,0 +1,193 @@
+{
+  "human_approvals_created": 0,
+  "limitations": [
+    "All application model responses are explicit fixtures; these results do not establish Jev accuracy.",
+    "Foreman exercises upstream's injected-client path, not a live or installed TypeSafe SDK transport.",
+    "Native source retrieval/dependency installation is separate; this command is offline."
+  ],
+  "live_model_calls": 0,
+  "results": {
+    "foreman": {
+      "baseline_report_sha256": "4d23e72da2e33e289810e828a60b88c010f92985d6b5b511f145c373288728ec",
+      "candidate_report_sha256": "77d6d5353ce64f2d05f27dfebc2dbee5478447ecdcec2169bf5249057b792396",
+      "checks": [
+        "actual upstream runtime",
+        "check",
+        "evaluate",
+        "inspect",
+        "paired comparison",
+        "relocated inspect"
+      ],
+      "comparison_sha256": "a1d954e89f8c8bc2c5c1c743d26731df3b269d05398a835182dea0141f55a949",
+      "expected_transition_assertions_passed": true,
+      "fixture_episodes": 3,
+      "model_accuracy_claim": null,
+      "native_assertions": 16,
+      "native_capture_sha256": "565f166481df5bcb3af079c469b9b848563736036159045336f895b12eb1ed29",
+      "origin": "synthetic_fixture"
+    },
+    "router": {
+      "baseline_report_sha256": "635c0a66a6ae794ab2cd26278e18465bf41a7fe1636e96df2b07650f3955d83d",
+      "candidate_report_sha256": "691dcff6eef53ccac0e5d6ae88c713c2c3c2cd8b9392aa9d808dded9a978feba",
+      "checks": [
+        "actual upstream runtime",
+        "check",
+        "evaluate",
+        "inspect",
+        "paired comparison",
+        "relocated inspect"
+      ],
+      "comparison_sha256": "3b80d6fe9da43a0de079d8d48ca58036b04e6ddbf814f9dc040969912e2efdc2",
+      "expected_transition_assertions_passed": true,
+      "fixture_episodes": 24,
+      "model_accuracy_claim": null,
+      "native_assertions": 24,
+      "native_capture_sha256": "4f6e8c89bb2fa04d9599741888c339820ec8a9d49f89a1e962c7bfab9bfc0b8c",
+      "origin": "synthetic_fixture"
+    },
+    "sift": {
+      "baseline_report_sha256": "2de86554fb630e8c06deca777aa94170673f6b52cd0b9df705ea5a679783cb7b",
+      "candidate_report_sha256": "69de832f85d311455a1a818983f3eaa4e20abe8d7bd2412cd6c48ca60ea2515a",
+      "checks": [
+        "actual upstream runtime",
+        "check",
+        "evaluate",
+        "inspect",
+        "paired comparison",
+        "relocated inspect"
+      ],
+      "comparison_sha256": "c2c02c90cf805174aa367e5d8a67e9f833aa38c993f89a02e562611fea711c02",
+      "expected_transition_assertions_passed": true,
+      "fixture_episodes": 3,
+      "model_accuracy_claim": null,
+      "native_assertions": 18,
+      "native_capture_sha256": "85daa26ce08ece550295e33abedaf07f09e43f357e95d610b39c1a6439cbaafa",
+      "origin": "synthetic_fixture"
+    }
+  },
+  "schema_version": 1,
+  "status": "passed",
+  "validator_sha256": "bf33ab4a1ca16ee7cf985ff6d83bacf58344b452580639ddd0ce4c7ad0898dab",
+  "execution_location": "local sandbox",
+  "python_contract_tests": 40,
+  "native_application_assertions": 58,
+  "source_pr_head_before_followup": "e1fc38e20a77cba5a9f7b87dcb71c0722e0bb2c3",
+  "ci_binary_merge_commit": "04611af0966609ced70315ea4123011714562f24",
+  "source_archive_sha256": "3c387662c51560694d231a8590ecbd3a788de81474f1d31a9f2a92f57b62d0c6",
+  "native_source_bundle_run": 35528954816,
+  "canaries": {
+    "router": [
+      {
+        "id": "invalid-confidence-missing",
+        "input": {
+          "prompt": "Implement the change.",
+          "jev": {
+            "choice": "haiku"
+          },
+          "current": "sonnet",
+          "available": [
+            "haiku",
+            "sonnet",
+            "opus"
+          ],
+          "contextTokens": 1000
+        },
+        "expected_safe_tier": "sonnet",
+        "scope": "Adversarial probe of the upstream comment promising malformed-input fallback; not a typed-valid response or live observation.",
+        "output": {
+          "tier": "haiku",
+          "reason": "jev",
+          "changed": true
+        },
+        "kept_current": false
+      },
+      {
+        "id": "invalid-confidence-null",
+        "input": {
+          "prompt": "Implement the change.",
+          "jev": {
+            "choice": "haiku",
+            "confidence": null
+          },
+          "current": "sonnet",
+          "available": [
+            "haiku",
+            "sonnet",
+            "opus"
+          ],
+          "contextTokens": 1000
+        },
+        "expected_safe_tier": "sonnet",
+        "scope": "Adversarial probe of the upstream comment promising malformed-input fallback; not a typed-valid response or live observation.",
+        "output": {
+          "tier": "sonnet",
+          "reason": "low-confidence-no-downgrade/no-change",
+          "changed": false
+        },
+        "kept_current": true
+      },
+      {
+        "id": "invalid-confidence-string",
+        "input": {
+          "prompt": "Implement the change.",
+          "jev": {
+            "choice": "haiku",
+            "confidence": "0.9"
+          },
+          "current": "sonnet",
+          "available": [
+            "haiku",
+            "sonnet",
+            "opus"
+          ],
+          "contextTokens": 1000
+        },
+        "expected_safe_tier": "sonnet",
+        "scope": "Adversarial probe of the upstream comment promising malformed-input fallback; not a typed-valid response or live observation.",
+        "output": {
+          "tier": "haiku",
+          "reason": "jev",
+          "changed": true
+        },
+        "kept_current": false
+      },
+      {
+        "id": "invalid-confidence-out-of-range",
+        "input": {
+          "prompt": "Implement the change.",
+          "jev": {
+            "choice": "haiku",
+            "confidence": 2
+          },
+          "current": "sonnet",
+          "available": [
+            "haiku",
+            "sonnet",
+            "opus"
+          ],
+          "contextTokens": 1000
+        },
+        "expected_safe_tier": "sonnet",
+        "scope": "Adversarial probe of the upstream comment promising malformed-input fallback; not a typed-valid response or live observation.",
+        "output": {
+          "tier": "haiku",
+          "reason": "jev",
+          "changed": true
+        },
+        "kept_current": false
+      }
+    ],
+    "foreman": {
+      "raw": 8.0,
+      "normalized": 1.0,
+      "meaning": "upstream clamps any finite overshoot, not only a small one"
+    }
+  },
+  "tested_scripts_sha256": {
+    "verify.py": "e68639996d41ef5944bc3a1735fa1a73310d74d049991d55434ab8bb607e27a0",
+    "sift.mjs": "8d103251f173b731721a820485221cf01d7d5ede9b92ee592e7cd41f34bd7278",
+    "foreman.py": "a7e694a49d0b481ea0e59f1488b5fce80d8cd6802b04ae73aaab58ad29cd665f",
+    "router-cases.json": "e85ca430cc1a24592495ea5cacd17ffa20f07ba3ef7aec73f4c35c86c1090468",
+    "router.mjs": "7b6dd88252f93a52b9b98ac5fdeb05d4c1249005a416b03a5fa42f3f780c8fa4"
+  }
+}
