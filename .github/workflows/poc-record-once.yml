@@ -1,0 +1,114 @@
+# Temporary, single-branch execution bridge. Removed by its successful evidence commit.
+name: Record Jev PoC execution once
+on:
+  push:
+    branches: ['examples/jev-poc-execution']
+    paths: ['.github/workflows/poc-record-once.yml']
+permissions:
+  contents: read
+jobs:
+  record:
+    if: github.repository == 'Dowwie/validator' && github.ref == 'refs/heads/examples/jev-poc-execution'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Verify and apply the exact reviewed local patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/poc-evidence
+          git rev-parse HEAD > target/poc-evidence/trigger-commit.txt
+          python3 - <<'PY'
+          import hashlib, lzma, pathlib, re, subprocess
+          parts = [pathlib.Path(f'.poc-transfer/{i:02}').read_bytes() for i in range(6)]
+          compressed = b''.join(parts)
+          assert hashlib.sha256(compressed).hexdigest() == '94cc730ff89a1054ffd940649dabe1d9606bff12f1cfff3212fb53333c944027'
+          patch = lzma.decompress(compressed, memlimit=128*1024*1024)
+          assert len(patch) == 131360
+          allowed = {'.github/workflows/jev-poc.yml', '.gitignore', 'docs/artifact-index.md',
+            'examples/jev-poc/README.md', 'examples/jev-poc/adapters.py',
+            'examples/jev-poc/capture_sift.mjs', 'examples/jev-poc/casebooks.py',
+            'examples/jev-poc/jgrep.py', 'examples/jev-poc/poc.py',
+            'examples/jev-poc/record_outcomes.py', 'examples/jev-poc/test_poc.py',
+            'src/cli.rs', 'tests/cli_help.rs'}
+          paths = set(re.findall(r'^diff --git a/(\S+) b/\S+$', patch.decode(), re.M))
+          assert paths == allowed, paths
+          path = pathlib.Path('target/poc-evidence/applied.patch')
+          path.write_bytes(patch)
+          subprocess.run(['git', 'apply', '--check', '--index', str(path)], check=True)
+          subprocess.run(['git', 'apply', '--index', str(path)], check=True)
+          PY
+      - name: Build and test the native candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup toolchain install 1.98.1 --profile minimal --component rustfmt --component clippy
+          rustup show 2>&1 | tee target/poc-evidence/toolchain.log
+          cargo fmt --all
+          cargo fmt --all -- --check 2>&1 | tee target/poc-evidence/fmt.log
+          cargo test --locked --all-targets 2>&1 | tee target/poc-evidence/cargo-test.log
+          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee target/poc-evidence/clippy.log
+          cargo build --locked 2>&1 | tee target/poc-evidence/build.log
+          cp target/debug/validator target/poc-evidence/validator
+          python3 --version > target/poc-evidence/python-version.txt
+      - name: Retrieve pinned public evidence and run offline examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install 'jsonschema==4.25.1'
+          python3 examples/jev-poc/poc.py fetch-jgrep --out examples/jev-poc/upstream > target/poc-evidence/upstream-fetch.json
+          python3 -m unittest discover -s examples/jev-poc -p 'test_*.py' -v 2>&1 | tee target/poc-evidence/example-tests.log
+          python3 examples/jev-poc/poc.py verify --validator target/debug/validator --upstream examples/jev-poc/upstream --out target/poc-evidence/runs 2>&1 | tee target/poc-evidence/example-replay.log
+          node --check examples/jev-poc/capture_sift.mjs
+          node examples/jev-poc/capture_sift.mjs --book target/poc-evidence/runs/drafts/sift.json --limit 5 > target/poc-evidence/sift-dry-run.json
+      - name: Record completed outcomes and check changed documentation links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 examples/jev-poc/record_outcomes.py --root . --evidence target/poc-evidence --run-url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --trigger-commit "$GITHUB_SHA"
+          python3 - <<'PY'
+          import pathlib, re, subprocess
+          path = pathlib.Path('docs/artifact-index.md')
+          old = set(subprocess.check_output(['git','show','HEAD:docs/artifact-index.md'], text=True).splitlines())
+          new = [line for line in path.read_text().splitlines() if line not in old]
+          links = [link for line in new for link in re.findall(r'\]\(([^)]+)\)', line)]
+          assert len(links) == 17, links
+          for link in links:
+              assert (path.parent / link.split('#')[0]).is_file(), link
+          print('Verified 17 added artifact-index links')
+          PY
+      - name: Publish only tested source and evidence to this PR branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = 'Dowwie/validator'
+          test "$GITHUB_REF_NAME" = 'examples/jev-poc-execution'
+          gh auth setup-git
+          git fetch origin "$GITHUB_REF_NAME"
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
+          git rm -r .poc-transfer .github/workflows/poc-record-once.yml
+          git add .github/workflows/jev-poc.yml .gitignore docs/artifact-index.md docs/acceptance/jev-poc-execution.md examples/jev-poc src/cli.rs tests/cli_help.rs
+          git diff --cached --check
+          git diff --cached --stat > target/poc-evidence/committed-stat.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'examples: execute native Jev adapters and published jgrep replay'
+          git rev-parse HEAD > target/poc-evidence/commit.txt
+          git archive HEAD > target/poc-evidence/source.tar
+          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
+      - name: Preserve proof artifacts even when verification fails
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: jev-poc-execution-evidence
+          path: target/poc-evidence/
+          if-no-files-found: error
+          retention-days: 14
