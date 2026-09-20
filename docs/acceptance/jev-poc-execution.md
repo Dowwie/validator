@@ -95,3 +95,44 @@ and synthetic-reference bias limit every drafted corpus.
 The next substantive proof is a human-reviewed Sift subset through the provided
 bounded capture runner, followed by native run → review → recommend. No task
 management, autonomous remediation, gold revision, or provider telemetry was added.
+
+## Local sandbox continuation — 2026-09-20
+
+The same PR's CI-built executable was downloaded and run in the local sandbox;
+its SHA-256 is `bf33ab4a1ca16ee7cf985ff6d83bacf58344b452580639ddd0ce4c7ad0898dab`.
+The build archive identifies the PR test merge as
+`04611af0966609ced70315ea4123011714562f24`; its head was `e1fc38e`.
+The archive digest was verified before extraction. This sandbox has Python and
+Node but no Rust compiler, direct external DNS, or configured Jev/provider key.
+That did not prevent execution of the downloaded native program.
+
+Locally executed: all 40 existing Python contract tests, all ten native adapter
+lifecycle fixtures, the six published jgrep replays and four comparisons, plus
+**58 new assertions against actual upstream application implementations**:
+24 router policy cases, 18 Sift classify/provider checks, and 16 Foreman
+schema/parser/assessment checks. All 80 proposed Sift inputs and 60 proposed
+Foreman observations passed their actual upstream schemas. The resulting native
+fixture captures completed six Validator evaluations, three paired comparisons,
+inspection, receipt-hash verification and relocated inspection.
+
+The native runtime bundle was obtained from
+[run 35528954816](https://github.com/Dowwie/validator/actions/runs/35528954816),
+with source archive SHA-256
+`3c387662c51560694d231a8590ecbd3a788de81474f1d31a9f2a92f57b62d0c6`.
+It contains clean pinned public checkouts and locked Node dependencies, not keys.
+Sift and router execute their installed dependencies. Foreman uses real upstream
+Pydantic types and the upstream-supported injected-client path; its fake replies
+do not exercise a live TypeSafe SDK transport. No workers or file-moving flows run.
+
+The primary router fixture suite passes. Four separate malformed-input probes
+show three cases where missing, string, or out-of-range confidence still permits
+a downgrade. Foreman accepts a finite 8.0 through normalization and clamps it to
+1.0. These are low-level boundary findings, not proof of production exposure or
+Jev errors. Full probe outputs are retained in
+[the native outcomes](../../examples/jev-poc/native/outcomes.json).
+
+No new model inference or human reference approval occurred. These runs close the
+router's planned deterministic-fixture slice and add real application-boundary
+coverage for Sift and Foreman. They do not complete live accuracy experiments,
+remaining capture runners, semantic reference review, or optional dataset expansion.
+The measurement core and third-party source remain unchanged.

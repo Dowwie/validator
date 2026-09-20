@@ -196,3 +196,46 @@ corpora, optimization loops and full runtime integration tests are not implement
 Their saved output shapes can already be imported. Nothing in these examples
 launches coding workers, moves user documents, performs trades, opens issues, or
 changes task state. The review boundary remains **run → review → recommend**.
+
+## Native application boundary tests, run locally
+
+The new `native/verify.py` exercises **actual pinned upstream implementations**,
+not just objects shaped like their outputs. It runs 24 router policy fixtures,
+18 Sift classify/provider checks and 16 Foreman schema/assessment checks, then
+feeds the resulting explicitly synthetic captures into the real Validator binary
+for six evaluations and three paired comparisons. It also schema-checks all 80
+Sift inputs and all 60 Foreman snapshots. Results are in `native/outcomes.json`.
+
+Prepare clean checkouts at the pins in the plan under a common directory named
+`router/`, `sift/` and `foreman/`. Run `npm ci --ignore-scripts` in router and Sift;
+install `pydantic>=2.7,<3` for Foreman. The CI `pinned-native-runtimes` artifact
+contains these exact public checkouts and locked Node dependencies for offline
+sandbox use. Its `.git` directories retain their revision identities. It contains
+no provider credentials. Source acquisition is separate from the following run:
+
+```sh
+python3 examples/jev-poc/native/verify.py \
+  --sources /path/to/native-runtimes \
+  --validator target/debug/validator \
+  --out /tmp/validator-native-proof-001
+```
+
+The output directory must not exist. Requests are answered in memory, provider
+credentials are removed from the child environment, and network attempts in the
+native probes are blocked. Nothing labels these fixtures as live observations or
+approves their semantic reference proposals. Foreman uses its own injected-client
+path, not an installed TypeSafe SDK or a worker runtime.
+
+`native/router-cases.json` contains the 24 hand-derived policy cases and four
+malformed-input probes. `native/router.mjs` runs the exact policy/config with its
+installed SDK; `native/sift.mjs` runs the actual classifier and HTTP translation;
+`native/foreman.py` runs the actual Pydantic schema and assessment implementation.
+These probes are reproducible entry points, not alternate application implementations.
+
+The router tests found that missing, string and out-of-range confidence can still
+permit a downgrade at this low-level policy boundary. Foreman clamps a finite
+value of 8.0 to 1.0. These are recorded boundary observations, not evidence that a
+real provider emitted such values or that the surrounding production validation
+fails. No third-party source was modified. Fresh accuracy measurements still need
+reviewed references and provider access; the other application-native runners
+remain pending.
