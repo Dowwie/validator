@@ -1,0 +1,26 @@
+{
+  "commit": "fdceb6bdf79165a133667b8e57f3b7244545f0a2",
+  "files": {
+    "LICENSE": {
+      "git_blob_sha": "b29e006c91695d4588a414429671cb3932af40b0",
+      "sha256": "ba702ed888bfeaa6597cd7e40f8e158f430dbfd0bb1fa0814637b6ddc30dc788",
+      "url": "https://raw.githubusercontent.com/keltokhy/jgrep/fdceb6bdf79165a133667b8e57f3b7244545f0a2/LICENSE"
+    },
+    "cases.json": {
+      "git_blob_sha": "61e368acf3651c67765e06e208070ede790418c9",
+      "sha256": "a3c345311d7b9a39d2598b2772c478801c69fd9001f6d4e1214e46e6f5170cdd",
+      "url": "https://raw.githubusercontent.com/keltokhy/jgrep/fdceb6bdf79165a133667b8e57f3b7244545f0a2/bench/fixtures/code_review.json"
+    },
+    "measurement.py": {
+      "git_blob_sha": "63b017370a3bf0834b7107c5dcaad10af3dcddd5",
+      "sha256": "92e6a2b0faf1cbaf1e50b5922dd1fbf8a31f08e27e7f0147324d5c767a02a4fd",
+      "url": "https://raw.githubusercontent.com/keltokhy/jgrep/fdceb6bdf79165a133667b8e57f3b7244545f0a2/bench/code_review.py"
+    },
+    "results.json": {
+      "git_blob_sha": "f4032fa0d787a1340df68d0c7c8a9c1489e2c482",
+      "sha256": "91f64249d4b1b86b865dd460dd15defdcb85af10e901c08bc8dfb2a60ff0b599",
+      "url": "https://raw.githubusercontent.com/keltokhy/jgrep/fdceb6bdf79165a133667b8e57f3b7244545f0a2/docs/benchmarks/code-review.json"
+    }
+  },
+  "repository": "keltokhy/jgrep"
+}

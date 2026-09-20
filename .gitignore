@@ -1,1 +1,5 @@
 /target
+
+# Generated local PoC work; upstream evidence and outcomes are deliberately tracked.
+/examples/jev-poc/__pycache__/
+/examples/jev-poc/work/

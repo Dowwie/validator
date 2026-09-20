@@ -6,6 +6,30 @@ use validator::{
     InspectionOptions, check, compare, evaluate, inspect,
 };
 
+const CHECK_HELP: &str = "validator check --dataset PATH --predictions PATH --config PATH\nValidate inputs and evidence without scoring or publishing a run.";
+const EVALUATE_HELP: &str = "validator evaluate --dataset PATH --predictions PATH --config PATH --out NEW_RUN_DIR\nEvaluate saved predictions and publish a new run. --out is required and must not exist.";
+const INSPECT_HELP: &str = "validator inspect --run RUN_DIR --episode UUID\nVerify and replay a stored run before returning one selected episode.";
+const COMPARE_HELP: &str = "validator compare --baseline RUN_DIR --candidate RUN_DIR --out NEW_COMPARISON_DIR [--intersection]\nVerify and compare paired runs. --out is required and must not exist.";
+const HELP: &str = "Commands:
+  check       Validate canonical inputs and evidence without scoring
+  evaluate    Score saved predictions and publish a new run
+  inspect     Verify a run and disclose one selected episode
+  compare     Verify two runs and publish paired changes
+
+Use validator COMMAND --help for arguments.
+--version prints the executable version.
+Success means the operation completed, not that the classifier met a quality threshold.";
+
+fn command_help(command: &str) -> Option<&'static str> {
+    match command {
+        "check" => Some(CHECK_HELP),
+        "evaluate" => Some(EVALUATE_HELP),
+        "inspect" => Some(INSPECT_HELP),
+        "compare" => Some(COMPARE_HELP),
+        _ => None,
+    }
+}
+
 pub(crate) fn run() -> ExitCode {
     let mut arguments = env::args_os();
     let _program = arguments.next();
@@ -13,17 +37,23 @@ pub(crate) fn run() -> ExitCode {
         return error(Diagnostic::for_code(DiagnosticCode::Schema));
     };
     if command == "--help" || command == "-h" {
-        println!(
-            "validator check|evaluate --dataset PATH --predictions PATH --config PATH [--out PATH]; validator inspect --run RUN_DIR --episode UUID"
-        );
+        println!("validator {}\n\n{HELP}", env!("CARGO_PKG_VERSION"));
         return ExitCode::SUCCESS;
     }
     if command == "--version" {
         println!("validator {}", env!("CARGO_PKG_VERSION"));
         return ExitCode::SUCCESS;
     }
+    let arguments: Vec<_> = arguments.collect();
+    if arguments.len() == 1
+        && (arguments[0] == "--help" || arguments[0] == "-h")
+        && let Some(help) = command.to_str().and_then(command_help)
+    {
+        println!("{help}");
+        return ExitCode::SUCCESS;
+    }
     match command.to_str() {
-        Some("check") => match paths(arguments.collect(), false) {
+        Some("check") => match paths(arguments, false) {
             Ok((dataset, predictions, config, None)) => success(check(CheckOptions {
                 dataset,
                 predictions,
@@ -31,7 +61,7 @@ pub(crate) fn run() -> ExitCode {
             })),
             Ok(_) | Err(()) => error(Diagnostic::for_code(DiagnosticCode::Schema)),
         },
-        Some("evaluate") => match paths(arguments.collect(), true) {
+        Some("evaluate") => match paths(arguments, true) {
             Ok((dataset, predictions, config, Some(output))) => {
                 success(evaluate(EvaluationOptions {
                     dataset,
@@ -42,11 +72,11 @@ pub(crate) fn run() -> ExitCode {
             }
             Ok(_) | Err(()) => error(Diagnostic::for_code(DiagnosticCode::Schema)),
         },
-        Some("inspect") => match inspect_paths(arguments.collect()) {
+        Some("inspect") => match inspect_paths(arguments) {
             Ok((run, episode)) => success(inspect(InspectionOptions { run, episode })),
             Err(()) => error(Diagnostic::for_code(DiagnosticCode::Schema)),
         },
-        Some("compare") => match compare_paths(arguments.collect()) {
+        Some("compare") => match compare_paths(arguments) {
             Ok((baseline, candidate, output, intersection)) => {
                 success(compare(ComparisonOptions {
                     baseline,
