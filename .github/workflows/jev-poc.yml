@@ -44,13 +44,11 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          if test -f examples/jev-poc/test_poc.py; then
-            python3 -m pip install 'jsonschema==4.25.1'
-            python3 -m unittest discover -s examples/jev-poc -p 'test_*.py' -v 2>&1 | tee target/poc-evidence/example-tests.log
-            python3 examples/jev-poc/poc.py verify --validator target/debug/validator --upstream examples/jev-poc/upstream --out target/poc-evidence/runs 2>&1 | tee target/poc-evidence/example-replay.log
-            node --check examples/jev-poc/capture_sift.mjs
-            node examples/jev-poc/capture_sift.mjs --book target/poc-evidence/runs/drafts/sift.json --limit 5 > target/poc-evidence/sift-dry-run.json
-          fi
+          python3 -m pip install 'jsonschema==4.25.1'
+          python3 -m unittest discover -s examples/jev-poc -p 'test_*.py' -v 2>&1 | tee target/poc-evidence/example-tests.log
+          python3 examples/jev-poc/poc.py verify --validator target/debug/validator --upstream examples/jev-poc/upstream --out target/poc-evidence/runs 2>&1 | tee target/poc-evidence/example-replay.log
+          node --check examples/jev-poc/capture_sift.mjs
+          node examples/jev-poc/capture_sift.mjs --book target/poc-evidence/runs/drafts/sift.json --limit 5 > target/poc-evidence/sift-dry-run.json
       - name: Upload evidence, including failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
