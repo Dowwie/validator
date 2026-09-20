@@ -57,3 +57,43 @@ jobs:
           path: target/poc-evidence/
           if-no-files-found: error
           retention-days: 14
+
+  native-runtimes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Retrieve pinned public sources without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/native-runtimes
+          while read -r name repository revision; do
+            directory="target/native-runtimes/$name"
+            git init -q "$directory"
+            git -c credential.helper= -C "$directory" fetch --quiet --depth=1 "https://github.com/$repository.git" "$revision"
+            git -C "$directory" checkout --quiet --detach FETCH_HEAD
+            test "$(git -C "$directory" rev-parse HEAD)" = "$revision"
+          done <<'PINS'
+          router gargpratyush/jev-router 38da6b84ea01241bfc41fbddc0928d0f40a703f0
+          sift kbhuw/jev-sift 966de12e2bb5f94d47886ee51f30a07ec8ef1607
+          foreman thruwire/foreman a7d21d18d306a0cb9f3e15acefbdb5663521405c
+          PINS
+          npm ci --prefix target/native-runtimes/router --ignore-scripts --no-audit --no-fund
+          npm ci --prefix target/native-runtimes/sift --ignore-scripts --no-audit --no-fund
+      - name: Package source and dependency bytes for offline execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -czf target/native-runtimes.tar.gz -C target native-runtimes
+          sha256sum target/native-runtimes.tar.gz > target/native-runtimes.sha256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pinned-native-runtimes
+          path: |
+            target/native-runtimes.tar.gz
+            target/native-runtimes.sha256
+          if-no-files-found: error
+          retention-days: 7
