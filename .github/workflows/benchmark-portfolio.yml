@@ -31,6 +31,8 @@ jobs:
           git archive HEAD > target/benchmark-evidence/source.tar
           python3 -m pip install 'pyarrow==21.0.0'
           python3 examples/jev-poc/benchmarks/fetch.py --out target/benchmark-sources 2>&1 | tee target/benchmark-evidence/acquisition.log
+          tar -czf target/benchmark-evidence/benchmark-sources.tar.gz -C target benchmark-sources
+          sha256sum target/benchmark-evidence/benchmark-sources.tar.gz > target/benchmark-evidence/benchmark-sources.sha256
       - name: Build and test the actual Rust core
         shell: bash
         run: |
