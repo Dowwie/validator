@@ -1,0 +1,33 @@
+name: Made with Jev evidence
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/made-with-jev.yml'
+      - 'examples/jev-poc/madewithjev/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch pinned public repositories without executing their code
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/sources
+          while read -r name repo pin; do
+            curl --fail --location --retry 2 --max-time 120 "https://codeload.github.com/$repo/tar.gz/$pin" -o "evidence/sources/$name.tar.gz"
+          done <<'PINS'
+          spam bitnovus/jev-spam-eval a3757a1b3412177a686c1b4d95227b50a8f73537
+          assay jourdanlabs/assay-001 b7f71053a88025a5af80af00801c5ce725c9547d
+          clean-code frostney/clean-code-review 0a9b36a66df17ea27719f3e3132d1c9c16bdc852
+          PINS
+          sha256sum evidence/sources/*.tar.gz > evidence/sources/SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: made-with-jev-sources
+          path: evidence/sources/
+          retention-days: 7
+          if-no-files-found: error
