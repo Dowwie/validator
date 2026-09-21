@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      - name: Acquire pinned public source without executing it
+      - name: Acquire pinned public sources and validation dependency
         shell: bash
         run: |
           set -euo pipefail
@@ -36,6 +36,7 @@ jobs:
           sponsor trungdq88/youtube-sponsor-detection de01f0568d043035889a296a61ce21e0accc8b16
           moderation CodeAlive-AI/mastra-jev-moderation 8735ea80efad6ec1dab26f74f1a7851007758915
           PINS
+          npm install --prefix target/portfolio-sources/moderation --ignore-scripts --no-audit --no-fund --save-exact zod@3.25.76
           tar -czf target/portfolio-evidence/sources.tar.gz -C target portfolio-sources
           sha256sum target/portfolio-evidence/sources.tar.gz > target/portfolio-evidence/sources.sha256
           git rev-parse HEAD > target/portfolio-evidence/commit.txt
