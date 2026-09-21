@@ -1,0 +1,57 @@
+name: Jev portfolio expansion
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/portfolio.yml'
+      - 'examples/jev-poc/portfolio/**'
+      - 'examples/jev-poc/poc.py'
+      - 'examples/jev-poc/adapters.py'
+      - 'src/**'
+      - 'Cargo.*'
+      - 'rust-toolchain.toml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Acquire pinned public source without executing it
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/portfolio-sources target/portfolio-evidence
+          while read -r name repo revision; do
+            dir="target/portfolio-sources/$name"
+            git init -q "$dir"
+            git -c credential.helper= -C "$dir" fetch -q --depth=1 "https://github.com/$repo.git" "$revision"
+            git -C "$dir" checkout -q --detach FETCH_HEAD
+            test "$(git -C "$dir" rev-parse HEAD)" = "$revision"
+          done <<'PINS'
+          atlas Zaious/jev-capability-atlas 4746cfd6bc679fb1c8ffdd8317920fbf77a13542
+          sponsor trungdq88/youtube-sponsor-detection de01f0568d043035889a296a61ce21e0accc8b16
+          moderation CodeAlive-AI/mastra-jev-moderation 8735ea80efad6ec1dab26f74f1a7851007758915
+          PINS
+          tar -czf target/portfolio-evidence/sources.tar.gz -C target portfolio-sources
+          sha256sum target/portfolio-evidence/sources.tar.gz > target/portfolio-evidence/sources.sha256
+          git rev-parse HEAD > target/portfolio-evidence/commit.txt
+          git archive HEAD > target/portfolio-evidence/source.tar
+      - name: Build the unchanged measurement core
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup toolchain install 1.98.1 --profile minimal
+          cargo build --locked 2>&1 | tee target/portfolio-evidence/build.log
+          cp target/debug/validator target/portfolio-evidence/validator
+      - name: Retain acquisition and execution evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: portfolio-verification
+          path: target/portfolio-evidence/
+          retention-days: 7
+          if-no-files-found: error
