@@ -1,0 +1,45 @@
+name: Jev evidence portfolio
+on:
+  pull_request:
+    paths:
+      - 'examples/jev-poc/benchmarks/**'
+      - '.github/workflows/benchmark-portfolio.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Fetch exact public revisions without executing upstream code
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/benchmark-sources
+          while read -r name repository revision; do
+            directory="target/benchmark-git/$name"
+            mkdir -p "$directory" "target/benchmark-sources/$name"
+            git init -q "$directory"
+            git -c credential.helper= -C "$directory" fetch --quiet --depth=1 "https://github.com/$repository.git" "$revision"
+            test "$(git -C "$directory" rev-parse FETCH_HEAD)" = "$revision"
+            git -C "$directory" archive FETCH_HEAD | tar -x -C "target/benchmark-sources/$name"
+            printf '%s\n' "$revision" > "target/benchmark-sources/$name/.source-revision"
+          done <<'PINS'
+          acento marcosmartinez/jev-acento 7e007b4c2bd552471b56eff035f9a3df7593f9fe
+          moderation ohernandezdev/jevmod 01063f3e927ddbc3c7de923b73f56dcc33034ca9
+          pairwise maybern-tripp-smith/fedjev-bench 7911b5da1dee9947c75784a6962ee5d4fd3d315f
+          PINS
+          tar -czf target/benchmark-sources.tar.gz -C target benchmark-sources
+          sha256sum target/benchmark-sources.tar.gz > target/benchmark-sources.sha256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: benchmark-sources
+          path: |
+            target/benchmark-sources.tar.gz
+            target/benchmark-sources.sha256
+          retention-days: 7
+          if-no-files-found: error
