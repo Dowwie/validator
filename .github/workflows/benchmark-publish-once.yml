@@ -1,0 +1,61 @@
+# Temporary file transfer only; removed from the final example tree.
+name: Stage tested benchmark files once
+on:
+  push:
+    branches: ['examples/jev-evidence-portfolio']
+    paths: ['.github/workflows/benchmark-publish-once.yml']
+permissions:
+  contents: read
+jobs:
+  blobs:
+    if: github.repository == 'Dowwie/validator' && github.ref == 'refs/heads/examples/jev-evidence-portfolio'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - name: Verify exact patch and create file blobs without running candidate code
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64,hashlib,json,lzma,os,pathlib,re,subprocess,urllib.request
+          assert os.environ['GITHUB_REPOSITORY']=='Dowwie/validator'
+          assert subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip()=='14e9d82b7cbaf60fc150740df921a91024d2ae69'
+          compressed=base64.b64decode(''.join(pathlib.Path(f'.benchmark-transfer/{i}').read_text() for i in range(5)),validate=True)
+          assert hashlib.sha256(compressed).hexdigest()=='1cbb38abaedb497dd009ab1bd5e50d65762bf285eb64ce1fffeb7b35553e9766'
+          patch=lzma.decompress(compressed,memlimit=128*1024*1024)
+          assert len(patch)==265454
+          assert hashlib.sha256(patch).hexdigest()=='dec6b4b07fa65c460ca2e6c5b4d1f09ea9e70ee28c10fdb4527d6472e6c81e64'
+          allowed={'.github/workflows/benchmark-portfolio.yml','docs/acceptance/evidence-portfolio.md','docs/artifact-index.md','examples/jev-poc/benchmarks/README.md','examples/jev-poc/benchmarks/fetch.py','examples/jev-poc/benchmarks/outcomes.json','examples/jev-poc/benchmarks/readers.py','examples/jev-poc/benchmarks/rubric.json','examples/jev-poc/benchmarks/run.py','examples/jev-poc/benchmarks/sources.lock.json','examples/jev-poc/benchmarks/test_benchmarks.py'}
+          assert set(re.findall(r'^diff --git a/(\S+) b/\S+$',patch.decode(),re.M))==allowed
+          pathlib.Path('/tmp/benchmark-tested.patch').write_bytes(patch)
+          subprocess.run(['git','apply','--check','--index','/tmp/benchmark-tested.patch'],check=True)
+          subprocess.run(['git','apply','--index','/tmp/benchmark-tested.patch'],check=True)
+          subprocess.run(['git','diff','--cached','--check'],check=True)
+          assert set(subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines())==allowed
+          result={}
+          for name in sorted(allowed):
+              data=pathlib.Path(name).read_bytes()
+              assert not pathlib.Path(name).is_symlink()
+              request=urllib.request.Request('https://api.github.com/repos/Dowwie/validator/git/blobs',data=json.dumps({'content':data.decode('utf-8'),'encoding':'utf-8'}).encode(),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'validator-tested-file-transfer'},method='POST')
+              with urllib.request.urlopen(request,timeout=30) as response:
+                  blob=json.load(response)
+              expected=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+              assert blob['sha']==expected
+              result[name]={'sha':blob['sha'],'sha256':hashlib.sha256(data).hexdigest()}
+          pathlib.Path('changed-blobs.json').write_text(json.dumps(result,indent=2)+'\n')
+          print(json.dumps(result,indent=2))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: benchmark-tested-file-blobs
+          path: changed-blobs.json
+          if-no-files-found: error
+          retention-days: 7
