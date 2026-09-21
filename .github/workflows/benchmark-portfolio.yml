@@ -3,55 +3,56 @@ on:
   pull_request:
     paths:
       - 'examples/jev-poc/benchmarks/**'
+      - 'examples/jev-poc/poc.py'
+      - 'examples/jev-poc/adapters.py'
+      - 'examples/jev-poc/madewithjev/oracle.py'
+      - 'src/**'
+      - 'schemas/**'
+      - 'Cargo.*'
+      - 'rust-toolchain.toml'
       - '.github/workflows/benchmark-portfolio.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  sources:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      - name: Fetch exact public revisions without executing upstream code
+      - name: Acquire pinned public evidence without running upstream code
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p target/benchmark-sources
-          while read -r name repository revision; do
-            directory="target/benchmark-git/$name"
-            mkdir -p "$directory" "target/benchmark-sources/$name"
-            git init -q "$directory"
-            git -c credential.helper= -C "$directory" fetch --quiet --depth=1 "https://github.com/$repository.git" "$revision"
-            test "$(git -C "$directory" rev-parse FETCH_HEAD)" = "$revision"
-            git -C "$directory" archive FETCH_HEAD | tar -x -C "target/benchmark-sources/$name"
-            printf '%s\n' "$revision" > "target/benchmark-sources/$name/.source-revision"
-          done <<'PINS'
-          acento marcosmartinez/jev-acento 7e007b4c2bd552471b56eff035f9a3df7593f9fe
-          moderation ohernandezdev/jevmod 01063f3e927ddbc3c7de923b73f56dcc33034ca9
-          pairwise maybern-tripp-smith/fedjev-bench 7911b5da1dee9947c75784a6962ee5d4fd3d315f
-          reference openai/moderation-api-release f4ab51b5edd3bfbcb349a56324274235b674e0e4
-          PINS
+          mkdir -p target/benchmark-evidence
+          git rev-parse HEAD > target/benchmark-evidence/commit.txt
+          git archive HEAD > target/benchmark-evidence/source.tar
           python3 -m pip install 'pyarrow==21.0.0'
-          python3 - <<'PY'
-          import hashlib, json
-          from pathlib import Path
-          import pyarrow.parquet as pq
-          p = Path('target/benchmark-sources/acento/data/items.parquet')
-          rows = pq.read_table(p).to_pylist()
-          data = json.dumps(rows, sort_keys=True, ensure_ascii=False, allow_nan=False, default=str).encode()
-          p.with_suffix('.json').write_bytes(data)
-          p.with_suffix('.export.json').write_text(json.dumps({'source_sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'json_sha256': hashlib.sha256(data).hexdigest(), 'rows': len(rows), 'exporter': 'pyarrow-21.0.0 to_pylist; json sort_keys ensure_ascii=False default=str'}, indent=2))
-          PY
-          tar -czf target/benchmark-sources.tar.gz -C target benchmark-sources
-          sha256sum target/benchmark-sources.tar.gz > target/benchmark-sources.sha256
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+          python3 examples/jev-poc/benchmarks/fetch.py --out target/benchmark-sources 2>&1 | tee target/benchmark-evidence/acquisition.log
+      - name: Build and test the actual Rust core
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup toolchain install 1.98.1 --profile minimal --component clippy --component rustfmt
+          cargo fmt --all -- --check 2>&1 | tee target/benchmark-evidence/format.log
+          cargo test --locked --all-targets 2>&1 | tee target/benchmark-evidence/rust-tests.log
+          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee target/benchmark-evidence/clippy.log
+          cargo build --locked 2>&1 | tee target/benchmark-evidence/build.log
+          cp target/debug/validator target/benchmark-evidence/validator
+      - name: Run adapter contracts and published-response comparisons
+        shell: bash
+        run: |
+          set -euo pipefail
+          export VALIDATOR_BIN="$PWD/target/debug/validator"
+          python3 -m unittest discover -s examples/jev-poc/benchmarks -p 'test_*.py' -v 2>&1 | tee target/benchmark-evidence/tests.log
+          python3 examples/jev-poc/benchmarks/run.py --sources target/benchmark-sources --validator "$VALIDATOR_BIN" --allow-unverified-moderation-join --out target/benchmark-evidence/runs 2>&1 | tee target/benchmark-evidence/replay.log
+      - name: Retain execution evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: benchmark-sources
-          path: |
-            target/benchmark-sources.tar.gz
-            target/benchmark-sources.sha256
-          retention-days: 7
+          name: benchmark-verification
+          path: target/benchmark-evidence/
+          retention-days: 14
           if-no-files-found: error

@@ -1,0 +1,78 @@
+{
+  "files": {
+    "acento": {
+      "LICENSE": "65fc594b02438980c9dcba5611dc99ff7f6728a55bd1561a5ebb413a526957c1",
+      "PREREG.md": "58d9d4c2253e943e07a77d34319bb6aad209e446c44048e31b3af738245a068f",
+      "PREREG.sha256": "0a1e633d6c3d41b4cf617ba81c4da0d7fef01d8a99b51fd994e0cf2b45f29282",
+      "THIRD_PARTY.md": "eedfdf67a10d23aba31134a19a835a6d3adfe4ded418b08ebcd3856e88b6e20b",
+      "data/items.export.json": "673765305bcc729a7d5c4f158ba4c8a8aeb09c5bf6dc90566d9080bbf8d8f2bd",
+      "data/items.json": "6db7563849dd8c3e4553c38f9b08a3d0debae95056c875b2b428485fd99b0a32",
+      "data/items.parquet": "03223d3b936b41bbdd46876e4158988dce070300685514f150bd34738c116092",
+      "prompts.sha256": "a53eafb781d957c83d9a50db41bca6bb5c22497d6f566aa3c1bc490afef53044",
+      "prompts/belebele.en.json": "80ffe48a244c5c77115be11b71fd496d32945e85679f9d59a0c5b2495fdd5076",
+      "prompts/belebele.es.json": "76ee83df5d0f48fbe6e0d7b4279449a40d6dcda37b1d5063e8e9df07dea6d28c",
+      "prompts/massive.en.json": "431ebd8c48007fe3f73612ce636ac00d66a1e0e83ab5113ab9288a8489eff2b1",
+      "prompts/massive.es.json": "bb990d7804c96ca74e4a8adc6c717a3a256df72f4fb23739ce697711f3eddebb",
+      "prompts/pawsx.en.json": "e5238950b14b24c0816cc3a2730d1fb90417b41543b6b1d04e4c841ee8f704c5",
+      "prompts/pawsx.es.json": "d01635ccb23558cf4addb0beef0f3c54664189a52eac383bc2e9ea45702fb6d5",
+      "prompts/xnli.en.json": "2b049a45c471a18ea32f9ebe68e183d79d3eaf879f9fd917accdb7ef56717c31",
+      "prompts/xnli.es.json": "badafda503d5a10879d8bb697bd45974f632af1c26e4b27b9959619139834057",
+      "runs/20260921-es-v1-belebele-A-pass0.jsonl": "a1a9e104052e0c84406dc647a7d6471393eb903fb7132c97ae990ee911758b5b",
+      "runs/20260921-es-v1-belebele-A-pass1.jsonl": "f7b09fdeb6da4c8f1c306ecc3ac21e015d871466dd971680e97e89193ded96e5",
+      "runs/20260921-es-v1-belebele-B-pass0.jsonl": "6efca08363ffeee99d40a4a08264579ae4c2ca8e14f773e77e7171251f183379",
+      "runs/20260921-es-v1-belebele-B-pass1.jsonl": "4e15fcce5e4c61a8a5593c653e391662a9babd8d5b677b35bdf22c303fbbc514",
+      "runs/20260921-es-v1-belebele-C-pass0.jsonl": "771067fabbeda6417368e558e28ff69999f450e6fe467808b56e87b7e0b272dd",
+      "runs/20260921-es-v1-belebele-C-pass1.jsonl": "4b186eec2799df6a30c4566009091074954bc41ef8210630e08471e4662d31f6",
+      "runs/20260921-es-v1-massive-A-pass0.jsonl": "bb7d46462e802cfff9f6a35510eb7e121f12478d81f3dd8fa4935d029e842a0c",
+      "runs/20260921-es-v1-massive-A-pass1.jsonl": "198b98d19f21b76c349433f135939648a874066e1950a2b6ff7bbba740c1cb61",
+      "runs/20260921-es-v1-massive-B-pass0.jsonl": "883597681bf0a6610c538fe5b09e28ad4100f2e96bcacea6bbac8d1740779f98",
+      "runs/20260921-es-v1-massive-B-pass1.jsonl": "e5164e32c0da97ea5e7190f865cf517d00d4815ae1593e336584473210164ad0",
+      "runs/20260921-es-v1-massive-C-pass0.jsonl": "ce8f91440418727bb4dc37b0710b30717bb604b5b44106bdcc901924fc131de3",
+      "runs/20260921-es-v1-massive-C-pass1.jsonl": "90f98802e0b87ae67681203f329c3daf7cc60766f7219a33b9b004817703dbca",
+      "runs/20260921-es-v1-pawsx-A-pass0.jsonl": "e85cabed3a82f0207b802d4e834c1fa880970e964f1f0a7cd755d9b8ecc84dd5",
+      "runs/20260921-es-v1-pawsx-A-pass1.jsonl": "d9cdda5ce1f1d31043e43b2b63f05e8093643ace77f3ffc2ef77929cf29ec3b7",
+      "runs/20260921-es-v1-pawsx-B-pass0.jsonl": "b537d73c07b3dc4c0945f1daac50dace79078d675877c13697a2338c1c6e0958",
+      "runs/20260921-es-v1-pawsx-B-pass1.jsonl": "a0b6775b2045d8b03c5c4ec1b76e17b518f965df871350d6ba0620505ac9a5b9",
+      "runs/20260921-es-v1-pawsx-C-pass0.jsonl": "069e0a417ad9009808fd1bc9f5e0109d4d44f15973e5eb0a56375eaab687a104",
+      "runs/20260921-es-v1-pawsx-C-pass1.jsonl": "e4b5e3908c512adb698070263b292d2c8e586de98e6d45678154a5afc28af046",
+      "runs/20260921-es-v1-xnli-A-pass0.jsonl": "f7c2eb6ba4e6f396d649e841e80c2082e8d0c3775f8def3ca47ae0ff4be2bf38",
+      "runs/20260921-es-v1-xnli-A-pass1.jsonl": "50a82fb51c80c20afed6731644f6b10a82ead92ff803e9d1d3065b3e00ee6afa",
+      "runs/20260921-es-v1-xnli-B-pass0.jsonl": "a435f07f1d437e983482ae833aa59d3733e118fac251db784ca87cc0b90ffeee",
+      "runs/20260921-es-v1-xnli-B-pass1.jsonl": "31cbcce40527f5d5e3695e5b05982a0ebc9a04ace7f9915cb0b968c4552a34e1",
+      "runs/20260921-es-v1-xnli-C-pass0.jsonl": "98587fca65f36c5276d634415c326a7fb4b0d9f6a412c0a221a1993dec0bb7cc",
+      "runs/20260921-es-v1-xnli-C-pass1.jsonl": "409ed69751b2e912fa466518c3d855b20738950e72da11f13d8189a5d7007698",
+      "runs/manifest.json": "c352f2c60d53a48772974832096f54c3b514db4d8cc1982e7679f558e12cc3c7",
+      "src/jev_acento/providers.py": "9e4243a6b5ad6546a35e1878af1bf4c9c39fb7d098d57f51c93d7cfc92bd49ef",
+      "src/jev_acento/run.py": "871375c472137fd5f486a848a3236999cee66a2cae0f1e6635ddb80846995581"
+    },
+    "moderation": {
+      "LICENSE": "679f8f1c6933a59ce8b91e95101beeab9a0657e6f2342c92f273fcb98d342c1e",
+      "benchmark/prepare.py": "098d0254c4b227e289063267ab892cf8f449d28ba751217ff8eadfccb3838cd3",
+      "benchmark/results/jevmod.jsonl": "2d6275a948351b77d54fab4a1ff7a3ea4785c342803c3c7fc2d3253f1c59bf61",
+      "benchmark/run_jevmod.py": "90be2e1106e28107e2d839688dac7313daa39298d7496fad283a513d5790a955",
+      "jevmod/categories.json": "ea6b504370622a79e7c2a2e7eda143fa44d5b8a4b3d70a6c34dfe6de9cd31858",
+      "jevmod/judge.py": "5aedb30335ab2ecf74d7fb68a53c358433f280e76144ec639bbc7de9fa21ea6d"
+    },
+    "pairwise": {
+      "DATA.md": "34c4b1ce2f2d42133ba9e0127c36839aa3ea30a77423e62579f5aec0383e59a9",
+      "LICENSE": "120163ef41466be78d1c0ad4351244769ddb711455c83e516c7847af5e7bb5ef",
+      "data/pairs/PAIR_MANIFEST.md": "086ecda4112493243f3998de05e775b2a813237503e12c48950feaada180cad1",
+      "data/pairs/gold_pairs.jsonl": "838bb8b6cb597c241fd657e3cf97f3ddce180fbcf59a2aa87b982b200c1385e4",
+      "runs/jev/answers.jsonl": "e202d49123bad2ffd932846cc1d3b4ad799766100c644450dc7128a421c8e4cd",
+      "runs/jev/answers_names.jsonl": "1bcde22107d0dd2ed73fecc32870056655d844585882e28ce8f2bf6bc7c672df",
+      "runs/jev/requests.jsonl": "91625487fd41e314b9973d9c7ad3f768e87db1eac885b91388b02985cf90a0b8"
+    },
+    "reference": {
+      "README.md": "67120be63eb78d137bcc7027609c730f539e0d2039e93811707d7a653beed8cd",
+      "data/samples-1680.jsonl.gz": "ef3f7de86ee394fe337b0a566ba4b9c7db058f3caa8d6a4a0006138b663ab9a8"
+    }
+  },
+  "note": "File hashes bind checked source bytes. items.json is a pyarrow-21.0.0 export of pinned parquet metadata; export receipt links both. Raw corpora are not vendored.",
+  "pins": {
+    "acento": "7e007b4c2bd552471b56eff035f9a3df7593f9fe",
+    "moderation": "01063f3e927ddbc3c7de923b73f56dcc33034ca9",
+    "pairwise": "7911b5da1dee9947c75784a6962ee5d4fd3d315f",
+    "reference": "f4ab51b5edd3bfbcb349a56324274235b674e0e4"
+  },
+  "schema_version": 1
+}

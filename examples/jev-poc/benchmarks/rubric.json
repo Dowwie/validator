@@ -1,0 +1,20 @@
+{
+  "authority": "Proposed",
+  "use": "Illustrative task-specific diagnostic guards, not deployment requirements or an automatic winner.",
+  "bilingual": {
+    "objective": "Preserve task agreement when the state language changes; compare instruction wording separately.",
+    "maximum_accuracy_drop": 0.03,
+    "repeat_rule": "Report paired decision flips and accuracy variation separately. Do not equate repeated agreement with truth."
+  },
+  "moderation": {
+    "objective": "Expose missed labels and false alarms separately for each assessed category.",
+    "acceptance": "Do not call a threshold change an unconditional improvement if either false positives or false negatives rise.",
+    "reference_gate": "Unknown labels must not be negatives; original input identity and task taxonomy need review before deployment conclusions."
+  },
+  "pairwise": {
+    "objective": "Assess reference-relative choices and sensitivity to displayed document order.",
+    "minimum_reference_agreement": 0.95,
+    "minimum_coverage": 0.9,
+    "scope": "These are author-defined comparison labels, not forecasts, financial advice, or validated tournament rankings."
+  }
+}
