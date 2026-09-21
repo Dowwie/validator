@@ -4,30 +4,49 @@ on:
     paths:
       - '.github/workflows/made-with-jev.yml'
       - 'examples/jev-poc/madewithjev/**'
+      - 'examples/jev-poc/poc.py'
+      - 'examples/jev-poc/adapters.py'
+      - 'src/**'
+      - 'Cargo.*'
+      - 'rust-toolchain.toml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  sources:
+  replay:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
-      - name: Fetch pinned public repositories without executing their code
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Build the existing core and test the new adapters
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p evidence/sources
-          while read -r name repo pin; do
-            curl --fail --location --retry 2 --max-time 120 "https://codeload.github.com/$repo/tar.gz/$pin" -o "evidence/sources/$name.tar.gz"
-          done <<'PINS'
-          spam bitnovus/jev-spam-eval a3757a1b3412177a686c1b4d95227b50a8f73537
-          assay jourdanlabs/assay-001 b7f71053a88025a5af80af00801c5ce725c9547d
-          clean-code frostney/clean-code-review 0a9b36a66df17ea27719f3e3132d1c9c16bdc852
-          PINS
-          sha256sum evidence/sources/*.tar.gz > evidence/sources/SHA256SUMS
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+          mkdir -p target/made-evidence
+          git rev-parse HEAD > target/made-evidence/commit.txt
+          rustup toolchain install 1.98.1 --profile minimal
+          cargo build --locked 2>&1 | tee target/made-evidence/build.log
+          python3 -m unittest discover -s examples/jev-poc/madewithjev -p 'test_*.py' -v 2>&1 | tee target/made-evidence/tests.log
+      - name: Acquire pinned public sources without running upstream applications
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 examples/jev-poc/madewithjev/fetch.py --out target/made-sources 2>&1 | tee target/made-evidence/acquisition.log
+      - name: Replay saved decisions and explicit code-review fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 examples/jev-poc/madewithjev/run.py --sources target/made-sources --validator target/debug/validator --allow-unverified-email-runner --out target/made-evidence/runs 2>&1 | tee target/made-evidence/replay.log
+          python3 examples/jev-poc/madewithjev/record.py --run target/made-evidence/runs --summary target/made-evidence/outcomes.json --report target/made-evidence/review.md
+      - name: Retain the completed source tree for exact review
+        run: git archive HEAD > target/made-evidence/source.tar
+      - name: Preserve verification evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: made-with-jev-sources
-          path: evidence/sources/
+          name: made-with-jev-verification
+          path: target/made-evidence/
           retention-days: 7
           if-no-files-found: error

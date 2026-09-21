@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "example": "made-clean-code",
+  "task": {
+    "kind": "multi_label",
+    "labels": [
+      "too_many_arguments",
+      "flag_or_output_arguments",
+      "commented_out_code",
+      "swallowed_errors"
+    ]
+  },
+  "scope": "Four named all-scope Nouls only; all other findings require separate complete reference review.",
+  "cases": [
+    {
+      "case_id": "argument-count",
+      "family_id": "argument-count",
+      "partition": "development",
+      "model_input": {
+        "path": "argument-count.ts",
+        "code": "function sum(a,b,c) { return a+b+c; }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "too_many_arguments"
+        ]
+      },
+      "rationale": "Exactly three formal arguments; no other selected finding.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "empty-catch",
+      "family_id": "empty-catch",
+      "partition": "development",
+      "model_input": {
+        "path": "empty-catch.ts",
+        "code": "function save() { try { persist(); } catch (error) {} }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "swallowed_errors"
+        ]
+      },
+      "rationale": "A caught exception has no reporting, propagation, or recovery.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "clean-function",
+      "family_id": "clean-function",
+      "partition": "development",
+      "model_input": {
+        "path": "clean-function.ts",
+        "code": "function double(value) { return value * 2; }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": []
+      },
+      "rationale": "None of the four named findings is present.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "flag-and-comment",
+      "family_id": "flag-and-comment",
+      "partition": "development",
+      "model_input": {
+        "path": "flag-and-comment.ts",
+        "code": "function read(path, raw) {\n // oldRead(path);\n return raw ? readBytes(path) : readText(path);\n}"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "flag_or_output_arguments",
+          "commented_out_code"
+        ]
+      },
+      "rationale": "Boolean flag selects behavior; a commented executable call remains.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "two-args",
+      "family_id": "two-args",
+      "partition": "development",
+      "model_input": {
+        "path": "two-args.ts",
+        "code": "function add(left, right) { return left + right; }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": []
+      },
+      "rationale": "Two arguments, not the declared three-or-more threshold.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "propagated-error",
+      "family_id": "propagated-error",
+      "partition": "development",
+      "model_input": {
+        "path": "propagated-error.ts",
+        "code": "function save() { return persist(); }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": []
+      },
+      "rationale": "The thrown error is not caught or silently discarded.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "comment-explanation",
+      "family_id": "comment-explanation",
+      "partition": "development",
+      "model_input": {
+        "path": "comment-explanation.ts",
+        "code": "// Convert input values to their double.\nfunction double(value) { return value * 2; }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": []
+      },
+      "rationale": "The comment is an explanation, not disabled executable code.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "three-and-catch",
+      "family_id": "three-and-catch",
+      "partition": "development",
+      "model_input": {
+        "path": "three-and-catch.ts",
+        "code": "function put(a,b,c) { try { persist(a,b,c); } catch (e) {} }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "too_many_arguments",
+          "swallowed_errors"
+        ]
+      },
+      "rationale": "Three arguments and an empty exception handler; both labels apply.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    }
+  ]
+}

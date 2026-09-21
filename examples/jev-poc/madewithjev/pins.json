@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "discovery_url": "https://madewithjev.com/",
+  "checked_date": "2026-09-21",
+  "sources": {
+    "spam": {
+      "repository": "bitnovus/jev-spam-eval",
+      "commit": "a3757a1b3412177a686c1b4d95227b50a8f73537",
+      "files": {
+        "LICENSE": {
+          "sha256": "129c22b6a2bf9e44382f7d884e2e917b9795a4f6b2159577758db8e5b0cf9094",
+          "git_blob": "c3e7d6a93a2f9e29814e541f7386959cc15d8154"
+        },
+        "README.md": {
+          "sha256": "7d731299eef47bf661bdfc73d071ecb37bc92375e6a894bcac963a2c7f10bfc2",
+          "git_blob": "95985322037a1be21d4de7ed5b3c334c571913cf"
+        },
+        "spam_noul.py": {
+          "sha256": "228cb4833e1a8a77970f9b5760053d0622a1465d8e645e28bb73432f680516fe",
+          "git_blob": "47ccb3de8c42343e033c4366fa3b2c7a2cc3b4f6"
+        },
+        "phish.py": {
+          "sha256": "7d496a7f0a4e57c2e4f50f63918fbec1cfeced0bc6d07957480e9834e7597570",
+          "git_blob": "7c390b197e4bb51a3e236b1c81696847f6e42fae"
+        },
+        "results/results_criteria_all.jsonl": {
+          "sha256": "6f65bcbc2b1ea2e668707318447238eb981c825ada927c68f91175d3d0537e1a",
+          "git_blob": "11793910138f84c13d3265a15e2ecbd36052502d"
+        },
+        "results/phish_main_all.jsonl": {
+          "sha256": "2226da8e24e798de9b71dd9a7c9c9702aaecde18eae2c461c20ed17c27e691a5",
+          "git_blob": "fce50de26f9f6a845e0ac824b781b16db94fe294"
+        },
+        "results/phish_fresh.jsonl": {
+          "sha256": "8dc31e46568db13cbb2bc106cf9ae1493a9c5925ef18b43130d0443599c0276a",
+          "git_blob": "ea49fbe1a567b034ed9be73a11bc2b7d410df2be"
+        },
+        "results/phish_recent.jsonl": {
+          "sha256": "7bfa3c07521a0b725d99ffca975a5165740c9d3b4cea4c7154a4c9ca98150c06",
+          "git_blob": "ffccd010fde1b19b38016445c1cd8c0fea5951e5"
+        },
+        "experiments/jev-context/predictions.jsonl": {
+          "sha256": "8734286037cb913a84a2a746929ccab8be9f5a8357b7e9335cc3d9643031070c",
+          "git_blob": "9f0eadc671cfddd5ee9b15711439f3288a8d1229"
+        },
+        "experiments/jev-context/manifest.json": {
+          "sha256": "b5efe2bb493d0643f76d9f9ec23655703614f1c93ebfe9fc1efe84201e5ed7e5",
+          "git_blob": "46fd71bc8df32c0e1f6389c06d617a9e88a56dd2"
+        },
+        "experiments/jev-context/evaluate.py": {
+          "sha256": "cbb4ad06fcd0587005c43c3a0fe77070e3ccce05d81de8495b0a9fc981b1562c",
+          "git_blob": "740bae48d376661ab3e9eca47381defff84752ff"
+        },
+        "experiments/jev-context/REPORT.md": {
+          "sha256": "f5eabec397e0be42639e1a68dffaa2e6e3a5d532aff20a0eab9e9b4dabe3c8d4",
+          "git_blob": "f899d5026534f0bbb1c89e7eb5643128a21b82bc"
+        }
+      }
+    },
+    "assay": {
+      "repository": "jourdanlabs/assay-001",
+      "commit": "b7f71053a88025a5af80af00801c5ce725c9547d",
+      "files": {
+        "README.md": {
+          "sha256": "fa34e46ecb4d7e62f6e1a323fa08837936220889f1454f91913d15ac83d1d774",
+          "git_blob": "eff9f28cfe3e79d3b0501fbc1c87e3c928d47d4f"
+        },
+        "PROTOCOL.md": {
+          "sha256": "f8ce3f5b72abd4f48b8da0efdd1769d12f5e111d6e905b298cf0251bc4a09b48",
+          "git_blob": "5ab4c0bddd474ef49dfdacc0f0d9c062c41dfa64"
+        },
+        "REPORT.md": {
+          "sha256": "bbfc096fef57562df09531ff2a80270d375283519b7b254d44ce9ff2c8e7bf44",
+          "git_blob": "0220ab9efc2c2406ede11b195e6fc77e85e7971d"
+        },
+        "CORPUS.sha256": {
+          "sha256": "25d113581f3191354ab3543d3450df18c97132189d5ab6c5a0f803b82d02dfd8",
+          "git_blob": "b0e3d88f448c496209fc8320e78a7af5cb737428"
+        },
+        "harness/run.py": {
+          "sha256": "aa7ac95d26b1725e54629f64dc377ff727a7ac2c84ea3c9d93a40fd8e757f7cf",
+          "git_blob": "f7cd97d0ff83d7fafac1ce7732b08c74b4e9f4fb"
+        },
+        "harness/score.py": {
+          "sha256": "25b65705649dce68206adbb433ee2f82800d8c0a11b30f82dcdad0b8f646317e",
+          "git_blob": "fc4b97cfad62fcd040c92ef37fe511acd5d30948"
+        },
+        "corpus/banking77/categories.json": {
+          "sha256": "53261da888122daf2d120d925458631d9619e15d82e56052e7a42e535ce32b63",
+          "git_blob": "cdd2a5c77a4079a455f8fb7e751d1ecee0e2a5a4"
+        },
+        "corpus/banking77/test.csv": {
+          "sha256": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d",
+          "git_blob": "799687a8367359432985b8b13d85a2baf73f92dd"
+        },
+        "raw/run/banking77/responses.jsonl": {
+          "sha256": "b5c96bc1ff6be5efd702d943273a75eaaff7d4b1fc23ecd0b17eb03ad40de978",
+          "git_blob": "636b230edb71cdd10cc0316dd17fa2c20b98607b"
+        },
+        "raw/run/banking77/responses.sha256": {
+          "sha256": "855a8da423e9f7c25eb2119c86d20023f9f3efd1dc0f104c6e8bf66078f4347e",
+          "git_blob": "6c08ef880a05fd0485af3e4a44565977eb416433"
+        }
+      }
+    },
+    "clean-code": {
+      "repository": "frostney/clean-code-review",
+      "commit": "0a9b36a66df17ea27719f3e3132d1c9c16bdc852",
+      "files": {
+        "LICENSE": {
+          "sha256": "276f1ab18d1b59f5cdd6a60ef3ce622020ac1c8feb29d7974203b3efa32455ea",
+          "git_blob": "e1864fcd47aced1d8e95238c524a2d8384ba436f"
+        },
+        "README.md": {
+          "sha256": "bca2cc661bbcad86d1c2cb4d68dd0b4b29559be4e3b751c127dee87985ddfc3a",
+          "git_blob": "5eeacdd199a86c3da3f5999d87c10d4d28e80627"
+        },
+        "agent/lib/judging/questions.ts": {
+          "sha256": "2474ae9b76a121bfbe13b3b11c4eb5cc8e6854f3eedfb69b7126279eeea32083",
+          "git_blob": "59f7aa60227dd5b40ff2d639a53581ed0d3757b2"
+        },
+        "agent/lib/judging/judge.ts": {
+          "sha256": "8f99c25657bf59305fe2741e570784e738088db0699405850d6a22981c308b0d",
+          "git_blob": "bffed14bb453f9a467aab3f710ca717f2cf8c3a9"
+        },
+        "agent/lib/judging/schema.ts": {
+          "sha256": "21a3084ccc1af81d7eb8a4a54e791d84a2c2a405fdbc2f130f0f1d5e552e8673",
+          "git_blob": "8e8f83d5594e1c92ff79211d21fcd07ce1006257"
+        }
+      }
+    }
+  }
+}

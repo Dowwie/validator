@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "authority": "proposed task priorities for retrospective demonstration, not production deployment gates",
+  "spam-binary": {
+    "primary": "Do not increase legitimate messages marked spam.",
+    "guardrail": "Do not increase missed spam.",
+    "policy": "Compare both exact error counts on the same raw-record population. A tradeoff is not an unconditional improvement."
+  },
+  "email-main-fresh": {
+    "primary": "Improve correct classification without reducing phishing recall.",
+    "guardrail": "Do not increase legitimate messages falsely labeled phishing.",
+    "policy": "Assess each cohort separately; prior data-informed development prohibits held-out claims."
+  },
+  "email-recent": {
+    "primary": "Do not increase missed phishing.",
+    "guardrail": "No precision or false-positive acceptance claim: this cohort contains only phishing.",
+    "policy": "Never average away a recent-cohort regression with an older-cohort accuracy gain."
+  },
+  "banking77": {
+    "primary": "At least 95% of answered predictions agree with the frozen references.",
+    "guardrail": "Answer at least 75% of cases.",
+    "candidate": {
+      "confidence_minimum": 0.8
+    },
+    "policy": "Compute accuracy and coverage separately; reject-below must not rewrite raw predictions."
+  },
+  "clean-code": {
+    "primary": "Find the four explicitly reviewed flaw types without inventing additional labels.",
+    "guardrail": "Scope-inapplicable or missing answers cannot count as reviewed negatives.",
+    "policy": "Synthetic fixtures verify mapping and accounting only. No semantic-accuracy gate is executed."
+  }
+}

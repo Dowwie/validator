@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "origin": "synthetic_fixture",
+  "cases": [
+    {
+      "case_id": "argument-count",
+      "family_id": "argument-count",
+      "partition": "development",
+      "model_input": {
+        "path": "argument-count.ts",
+        "code": "function sum(a,b,c) { return a+b+c; }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "too_many_arguments"
+        ]
+      },
+      "rationale": "Synthetic protocol fixture, not independent semantic adjudication.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "empty-catch",
+      "family_id": "empty-catch",
+      "partition": "development",
+      "model_input": {
+        "path": "empty-catch.ts",
+        "code": "function save() { try { persist(); } catch (error) {} }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "swallowed_errors"
+        ]
+      },
+      "rationale": "Synthetic protocol fixture, not independent semantic adjudication.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "clean-function",
+      "family_id": "clean-function",
+      "partition": "development",
+      "model_input": {
+        "path": "clean-function.ts",
+        "code": "function double(value) { return value * 2; }"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": []
+      },
+      "rationale": "Synthetic protocol fixture, not independent semantic adjudication.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    },
+    {
+      "case_id": "flag-and-comment",
+      "family_id": "flag-and-comment",
+      "partition": "development",
+      "model_input": {
+        "path": "flag-and-comment.ts",
+        "code": "function read(path, raw) {\n // oldRead(path);\n return raw ? readBytes(path) : readText(path);\n}"
+      },
+      "proposed_expected": {
+        "type": "labels",
+        "labels": [
+          "flag_or_output_arguments",
+          "commented_out_code"
+        ]
+      },
+      "rationale": "Synthetic protocol fixture, not independent semantic adjudication.",
+      "review": {
+        "state": "pending",
+        "reviewer": null
+      }
+    }
+  ],
+  "records": [
+    {
+      "case_id": "argument-count",
+      "output": {
+        "answers": {
+          "too_many_arguments": {
+            "type": "noul",
+            "noul": 0.6
+          },
+          "flag_or_output_arguments": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "commented_out_code": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "swallowed_errors": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "function_size": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "nesting": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "verdict": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          }
+        },
+        "windows": 1,
+        "cut": false
+      },
+      "model": "synthetic-fixture"
+    },
+    {
+      "case_id": "empty-catch",
+      "output": {
+        "answers": {
+          "too_many_arguments": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "flag_or_output_arguments": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "commented_out_code": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "swallowed_errors": {
+            "type": "noul",
+            "noul": 0.9
+          },
+          "function_size": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "nesting": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "verdict": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          }
+        },
+        "windows": 1,
+        "cut": false
+      },
+      "model": "synthetic-fixture"
+    },
+    {
+      "case_id": "clean-function",
+      "output": {
+        "answers": {
+          "too_many_arguments": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "flag_or_output_arguments": {
+            "type": "noul",
+            "noul": 0.6
+          },
+          "commented_out_code": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "swallowed_errors": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "function_size": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "nesting": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "verdict": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          }
+        },
+        "windows": 1,
+        "cut": false
+      },
+      "model": "synthetic-fixture"
+    },
+    {
+      "case_id": "flag-and-comment",
+      "output": {
+        "answers": {
+          "too_many_arguments": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "flag_or_output_arguments": {
+            "type": "noul",
+            "noul": 0.8
+          },
+          "commented_out_code": {
+            "type": "noul",
+            "noul": 0.8
+          },
+          "swallowed_errors": {
+            "type": "noul",
+            "noul": 0.1
+          },
+          "function_size": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "nesting": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          },
+          "verdict": {
+            "type": "score",
+            "score": 3.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.1,
+              "3": 0.4,
+              "4": 0.5
+            }
+          }
+        },
+        "windows": 1,
+        "cut": false
+      },
+      "model": "synthetic-fixture"
+    }
+  ]
+}
