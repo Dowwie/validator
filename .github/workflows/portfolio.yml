@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/portfolio.yml'
       - 'examples/jev-poc/portfolio/**'
+      - 'examples/jev-poc/PORTFOLIO.md'
       - 'examples/jev-poc/poc.py'
       - 'examples/jev-poc/adapters.py'
       - 'src/**'
@@ -36,7 +37,9 @@ jobs:
           sponsor trungdq88/youtube-sponsor-detection de01f0568d043035889a296a61ce21e0accc8b16
           moderation CodeAlive-AI/mastra-jev-moderation 8735ea80efad6ec1dab26f74f1a7851007758915
           PINS
-          npm install --prefix target/portfolio-sources/moderation --ignore-scripts --no-audit --no-fund --save-exact zod@3.25.76
+          cp examples/jev-poc/portfolio/moderation.package.json target/portfolio-sources/moderation/package.json
+          cp examples/jev-poc/portfolio/moderation.package-lock.json target/portfolio-sources/moderation/package-lock.json
+          npm ci --prefix target/portfolio-sources/moderation --ignore-scripts --no-audit --no-fund
           tar -czf target/portfolio-evidence/sources.tar.gz -C target portfolio-sources
           sha256sum target/portfolio-evidence/sources.tar.gz > target/portfolio-evidence/sources.sha256
           git rev-parse HEAD > target/portfolio-evidence/commit.txt
@@ -48,6 +51,14 @@ jobs:
           rustup toolchain install 1.98.1 --profile minimal
           cargo build --locked 2>&1 | tee target/portfolio-evidence/build.log
           cp target/debug/validator target/portfolio-evidence/validator
+      - name: Run six tasks, independent accounting, and original controller tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 examples/jev-poc/portfolio/run.py --sources target/portfolio-sources --validator target/debug/validator --out target/portfolio-evidence/runs 2>&1 | tee target/portfolio-evidence/replay.log
+          PORTFOLIO_SOURCES=target/portfolio-sources PORTFOLIO_RESULTS=target/portfolio-evidence/runs python3 -m unittest discover -s examples/jev-poc/portfolio -p 'test_*.py' -v 2>&1 | tee target/portfolio-evidence/tests.log
+          node --test target/portfolio-sources/sponsor/test/live.test.js 2>&1 | tee target/portfolio-evidence/sponsor-live-tests.log
+          git diff --exit-code -- src schemas
       - name: Retain acquisition and execution evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

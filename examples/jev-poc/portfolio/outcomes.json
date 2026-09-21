@@ -1,0 +1,952 @@
+{
+  "binary_sha256": "bf33ab4a1ca16ee7cf985ff6d83bacf58344b452580639ddd0ce4c7ad0898dab",
+  "comparisons": 6,
+  "evaluations": 12,
+  "execution": {
+    "additional_attempt": {
+      "reason": "youtubei.js is not installed in the minimal controller-only environment; no pipeline assertion executed",
+      "status": "could_not_load",
+      "suite": "Sponsor test/pipeline.test.js"
+    },
+    "checks_are_scoped_not_exhaustive": true,
+    "date": "2026-09-21",
+    "location": "local sandbox",
+    "prior_example_tests_passed": 55,
+    "prior_gallery_tests_passed": 25,
+    "python_tests_passed": 29,
+    "source_acquisition_run": 35617609759,
+    "source_pr_parent": "4209d39bb6fbda748a86878166a6751f6c8729fc",
+    "sponsor_original_live_tests_passed": 5
+  },
+  "human_approvals_created": 0,
+  "limitations": [
+    "Published responses are upstream claims, not signed provenance or fresh inference.",
+    "Atlas publishes jev-latest, not the resolved model revision; retain that uncertainty.",
+    "Two explicit-null sarcasm references are withheld, not relabeled.",
+    "Historical triage agreement is not semantic accuracy.",
+    "Synthetic replies prove native software behavior only.",
+    "These small author diagnostics are neither population estimates nor held-out optimization."
+  ],
+  "live_model_calls": 0,
+  "native_checks": [
+    "sponsor-12-scenarios-both-thresholds-exact-actions",
+    "sponsor-noul-not-native-confidence",
+    "sponsor-internal-utterance-order-preserved",
+    "sponsor-no-two-outstanding-requests",
+    "sponsor-no-unrequested-answer-action",
+    "sponsor-preseek-late-transcript-is-not-new-evidence",
+    "sponsor-silence-timeout-resets-without-skip",
+    "sponsor-skip-limit-is-policy-not-negative-noul",
+    "moderation-10-scenarios-both-thresholds-exact-actions",
+    "moderation-actual-two-native-questions",
+    "moderation-category-is-not-the-block-gate",
+    "moderation-missing-category-cannot-bypass-block",
+    "moderation-http-failure-remains-action-not-model-no",
+    "moderation-last-message-only-and-truncation",
+    "moderation-invalid-json-fails-open",
+    "moderation-missing-gate-is-not-p0",
+    "moderation-circuit-open-cooldown-and-recovery",
+    "moderation-tripwire-reason-distinct"
+  ],
+  "new_tasks": 6,
+  "results": {
+    "citation-support": {
+      "arms": {
+        "confidence-080": {
+          "abstained_case_ids": [
+            "subtle_thin_support"
+          ],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 1,
+            "answered": 4,
+            "correct": 4,
+            "matrix": [
+              [
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1,
+                1
+              ]
+            ],
+            "total": 5,
+            "wrong": 0
+          },
+          "dataset_sha256": "1eccc426a9c8d8fd4a83ee78e2cf0a18fa4f9ead94c5edff892e6780f2810b87",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": {
+            "brier": 0.054759999999999996,
+            "log_loss": 0.09240709191931173
+          },
+          "reference_agreement": {
+            "accuracy": 0.8,
+            "coverage": 0.8,
+            "selective_accuracy": 1.0
+          },
+          "report_sha256": "0efa5610141cbc93b35c4273a07be6ee22f5cb64b9c6c73bf2f982735978d82c",
+          "wrong_case_ids": []
+        },
+        "recorded": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 5,
+            "correct": 5,
+            "matrix": [
+              [
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                2,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                2,
+                0
+              ]
+            ],
+            "total": 5,
+            "wrong": 0
+          },
+          "dataset_sha256": "1eccc426a9c8d8fd4a83ee78e2cf0a18fa4f9ead94c5edff892e6780f2810b87",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": {
+            "brier": 0.054759999999999996,
+            "log_loss": 0.09240709191931173
+          },
+          "reference_agreement": {
+            "accuracy": 1.0,
+            "coverage": 1.0,
+            "selective_accuracy": 1.0
+          },
+          "report_sha256": "eafe257b9ee7f8c28d9ed6124381f2864a86419f2c8c86c8e200d5fc3b0ba29c",
+          "wrong_case_ids": []
+        }
+      },
+      "cases": 5,
+      "comparison": {
+        "baseline": "recorded",
+        "both_correct": [
+          "clear_contradiction",
+          "reversed_meaning_high_overlap",
+          "paraphrase_support",
+          "irrelevant"
+        ],
+        "candidate": "confidence-080",
+        "changed_final_outcomes": [
+          "subtle_thin_support"
+        ],
+        "neither_correct": [],
+        "recovered": [],
+        "regressed": [
+          "subtle_thin_support"
+        ],
+        "sha256": "eb8f18ef78aa27b4292e53bacb43a6f91fc6f8c1031ac3143e070dafb9703f12"
+      },
+      "origin": "published_replay",
+      "reference_meaning": "author_diagnostic_agreement",
+      "rubric": {
+        "goal": "Distinguish support, contradiction, and insufficient support without silently dropping disputed cases.",
+        "guards": [
+          "No new wrong answers",
+          "Retain correct answers and report review burden"
+        ],
+        "next_experiment": "Review the thin-support reference independently before changing the question. A confidence gate is not a correction."
+      },
+      "rubric_result": {
+        "candidate_does_not_increase_wrong_count": true,
+        "candidate_has_no_regressed_cases": false,
+        "candidate_preserves_answered_population": false,
+        "candidate_preserves_correct_count": false,
+        "semantic_acceptance": "retrospective_reference_agreement_only"
+      },
+      "source": {
+        "commit": "4746cfd6bc679fb1c8ffdd8317920fbf77a13542",
+        "repository": "Zaious/jev-capability-atlas"
+      },
+      "verification": [
+        "all_raw_and_final_matrix_cells",
+        "per_class_rates",
+        "exact_transition_ids",
+        "affected_case_inspection",
+        "relocation",
+        "tamper_rejection"
+      ],
+      "withheld": []
+    },
+    "feed-triage": {
+      "arms": {
+        "threshold-075": {
+          "abstained_case_ids": [
+            "case-49",
+            "case-32",
+            "case-20",
+            "case-50",
+            "case-51",
+            "case-48",
+            "case-28",
+            "case-15",
+            "case-43",
+            "case-44",
+            "case-30",
+            "case-08"
+          ],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 12,
+            "answered": 3,
+            "correct": 1,
+            "matrix": [
+              [
+                0,
+                0,
+                0,
+                2
+              ],
+              [
+                2,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                0,
+                1,
+                5
+              ]
+            ],
+            "total": 15,
+            "wrong": 2
+          },
+          "dataset_sha256": "cb2c3f69c98f6c764933acf55119a20f2b46165f00c6f527f6a1ecfb84d8d66c",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": null,
+          "reference_agreement": {
+            "accuracy": 0.06666666666666667,
+            "coverage": 0.2,
+            "selective_accuracy": 0.3333333333333333
+          },
+          "report_sha256": "0effcaec1e78689ee21372c5834d56c6e4e872261a4c750930b1b2a21bf0d407",
+          "wrong_case_ids": [
+            "case-47",
+            "case-13"
+          ]
+        },
+        "threshold-090": {
+          "abstained_case_ids": [
+            "case-49",
+            "case-32",
+            "case-20",
+            "case-50",
+            "case-51",
+            "case-47",
+            "case-48",
+            "case-28",
+            "case-15",
+            "case-43",
+            "case-44",
+            "case-30",
+            "case-08"
+          ],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 13,
+            "answered": 2,
+            "correct": 1,
+            "matrix": [
+              [
+                0,
+                0,
+                0,
+                2
+              ],
+              [
+                1,
+                0,
+                0,
+                6
+              ],
+              [
+                0,
+                0,
+                1,
+                5
+              ]
+            ],
+            "total": 15,
+            "wrong": 1
+          },
+          "dataset_sha256": "cb2c3f69c98f6c764933acf55119a20f2b46165f00c6f527f6a1ecfb84d8d66c",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": null,
+          "reference_agreement": {
+            "accuracy": 0.06666666666666667,
+            "coverage": 0.13333333333333333,
+            "selective_accuracy": 0.5
+          },
+          "report_sha256": "fba1734eb512f817a28e797b29c44e962435a027d1b51b973485957ae9dd89b5",
+          "wrong_case_ids": [
+            "case-13"
+          ]
+        }
+      },
+      "cases": 15,
+      "comparison": {
+        "baseline": "threshold-075",
+        "both_correct": [
+          "case-46"
+        ],
+        "candidate": "threshold-090",
+        "changed_final_outcomes": [
+          "case-47"
+        ],
+        "neither_correct": [
+          "case-49",
+          "case-32",
+          "case-20",
+          "case-50",
+          "case-51",
+          "case-47",
+          "case-48",
+          "case-28",
+          "case-15",
+          "case-43",
+          "case-44",
+          "case-13",
+          "case-30",
+          "case-08"
+        ],
+        "recovered": [],
+        "regressed": [],
+        "sha256": "122fc42f16a50dd41f42093c097d826f980133b2c52ce38b830e3eb2ed9ca017"
+      },
+      "origin": "published_replay",
+      "reference_meaning": "historical_label_agreement",
+      "rubric": {
+        "goal": "Measure active/discard commitments separately from deferred review, against disclosed historical labels.",
+        "guards": [
+          "Count false active/discard commitments",
+          "Report review coverage and correct commitments separately"
+        ],
+        "next_experiment": "Ratify the intended watch policy and historical references before tuning. Raising a threshold can defer a disagreement without solving it."
+      },
+      "rubric_result": {
+        "candidate_does_not_increase_wrong_count": true,
+        "candidate_has_no_regressed_cases": true,
+        "candidate_preserves_answered_population": false,
+        "candidate_preserves_correct_count": true,
+        "semantic_acceptance": "retrospective_reference_agreement_only"
+      },
+      "source": {
+        "commit": "4746cfd6bc679fb1c8ffdd8317920fbf77a13542",
+        "repository": "Zaious/jev-capability-atlas"
+      },
+      "verification": [
+        "all_raw_and_final_matrix_cells",
+        "per_class_rates",
+        "exact_transition_ids",
+        "affected_case_inspection",
+        "relocation",
+        "tamper_rejection"
+      ],
+      "withheld": []
+    },
+    "moderation-action": {
+      "arms": {
+        "baseline": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 10,
+            "correct": 8,
+            "matrix": [
+              [
+                4,
+                1,
+                0
+              ],
+              [
+                1,
+                4,
+                0
+              ]
+            ],
+            "total": 10,
+            "wrong": 2
+          },
+          "dataset_sha256": "d50d089b2b4fb383b8356af43ff6dc81cbe77a15f3bfc1d538a5cc890e3f855e",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": null,
+          "report_sha256": "1a4d88e610b3cf9ea3b7dccf70966876e833600a9d5939d76e6b53ff9b782e92",
+          "wrong_case_ids": [
+            "m10",
+            "m08"
+          ]
+        },
+        "candidate": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 10,
+            "correct": 8,
+            "matrix": [
+              [
+                5,
+                0,
+                0
+              ],
+              [
+                2,
+                3,
+                0
+              ]
+            ],
+            "total": 10,
+            "wrong": 2
+          },
+          "dataset_sha256": "d50d089b2b4fb383b8356af43ff6dc81cbe77a15f3bfc1d538a5cc890e3f855e",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": null,
+          "report_sha256": "3f927db18e0cc96dc815c1462b06e207bb67b250d03e0a4bb72f904d12c59a59",
+          "wrong_case_ids": [
+            "m02",
+            "m08"
+          ]
+        }
+      },
+      "cases": 10,
+      "comparison": {
+        "baseline": "baseline",
+        "both_correct": [
+          "m04",
+          "m07",
+          "m03",
+          "m01",
+          "m09",
+          "m05",
+          "m06"
+        ],
+        "candidate": "candidate",
+        "changed_final_outcomes": [
+          "m10",
+          "m02"
+        ],
+        "neither_correct": [
+          "m08"
+        ],
+        "recovered": [
+          "m10"
+        ],
+        "regressed": [
+          "m02"
+        ],
+        "sha256": "2ca6b776aed0880e422425a6381b4fa4a7518e2a79e5267c8a6585309d381db7"
+      },
+      "origin": "synthetic_fixture",
+      "reference_meaning": "synthetic_software_test",
+      "rubric": {
+        "goal": "Keep model blocking judgment, categorical logging, and fail-open application behavior distinct.",
+        "guards": [
+          "Missing category cannot bypass a block",
+          "Missing model verdict is not p=0",
+          "Record pass-through on failure explicitly"
+        ],
+        "next_experiment": "Choose and review a domain policy before live evaluation. These fixtures do not certify content moderation safety."
+      },
+      "rubric_result": {
+        "candidate_does_not_increase_wrong_count": true,
+        "candidate_has_no_regressed_cases": false,
+        "candidate_preserves_answered_population": true,
+        "candidate_preserves_correct_count": true,
+        "semantic_acceptance": "not_assessed"
+      },
+      "source": {
+        "commit": "8735ea80efad6ec1dab26f74f1a7851007758915",
+        "repository": "CodeAlive-AI/mastra-jev-moderation"
+      },
+      "verification": [
+        "all_raw_and_final_matrix_cells",
+        "per_class_rates",
+        "exact_transition_ids",
+        "affected_case_inspection",
+        "relocation",
+        "tamper_rejection"
+      ],
+      "withheld": []
+    },
+    "sarcasm-context": {
+      "arms": {
+        "confidence-080": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 10,
+            "correct": 10,
+            "matrix": [
+              [
+                5,
+                0,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ]
+            ],
+            "total": 10,
+            "wrong": 0
+          },
+          "dataset_sha256": "778f2f653b67027048000b00fbe21e8eb4a99a62aba306c65be9b280ec447c08",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": {
+            "brier": 0.0040599999999999985,
+            "log_loss": 0.028075494449851794
+          },
+          "reference_agreement": {
+            "accuracy": 1.0,
+            "coverage": 1.0,
+            "selective_accuracy": 1.0
+          },
+          "report_sha256": "ed69bfe9910ece87519dfef8df94f1e5830da573911ba84020e93589bf5fde05",
+          "wrong_case_ids": []
+        },
+        "recorded": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 10,
+            "correct": 10,
+            "matrix": [
+              [
+                5,
+                0,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ]
+            ],
+            "total": 10,
+            "wrong": 0
+          },
+          "dataset_sha256": "778f2f653b67027048000b00fbe21e8eb4a99a62aba306c65be9b280ec447c08",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": {
+            "brier": 0.0040599999999999985,
+            "log_loss": 0.028075494449851794
+          },
+          "reference_agreement": {
+            "accuracy": 1.0,
+            "coverage": 1.0,
+            "selective_accuracy": 1.0
+          },
+          "report_sha256": "1ff8626d31db2e76eeaa54e93b33e86f4e3bd2292bb7e5923fa5378efb94f66b",
+          "wrong_case_ids": []
+        }
+      },
+      "cases": 10,
+      "comparison": {
+        "baseline": "recorded",
+        "both_correct": [
+          "MS3",
+          "SC4",
+          "SC5",
+          "SC2",
+          "MS2",
+          "SC3",
+          "MS5",
+          "MS1",
+          "SC1",
+          "MS4"
+        ],
+        "candidate": "confidence-080",
+        "changed_final_outcomes": [],
+        "neither_correct": [],
+        "recovered": [],
+        "regressed": [],
+        "sha256": "e378dc776754be9e489b9dcd2d3055505e894c4c74db305b2676e379d48e6303"
+      },
+      "origin": "published_replay",
+      "reference_meaning": "author_diagnostic_agreement",
+      "rubric": {
+        "goal": "Use supplied context while keeping unresolved reference intent outside hard-label scoring.",
+        "guards": [
+          "Explicit-null references stay unscored",
+          "Do not define ambiguous truth using model confidence"
+        ],
+        "next_experiment": "Have an independent reviewer adjudicate or keep the ambiguous cases withheld. Do not use certainty as truth."
+      },
+      "rubric_result": {
+        "candidate_does_not_increase_wrong_count": true,
+        "candidate_has_no_regressed_cases": true,
+        "candidate_preserves_answered_population": true,
+        "candidate_preserves_correct_count": true,
+        "semantic_acceptance": "retrospective_reference_agreement_only"
+      },
+      "source": {
+        "commit": "4746cfd6bc679fb1c8ffdd8317920fbf77a13542",
+        "repository": "Zaious/jev-capability-atlas"
+      },
+      "verification": [
+        "all_raw_and_final_matrix_cells",
+        "per_class_rates",
+        "exact_transition_ids",
+        "affected_case_inspection",
+        "relocation",
+        "tamper_rejection"
+      ],
+      "withheld": [
+        {
+          "confidence": 0.19,
+          "id": "AMB1",
+          "observed_choice": "sarcastic",
+          "probabilities": {
+            "sarcastic": 0.59,
+            "sincere": 0.41
+          },
+          "reason": "upstream_reference_is_explicitly_unresolved"
+        },
+        {
+          "confidence": 1.0,
+          "id": "AMB2",
+          "observed_choice": "sarcastic",
+          "probabilities": {
+            "sarcastic": 1.0,
+            "sincere": 0.0
+          },
+          "reason": "upstream_reference_is_explicitly_unresolved"
+        }
+      ]
+    },
+    "sarcasm-local": {
+      "arms": {
+        "confidence-080": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 12,
+            "correct": 12,
+            "matrix": [
+              [
+                5,
+                0,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ]
+            ],
+            "total": 12,
+            "wrong": 0
+          },
+          "dataset_sha256": "20b14c0500742efad487685f36508090a41b4d9103dab3b07aae9c6b90873bca",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": {
+            "brier": 0.0029166666666666664,
+            "log_loss": 0.01993956989447614
+          },
+          "reference_agreement": {
+            "accuracy": 1.0,
+            "coverage": 1.0,
+            "selective_accuracy": 1.0
+          },
+          "report_sha256": "c9b75fc34ac663b7ee16a46ac677733d912fe5512233511492967b054e224a39",
+          "wrong_case_ids": []
+        },
+        "recorded": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 12,
+            "correct": 12,
+            "matrix": [
+              [
+                5,
+                0,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ]
+            ],
+            "total": 12,
+            "wrong": 0
+          },
+          "dataset_sha256": "20b14c0500742efad487685f36508090a41b4d9103dab3b07aae9c6b90873bca",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": {
+            "brier": 0.0029166666666666664,
+            "log_loss": 0.01993956989447614
+          },
+          "reference_agreement": {
+            "accuracy": 1.0,
+            "coverage": 1.0,
+            "selective_accuracy": 1.0
+          },
+          "report_sha256": "7e0dc18fba3bbc839d56ff61ead6bbc4b06894c210e022a1ecad2f1c144fcaf0",
+          "wrong_case_ids": []
+        }
+      },
+      "cases": 12,
+      "comparison": {
+        "baseline": "recorded",
+        "both_correct": [
+          "I1",
+          "T1",
+          "S1",
+          "I3",
+          "B2",
+          "T2",
+          "D2",
+          "S2",
+          "I2",
+          "B1",
+          "S3",
+          "D1"
+        ],
+        "candidate": "confidence-080",
+        "changed_final_outcomes": [],
+        "neither_correct": [],
+        "recovered": [],
+        "regressed": [],
+        "sha256": "e447ae34f829d26003b201da04eaaa32f198e883cd993fd56f78285aaafefe32"
+      },
+      "origin": "published_replay",
+      "reference_meaning": "author_diagnostic_agreement",
+      "rubric": {
+        "goal": "Classify local textual intent; keep this population separate from cross-turn examples.",
+        "guards": [
+          "No new wrong answers",
+          "Preserve answered coverage"
+        ],
+        "next_experiment": "Obtain an independent challenge set; perfect agreement on twelve authored cases is not a general accuracy estimate."
+      },
+      "rubric_result": {
+        "candidate_does_not_increase_wrong_count": true,
+        "candidate_has_no_regressed_cases": true,
+        "candidate_preserves_answered_population": true,
+        "candidate_preserves_correct_count": true,
+        "semantic_acceptance": "retrospective_reference_agreement_only"
+      },
+      "source": {
+        "commit": "4746cfd6bc679fb1c8ffdd8317920fbf77a13542",
+        "repository": "Zaious/jev-capability-atlas"
+      },
+      "verification": [
+        "all_raw_and_final_matrix_cells",
+        "per_class_rates",
+        "exact_transition_ids",
+        "affected_case_inspection",
+        "relocation",
+        "tamper_rejection"
+      ],
+      "withheld": []
+    },
+    "sponsor-action": {
+      "arms": {
+        "baseline": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 12,
+            "correct": 11,
+            "matrix": [
+              [
+                7,
+                1,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ]
+            ],
+            "total": 12,
+            "wrong": 1
+          },
+          "dataset_sha256": "2265f5056af99222e8f4069ef6cd652926f9973ee082b48516436df66a78f4de",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": null,
+          "report_sha256": "62680a3a37b6c48947cafdf3e4a7d28f8939a554477d1d97b6912592931a9d72",
+          "wrong_case_ids": [
+            "s11"
+          ]
+        },
+        "candidate": {
+          "abstained_case_ids": [],
+          "count_oracle_passed": true,
+          "counts": {
+            "abstained": 0,
+            "answered": 12,
+            "correct": 10,
+            "matrix": [
+              [
+                8,
+                0,
+                0
+              ],
+              [
+                2,
+                2,
+                0
+              ]
+            ],
+            "total": 12,
+            "wrong": 2
+          },
+          "dataset_sha256": "2265f5056af99222e8f4069ef6cd652926f9973ee082b48516436df66a78f4de",
+          "model_performance_claim": null,
+          "probability_audit_passed": true,
+          "probability_oracle": null,
+          "report_sha256": "783ec57e60a6bec0ce4b9dfc8482494bbe92b205ba2a958e97a73982af9ae1ff",
+          "wrong_case_ids": [
+            "s12",
+            "s02"
+          ]
+        }
+      },
+      "cases": 12,
+      "comparison": {
+        "baseline": "baseline",
+        "both_correct": [
+          "s05",
+          "s06",
+          "s10",
+          "s04",
+          "s07",
+          "s08",
+          "s09",
+          "s01",
+          "s03"
+        ],
+        "candidate": "candidate",
+        "changed_final_outcomes": [
+          "s11",
+          "s12",
+          "s02"
+        ],
+        "neither_correct": [],
+        "recovered": [
+          "s11"
+        ],
+        "regressed": [
+          "s12",
+          "s02"
+        ],
+        "sha256": "b14af5440fa8fbef409479621a8a4b03c5d2692cbd7ff8bd75394e0f5049d813"
+      },
+      "origin": "synthetic_fixture",
+      "reference_meaning": "synthetic_software_test",
+      "rubric": {
+        "goal": "Prove that ordered hearing/seek history and Noul answers produce the declared skip action.",
+        "guards": [
+          "Preserve time ordering",
+          "No skip without a request",
+          "Skip limit and silence are not negative model predictions"
+        ],
+        "next_experiment": "Label complete audio/transcript sequences independently, then capture live responses. Never claim skip-time accuracy from these fixtures."
+      },
+      "rubric_result": {
+        "candidate_does_not_increase_wrong_count": false,
+        "candidate_has_no_regressed_cases": false,
+        "candidate_preserves_answered_population": true,
+        "candidate_preserves_correct_count": false,
+        "semantic_acceptance": "not_assessed"
+      },
+      "source": {
+        "commit": "de01f0568d043035889a296a61ce21e0accc8b16",
+        "repository": "trungdq88/youtube-sponsor-detection"
+      },
+      "verification": [
+        "all_raw_and_final_matrix_cells",
+        "per_class_rates",
+        "exact_transition_ids",
+        "affected_case_inspection",
+        "relocation",
+        "tamper_rejection"
+      ],
+      "withheld": []
+    }
+  },
+  "schema_version": 1,
+  "source_pins": {
+    "atlas": {
+      "commit": "4746cfd6bc679fb1c8ffdd8317920fbf77a13542",
+      "repository": "Zaious/jev-capability-atlas"
+    },
+    "moderation": {
+      "commit": "8735ea80efad6ec1dab26f74f1a7851007758915",
+      "repository": "CodeAlive-AI/mastra-jev-moderation"
+    },
+    "sponsor": {
+      "commit": "de01f0568d043035889a296a61ce21e0accc8b16",
+      "repository": "trungdq88/youtube-sponsor-detection"
+    }
+  },
+  "status": "passed",
+  "test_log_sha256": {
+    "final-sponsor-tests.log": "0884f8afab972a6fef477f2c708fb540f53d846ca9d01176979607dcc8c65ca4",
+    "final-tests.log": "8a89c51095dd0763952812bd88d38f9383639b66c0b40ec60ec3a70fd96327d7",
+    "prior-made-tests.log": "8f20105d76fd13abd18408696b06f14474e367c7a3486ff5f017f7b2c587ed38",
+    "prior-tests-full.log": "57434505cb7b9c1f439ea2d1bc4523bd671f181dbd1b007314532c78f79f594a",
+    "sponsor-tests.log": "0bb6f08c6e1e3453810ac0b55c1f6c38cb27b51b3ef0497e6836a64955084fbf"
+  },
+  "tested_files_sha256": {
+    "moderation.package-lock.json": "6b190277affed6825c74122ed8ccde807380ca91254e6d4d534e7762093bd38d",
+    "moderation.package.json": "d0993dea98cfa563eb2955d37ccbd5ff6e831f77d4cce534d06e517247102457",
+    "native-cases.json": "e965d5e53ebf14f49e00cbbc428e9de614b65e8aaef7510d6f9b7d49d1cff0bf",
+    "native.mjs": "5358cfd7caaf7e7897f882558c3cb3491debdac9160686e0ff161581cc62d971",
+    "rubric.json": "acac379affdef415e0c1aa2a49fe8d2c07ed260486644334ded6c9fb0b5471a2",
+    "run.py": "2f873fb2d7d871e9cfc05ddbe77dcc3606b048c7100f53bd19619bb78b571045",
+    "sources.json": "43365c131850844493380991d3183837d1f9734c9cd677f0000497f2343a236b",
+    "tasks.py": "292c9fa4b42118e859c7796642d52a51e64d07fe5c043636d6be84d48ee1006f",
+    "test_portfolio.py": "c9e15520db369d03174ce604ca880fbc41953f4e59e7b0425eb9a07d88243e65"
+  }
+}

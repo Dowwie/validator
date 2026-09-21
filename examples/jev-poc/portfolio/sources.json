@@ -1,0 +1,124 @@
+{
+  "atlas": {
+    "repository": "Zaious/jev-capability-atlas",
+    "commit": "4746cfd6bc679fb1c8ffdd8317920fbf77a13542",
+    "files": {
+      "LICENSE": {
+        "sha256": "932252b8bb0ad5c92a3fe4b8c3f6e48d791abc35035ef34c9494789ad4a1801a",
+        "git_blob": "7734db6f451a50bf6483ecd9f801c4cb2bd28edd"
+      },
+      "NOTICE": {
+        "sha256": "d876169754c7e4bf9f7d9954a9952df519e2828a0a218132acbe1363e28c5f91",
+        "git_blob": "e7b36666206e3e419cc77214912cc9b90032f91f"
+      },
+      "scripts/common/jev_client.py": {
+        "sha256": "2ec4ed2b88087859b406d94e1339d7c8cb10c575a35696586a2328cb7d9aacfe",
+        "git_blob": "3bc6f9e13076cbad9639949e9cba5c724a25b017"
+      },
+      "suites/citation-support-check/README.md": {
+        "sha256": "e73c5c707fbda1f435879021d21bb0cdee2f6dfa924a55583089690a47694b27",
+        "git_blob": "dc40a65b1edaa3b357fc2b2b1c50cba7b5fec7cb"
+      },
+      "suites/citation-support-check/protocol.yaml": {
+        "sha256": "e8bed56300dfe870c0eb72771cc49499c9e730d479f12ed09fa629e5acd6911d",
+        "git_blob": "b8eb93e18b7bbbd9b1cac26ddc6761fc653ed377"
+      },
+      "suites/citation-support-check/run.py": {
+        "sha256": "05a561d054e8d7cdb849dafca24f95b30e60331d25092b3702909da82c65f376",
+        "git_blob": "bf49b675257b1a9df803d779feaa71974e66acf5"
+      },
+      "suites/citation-support-check/runs/2026-09-19.json": {
+        "sha256": "7e8de8df64d2c170fa10c7f770efdbd1702183fe7e9867e81813ee2f791371d7",
+        "git_blob": "a243d4bf4cf1f5ee2f6b09a196d7a8ba8bcf09f3"
+      },
+      "suites/citation-support-check/data/cases.json": {
+        "sha256": "046b1c734937f59d5da1a4fdc3a61bdd63e2a507a622a9968b6715eb789f10d1",
+        "git_blob": "de3245f7b16fe5e5cfbcb956d3ad96acccd728e1"
+      },
+      "suites/sarcasm-vs-sincere-praise/README.md": {
+        "sha256": "1058a4d986674c886b91227852dde90af18681f51342d31036bd104767ca51d5",
+        "git_blob": "efb0a8565db0e80750e35b381ac85f093bcc5570"
+      },
+      "suites/sarcasm-vs-sincere-praise/protocol.yaml": {
+        "sha256": "1eb84d5207e54f270ba48d629f1eccc0127782a90b6da4e0867a5fcb502d6758",
+        "git_blob": "424fcf9918d6fea7e384795b1d0ba125708d6e1a"
+      },
+      "suites/sarcasm-vs-sincere-praise/run.py": {
+        "sha256": "f0692240a98ff3d98407815f7e9beeb71b82d8aeb4fccf32400bf99c73e4b251",
+        "git_blob": "36e91788a322782c8d1db06dab6735199bc380f0"
+      },
+      "suites/sarcasm-vs-sincere-praise/runs/2026-09-19.json": {
+        "sha256": "f206c52e10114de2d8fce395e73b3e777de4c72c6f846a8ebb01ba9ffd096342",
+        "git_blob": "12cbf47e3ebf6b3636a067b1a72b15db9719a8de"
+      },
+      "suites/sarcasm-vs-sincere-praise/data/same-clause.json": {
+        "sha256": "645c35a47b08816294632fac27d1a085bd39d4362ac8ed2fc1c48fc5b88d1043",
+        "git_blob": "a56b2be50f9a98cf3696299d980b9cc6740bbd48"
+      },
+      "suites/sarcasm-vs-sincere-praise/data/cross-turn.json": {
+        "sha256": "293a863d5c08fe7b2cedec00aaad26f9044368c9a2b920cfa17818a9015b22a6",
+        "git_blob": "a92e80a7644f41bc27c8f790dd8a936abf9c0180"
+      },
+      "suites/stage1-triage-filter/README.md": {
+        "sha256": "b01848d59a1e3a107c26af22c585ee285089c1bd7dd8a422c1f95fe2f541cbac",
+        "git_blob": "5af20790b73bf69bbc6a6f044f406d1182859d31"
+      },
+      "suites/stage1-triage-filter/protocol.yaml": {
+        "sha256": "99d3ddde481aea2b1dbc53ddf95c47883afb6b5e6c49f252d22324866031d44e",
+        "git_blob": "d6d3d844bc146638336b03d5f8d3c1c364f78ca0"
+      },
+      "suites/stage1-triage-filter/run.py": {
+        "sha256": "5bd4d7f61a7a8dee1cf26420b45627026d95ba2c33cd25a73198a0fe99a6c079",
+        "git_blob": "f2b232b58025deae0e96bdb31602b76a6d8259d3"
+      },
+      "suites/stage1-triage-filter/runs/2026-09-20.json": {
+        "sha256": "f7e6ae4af31db7dcda64e24a8a59c68172a865bda85e75fdd9f9e464858b3f85",
+        "git_blob": "c988e29d16373986151be447a18a751898526770"
+      },
+      "suites/stage1-triage-filter/data/cases.json": {
+        "sha256": "c9a99550ca0c0bd5e5fea52b8df4e176c893194f0e3885a75453698e7a305e54",
+        "git_blob": "aa783db177243a2c7dcf2584ae685e9c8a940f86"
+      }
+    }
+  },
+  "sponsor": {
+    "repository": "trungdq88/youtube-sponsor-detection",
+    "commit": "de01f0568d043035889a296a61ce21e0accc8b16",
+    "files": {
+      "src/live.js": {
+        "sha256": "e1d61ef7ea91324c04015c9ee7d76157644f67fe0e4e285cdc1c4c09027d7f84",
+        "git_blob": "8e3cf3ce19dccb84c67f0df199753d48baffa219"
+      },
+      "src/jev.js": {
+        "sha256": "966518248785cd3347e07668c9e321e8ae635534d90b8724ae10215db2c6d1dc",
+        "git_blob": "05c71b773a47f7082a33856bc61a4a2de52a835b"
+      },
+      "src/transcript.js": {
+        "sha256": "dd5996798d609578ff616de37d8ebcd15006d0c9fcc2df8d739b84ea2f9b3ff3",
+        "git_blob": "0a4550520c680408da7ba1b5e1a38294c5dd3814"
+      },
+      "package.json": {
+        "sha256": "1dd8c91717084e7ad78ed90c8b75c744134e4a7c5e2da37127323b8d9602aeb2",
+        "git_blob": "fd77676ec00802f44c224f6fe2d79808348570b0"
+      }
+    }
+  },
+  "moderation": {
+    "repository": "CodeAlive-AI/mastra-jev-moderation",
+    "commit": "8735ea80efad6ec1dab26f74f1a7851007758915",
+    "files": {
+      "LICENSE": {
+        "sha256": "b4541ba171789ef9ab4f7f0aef6bea0675db520bfadfe6c43a7e01bb7f091f23",
+        "git_blob": "6d268aef384fbdba8e6fdb8ea1a65bf1bbb57dfd"
+      },
+      "jev-moderation.ts": {
+        "sha256": "329defb68c6fbd9d9b2ba29e893cb6c8fec6ccd7e68b76c54de931cd2c78fb5f",
+        "git_blob": "48b4f56ae82e5403a2dc836487fa894d65165e6b"
+      },
+      "README.md": {
+        "sha256": "738e54e49852cb122d308e151a67164a39c66fc4c49bcb38e9527d7b53e4686e",
+        "git_blob": "99d8a5adac0331bd008b8167c1d6d7911fc00ac9"
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "citation-support": {
+    "goal": "Distinguish support, contradiction, and insufficient support without silently dropping disputed cases.",
+    "guards": [
+      "No new wrong answers",
+      "Retain correct answers and report review burden"
+    ],
+    "next_experiment": "Review the thin-support reference independently before changing the question. A confidence gate is not a correction."
+  },
+  "sarcasm-local": {
+    "goal": "Classify local textual intent; keep this population separate from cross-turn examples.",
+    "guards": [
+      "No new wrong answers",
+      "Preserve answered coverage"
+    ],
+    "next_experiment": "Obtain an independent challenge set; perfect agreement on twelve authored cases is not a general accuracy estimate."
+  },
+  "sarcasm-context": {
+    "goal": "Use supplied context while keeping unresolved reference intent outside hard-label scoring.",
+    "guards": [
+      "Explicit-null references stay unscored",
+      "Do not define ambiguous truth using model confidence"
+    ],
+    "next_experiment": "Have an independent reviewer adjudicate or keep the ambiguous cases withheld. Do not use certainty as truth."
+  },
+  "feed-triage": {
+    "goal": "Measure active/discard commitments separately from deferred review, against disclosed historical labels.",
+    "guards": [
+      "Count false active/discard commitments",
+      "Report review coverage and correct commitments separately"
+    ],
+    "next_experiment": "Ratify the intended watch policy and historical references before tuning. Raising a threshold can defer a disagreement without solving it."
+  },
+  "sponsor-action": {
+    "goal": "Prove that ordered hearing/seek history and Noul answers produce the declared skip action.",
+    "guards": [
+      "Preserve time ordering",
+      "No skip without a request",
+      "Skip limit and silence are not negative model predictions"
+    ],
+    "next_experiment": "Label complete audio/transcript sequences independently, then capture live responses. Never claim skip-time accuracy from these fixtures."
+  },
+  "moderation-action": {
+    "goal": "Keep model blocking judgment, categorical logging, and fail-open application behavior distinct.",
+    "guards": [
+      "Missing category cannot bypass a block",
+      "Missing model verdict is not p=0",
+      "Record pass-through on failure explicitly"
+    ],
+    "next_experiment": "Choose and review a domain policy before live evaluation. These fixtures do not certify content moderation safety."
+  }
+}

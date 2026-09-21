@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "origin": "synthetic_fixture",
+  "reference_status": "software_test_expectations_not_human_approved_semantic_gold",
+  "sponsor": [
+    {
+      "id": "s01",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": 0.1,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s02",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "skip",
+      "reply": 0.7,
+      "expected_policy": {
+        "baseline": "skip",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s03",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "skip",
+      "reply": 0.99,
+      "expected_policy": {
+        "baseline": "skip",
+        "candidate": "skip"
+      }
+    },
+    {
+      "id": "s04",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": 0.6999,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s05",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          },
+          {
+            "op": "skipped",
+            "at": 10000
+          },
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 10000,
+            "until": 17000
+          }
+        ],
+        "now": 17000,
+        "options": {}
+      },
+      "expected": "skip",
+      "reply": 0.95,
+      "expected_policy": {
+        "baseline": "skip",
+        "candidate": "skip"
+      }
+    },
+    {
+      "id": "s06",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          },
+          {
+            "op": "skipped",
+            "at": 10000
+          },
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 10000,
+            "until": 17000
+          }
+        ],
+        "now": 17000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": 0.1,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s07",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          },
+          {
+            "op": "skipped",
+            "at": 10000
+          },
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 10000,
+            "until": 17000
+          }
+        ],
+        "now": 17000,
+        "options": {
+          "maxConsecutiveSkips": 1
+        }
+      },
+      "expected": "keep",
+      "reply": 0.99,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s08",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          },
+          {
+            "op": "skipped",
+            "at": 10000
+          }
+        ],
+        "now": 50000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": null,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s09",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": null,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s10",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 0,
+            "until": 7000
+          },
+          {
+            "op": "skipped",
+            "at": 10000
+          },
+          {
+            "op": "hear",
+            "text": "This episode is about a neutral technical subject and the speaker continues to explain the main topic in detail.",
+            "at": 10000,
+            "until": 12000
+          }
+        ],
+        "now": 12000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": null,
+      "expected_policy": {
+        "baseline": "keep",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s11",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "The creator is describing their own merchandise and explicitly says no third party paid for this part of the video.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "keep",
+      "reply": 0.8,
+      "expected_policy": {
+        "baseline": "skip",
+        "candidate": "keep"
+      }
+    },
+    {
+      "id": "s12",
+      "input": {
+        "events": [
+          {
+            "op": "hear",
+            "text": "This paid message introduces a fictional third party sponsor and gives their subscription offer before returning to the subject.",
+            "at": 0,
+            "until": 7000
+          }
+        ],
+        "now": 7000,
+        "options": {}
+      },
+      "expected": "skip",
+      "reply": 0.8,
+      "expected_policy": {
+        "baseline": "skip",
+        "candidate": "keep"
+      }
+    }
+  ],
+  "moderation": [
+    {
+      "id": "m01",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "allow",
+      "reply": {
+        "type": "answer",
+        "probability": 0.1,
+        "category": "none"
+      },
+      "expected_policy": {
+        "baseline": "allow",
+        "candidate": "allow"
+      }
+    },
+    {
+      "id": "m02",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "block",
+      "reply": {
+        "type": "answer",
+        "probability": 0.7,
+        "category": "none"
+      },
+      "expected_policy": {
+        "baseline": "block",
+        "candidate": "allow"
+      }
+    },
+    {
+      "id": "m03",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "block",
+      "reply": {
+        "type": "answer",
+        "probability": 0.99,
+        "category": "none"
+      },
+      "expected_policy": {
+        "baseline": "block",
+        "candidate": "block"
+      }
+    },
+    {
+      "id": "m04",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "allow",
+      "reply": {
+        "type": "answer",
+        "probability": 0.6999,
+        "category": "none"
+      },
+      "expected_policy": {
+        "baseline": "allow",
+        "candidate": "allow"
+      }
+    },
+    {
+      "id": "m05",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "block",
+      "reply": {
+        "type": "answer",
+        "probability": 0.95,
+        "category": "none"
+      },
+      "expected_policy": {
+        "baseline": "block",
+        "candidate": "block"
+      }
+    },
+    {
+      "id": "m06",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "allow",
+      "reply": {
+        "type": "answer",
+        "probability": 0.1,
+        "category": "harassment"
+      },
+      "expected_policy": {
+        "baseline": "allow",
+        "candidate": "allow"
+      }
+    },
+    {
+      "id": "m07",
+      "input": {
+        "text": "A fictional ordinary message used only in a software fixture."
+      },
+      "expected": "block",
+      "reply": {
+        "type": "answer",
+        "probability": 0.95,
+        "category": null
+      },
+      "expected_policy": {
+        "baseline": "block",
+        "candidate": "block"
+      }
+    },
+    {
+      "id": "m08",
+      "input": {
+        "text": "A fixture whose reviewed test target requires blocking."
+      },
+      "expected": "block",
+      "reply": {
+        "type": "http_error",
+        "status": 500
+      },
+      "expected_policy": {
+        "baseline": "allow",
+        "candidate": "allow"
+      }
+    },
+    {
+      "id": "m09",
+      "input": {
+        "text": ""
+      },
+      "expected": "allow",
+      "reply": {
+        "type": "not_requested"
+      },
+      "expected_policy": {
+        "baseline": "allow",
+        "candidate": "allow"
+      }
+    },
+    {
+      "id": "m10",
+      "input": {
+        "text": "A safe fictional study request, deliberately paired with a false-positive model fixture."
+      },
+      "expected": "allow",
+      "reply": {
+        "type": "answer",
+        "probability": 0.8,
+        "category": "harassment"
+      },
+      "expected_policy": {
+        "baseline": "block",
+        "candidate": "allow"
+      }
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Jev application validation examples
 
+See the [portfolio index](PORTFOLIO.md) for the full collection and evidence status, including the [six additional tasks](portfolio/README.md).
+
 These examples implement the **preparation and offline proving layers** of
 [the application plans](../../docs/plans/jev-validation-pocs.md). They do not turn
 Validator into a model runner, optimizer, or task manager.
