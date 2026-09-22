@@ -47,3 +47,17 @@
 <p align="center">
   <a href="schemas/">Input formats</a>
 </p>
+
+## Command-line interface
+
+```sh
+validator evaluate \
+  --dataset data/golden.json \
+  --predictions data/predictions.json \
+  --config validator.json \
+  --out runs/current
+
+validator compare \
+  runs/baseline/report.json \
+  runs/current/report.json
+```
