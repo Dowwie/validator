@@ -39,19 +39,8 @@
 
 <br>
 
-<p align="center">
-  <a href="examples/readme-code-review/README.md"><strong>Try the worked example &rarr;</strong></a><br>
-  Reproduce the results without model calls or provider credentials.<br>
-  The guide explains the matrices, metrics, and commands.
-</p>
-
-<br>
-
 <hr>
 
 <p align="center">
-  <a href="examples/jev-poc/PORTFOLIO.md">More use cases</a> &nbsp; &middot; &nbsp;
-  <a href="schemas/">Input formats</a> &nbsp; &middot; &nbsp;
-  <a href="architecture.md">Architecture</a> &nbsp; &middot; &nbsp;
-  <a href="docs/specs/validator-v1.md">Specification</a>
+  <a href="schemas/">Input formats</a>
 </p>
