@@ -1,0 +1,6 @@
+{
+  "schema_version": 2,
+  "population": "All two-episode synthetic multi-label acceptance episodes",
+  "role": "development",
+  "decision": {"type": "as_recorded"}
+}

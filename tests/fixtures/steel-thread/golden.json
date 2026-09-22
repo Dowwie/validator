@@ -1,0 +1,10 @@
+{
+  "schema_version": 2,
+  "task": {"kind": "single_label", "labels": ["A", "B", "C"]},
+  "episodes": [
+    {"id": "01995c20-7d00-7000-8000-000000000001", "expected": {"type": "class", "label": "A"}, "input": {"case": "one"}},
+    {"id": "01995c20-7d00-7000-8000-000000000002", "expected": {"type": "class", "label": "A"}, "input": {"opaque_integer": 9007199254740993, "case": "two"}},
+    {"id": "01995c20-7d00-7000-8000-000000000003", "expected": {"type": "class", "label": "B"}, "input": {"case": "three"}},
+    {"id": "01995c20-7d00-7000-8000-000000000004", "expected": {"type": "class", "label": "C"}, "input": {"case": "four"}}
+  ]
+}
