@@ -3,8 +3,6 @@
 </div>
 <br>
 
-<h1 align="center">Validator</h1>
-
 <h3 align="center">Find the errors. Measure what changes.</h3>
 
 <p align="center">
