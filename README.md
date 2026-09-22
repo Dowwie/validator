@@ -1,3 +1,8 @@
+<div align="center">
+<img src="/assets/logo.png" alt="Logo" width="50%" style="display: block; margin-top: 0; margin-bottom: 0;"/>
+</div>
+<br>
+
 <h1 align="center">Validator</h1>
 
 <h3 align="center">Find the errors. Measure what changes.</h3>
