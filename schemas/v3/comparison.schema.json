@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "status", "runs", "metrics", "case_changes"],
+  "properties": {
+    "schema_version": {"const": 3},
+    "kind": {"const": "comparison"},
+    "status": {"const": "complete"},
+    "runs": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/run"}},
+    "metrics": {"type": "array", "items": {"$ref": "#/$defs/metric"}},
+    "case_changes": {"type": "array", "items": {"$ref": "#/$defs/relation"}}
+  },
+  "$defs": {
+    "run": {"type": "object", "required": ["index", "report_path", "task", "macro_undefined_labels", "signal_populations"], "properties": {"index": {"type": "integer", "minimum": 0}, "report_path": {"type": "string"}, "task": {"type": ["object", "null"]}, "macro_undefined_labels": {"type": "object", "required": ["raw", "final"], "properties": {"raw": {"$ref": "#/$defs/strings-or-null"}, "final": {"$ref": "#/$defs/strings-or-null"}}}, "signal_populations": {"type": "array", "items": {"$ref": "#/$defs/signal-population"}}}},
+    "signal-population": {"type": "object", "required": ["signal", "label", "status", "population_scope", "population_count", "included_ids", "excluded_ids"], "properties": {"signal": {"enum": ["maximum_probability", "confidence", "label_probability"]}, "label": {"type": ["string", "null"]}, "status": {}, "population_scope": {}, "population_count": {}, "included_ids": {}, "excluded_ids": {}}},
+    "metric": {"type": "object", "required": ["key", "kind", "values", "change_from_previous", "change_from_first"], "properties": {"key": {"$ref": "#/$defs/metric-key"}, "kind": {"enum": ["count", "metric", "scalar"]}, "values": {"type": "array"}, "change_from_previous": {"type": "array", "items": {"$ref": "#/$defs/delta"}}, "change_from_first": {"type": "array", "items": {"$ref": "#/$defs/delta"}}}},
+    "metric-key": {"type": "object", "required": ["task_kind", "family", "name", "dimensions"], "properties": {"task_kind": {"enum": ["single_label", "multi_label"]}, "family": {"enum": ["raw", "final", "probability", "signals"]}, "name": {"type": "string"}, "dimensions": {"$ref": "#/$defs/dimensions"}}},
+    "dimensions": {"oneOf": [{"type": "object", "maxProperties": 0}, {"type": "object", "required": ["label"], "maxProperties": 1, "properties": {"label": {"type": "string"}}}, {"type": "object", "required": ["actual", "predicted"], "maxProperties": 2, "properties": {"actual": {"type": "string"}, "predicted": {"oneOf": [{"type": "object", "required": ["type", "label"], "maxProperties": 2, "properties": {"type": {"const": "label"}, "label": {"type": "string"}}}, {"type": "object", "required": ["type"], "maxProperties": 1, "properties": {"type": {"const": "abstention"}}}]}}}, {"type": "object", "required": ["signal", "label", "bin"], "maxProperties": 3, "properties": {"signal": {"enum": ["maximum_probability", "confidence", "label_probability"]}, "label": {"type": ["string", "null"]}, "bin": {"type": "object", "required": ["index", "lower", "upper", "upper_inclusive"], "maxProperties": 4, "properties": {"index": {"type": "integer", "minimum": 0}, "lower": {"type": "number"}, "upper": {"type": "number"}, "upper_inclusive": {"type": "boolean"}}}}}]},
+    "delta": {"type": "object", "required": ["value", "reason"], "properties": {"value": {"type": ["number", "null"]}, "reason": {"type": ["string", "null"]}}},
+    "relation": {"type": "object", "required": ["from_index", "to_index", "shared_ids", "only_from_ids", "only_to_ids", "both_correct", "recovered", "regressed", "neither_correct", "changed_final_outcomes"], "properties": {"from_index": {"type": "integer", "minimum": 0}, "to_index": {"type": "integer", "minimum": 0}, "shared_ids": {"$ref": "#/$defs/strings"}, "only_from_ids": {"$ref": "#/$defs/strings"}, "only_to_ids": {"$ref": "#/$defs/strings"}, "both_correct": {"$ref": "#/$defs/category"}, "recovered": {"$ref": "#/$defs/category"}, "regressed": {"$ref": "#/$defs/category"}, "neither_correct": {"$ref": "#/$defs/category"}, "changed_final_outcomes": {"$ref": "#/$defs/category"}}},
+    "category": {"type": "object", "required": ["count", "ids"], "properties": {"count": {"type": "integer", "minimum": 0}, "ids": {"$ref": "#/$defs/strings"}}},
+    "strings": {"type": "array", "items": {"type": "string"}},
+    "strings-or-null": {"type": ["array", "null"], "items": {"type": "string"}}
+  }
+}

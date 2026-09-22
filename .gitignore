@@ -1,0 +1,28 @@
+/target
+
+# Generated local PoC work; upstream evidence and outcomes are deliberately tracked.
+/examples/jev-poc/__pycache__/
+/examples/jev-poc/work/
+
+# Nested example caches are transient, not evidence.
+/examples/jev-poc/**/__pycache__/
+
+/.zvec-grep/
+
+# Track public documentation explicitly; development records remain local.
+/docs/*
+!/docs/README.md
+!/docs/artifact-index.md
+!/docs/specs/
+/docs/specs/*
+!/docs/specs/validator-v1.md
+!/docs/specs/validator-data-model.md
+!/docs/specs/compare-series.md
+!/docs/acceptance/
+/docs/acceptance/*
+!/docs/acceptance/validator-v1.md
+!/docs/acceptance/jev-poc-execution.md
+!/docs/acceptance/portfolio-expansion.md
+!/docs/acceptance/made-with-jev.md
+!/docs/acceptance/evidence-portfolio.md
+!/docs/acceptance/workflow-replay.md

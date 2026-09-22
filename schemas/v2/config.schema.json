@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object","additionalProperties":false,"required":["schema_version","population","role","decision"],
+  "properties":{"schema_version":{"const":2},"population":{"type":"string","pattern":".*\\S.*"},"role":{"enum":["development","held_out"]},"parent_run_id":{"type":"string","format":"uuid"},"episode_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","format":"uuid"}},"decision":{"oneOf":[{"type":"object","additionalProperties":false,"required":["type"],"properties":{"type":{"const":"as_recorded"}}},{"type":"object","additionalProperties":false,"required":["type","signal","minimum"],"properties":{"type":{"const":"reject_below"},"signal":{"enum":["confidence","max_probability"]},"minimum":{"type":"number","minimum":0,"maximum":1}}},{"type":"object","additionalProperties":false,"required":["type","thresholds"],"properties":{"type":{"const":"label_thresholds"},"thresholds":{"type":"object","minProperties":1,"propertyNames":{"type":"string","pattern":".*\\S.*"},"additionalProperties":{"type":"number","minimum":0,"maximum":1}}}}]}}
+}

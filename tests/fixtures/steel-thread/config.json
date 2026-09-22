@@ -1,0 +1,6 @@
+{
+  "schema_version": 2,
+  "population": "steel-thread",
+  "role": "development",
+  "decision": {"type": "as_recorded"}
+}

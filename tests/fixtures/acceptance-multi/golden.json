@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "task": {
+    "kind": "multi_label",
+    "labels": ["A", "B", "C"]
+  },
+  "episodes": [
+    {
+      "id": "01995c20-7d00-7000-8000-000000000001",
+      "expected": {"type": "labels", "labels": ["A", "B"]},
+      "input": {"case": "overlap-error"}
+    },
+    {
+      "id": "01995c20-7d00-7000-8000-000000000002",
+      "expected": {"type": "labels", "labels": []},
+      "input": {"case": "empty-set-candidate-abstention"}
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "f04": {
+    "actual": ["A", "A", "A", "A", "B", "B", "C", "C"],
+    "predicted": ["A", "A", "B", "C", "B", "B", "A", "C"],
+    "matrix": [[2, 1, 1, 0], [0, 2, 0, 0], [1, 0, 1, 0]],
+    "counts": {"N": 8, "D": 5, "E": 3, "U": 0, "G": 8},
+    "accuracy": {"numerator": 5, "denominator": 8},
+    "class_f1": [[4, 7], [4, 5], [2, 4]],
+    "macro_f1": {"numerator": 131, "denominator": 210}
+  },
+  "exhaustive": {
+    "labels": ["A", "B", "C"],
+    "single_populations": 301,
+    "multi_answered_pairs": 64,
+    "multi_whole_abstentions": 8
+  },
+  "thread": {
+    "actual": ["A", "A", "B", "C"],
+    "predicted": ["A", null, "A", "C"],
+    "counts": {"N": 4, "D": 2, "E": 1, "U": 1, "G": 3},
+    "accuracy": {"numerator": 1, "denominator": 2},
+    "coverage": {"numerator": 3, "denominator": 4},
+    "selective_accuracy": {"numerator": 2, "denominator": 3},
+    "class_coverage": [[1, 2], [1, 1], [1, 1]],
+    "macro_f1": {"numerator": 1, "denominator": 2}
+  }
+}

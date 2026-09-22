@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "dataset_sha256": "36a22398a40ed88cc81112bfcf009c6cf3c0cbfa0d041278e048ea634975d885",
+  "sources": {
+    "baseline": {
+      "kind": "classifier",
+      "model": "synthetic-multi-label",
+      "configuration": {"revision": "baseline-v2"}
+    }
+  },
+  "predictions": [
+    {
+      "id": "01995c20-7d00-7000-8000-000000000001",
+      "source_id": "baseline",
+      "outcome": {"type": "labels", "labels": ["A", "C"]},
+      "probabilities": {"kind": "label_marginals", "values": {"A": 0.8, "B": 0.8, "C": 0.2}}
+    },
+    {
+      "id": "01995c20-7d00-7000-8000-000000000002",
+      "source_id": "baseline",
+      "outcome": {"type": "labels", "labels": []},
+      "probabilities": {"kind": "label_marginals", "values": {"A": 0.2, "B": 0.2, "C": 0.2}}
+    }
+  ]
+}

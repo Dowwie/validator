@@ -1,0 +1,32 @@
+{
+  "manifest_version": 1,
+  "fixture_directory": "tests/fixtures/acceptance-multi",
+  "freeze_order": [
+    "golden.json",
+    "baseline.json",
+    "candidate.json",
+    "config.json",
+    "targeted-config.json",
+    "targeted-predictions.json",
+    "expected.json",
+    "manifest.json"
+  ],
+  "input_fixture_count_before_oracle": 6,
+  "files": {
+    "golden.json": "36a22398a40ed88cc81112bfcf009c6cf3c0cbfa0d041278e048ea634975d885",
+    "baseline.json": "495b8aadd0d520a1b602c2692ab2cb92635ed2b6c2e017bf24c04c0c55069507",
+    "candidate.json": "07ea4b27c21b0c2c99971cd0e4789d7f64ebf2f20da43fe125d91b4c427abfe9",
+    "config.json": "97ddda3dda9c64fb81df21c2d7edb754ed8c37561bad127036933b34a210b80a",
+    "targeted-config.json": "87d1cd1b18e2044b286d93fa3baed8be84c26211c666e4c1cbfa9bfd05f334b3",
+    "targeted-predictions.json": "13270771769a6c523b59a789980d044107ae6c1dc085ff0b8c8b207ee2d3e8e3",
+    "expected.json": "c97e3a5b0debed6ae4dbf11ec2a67339c9009bb0953763bf56bde77ef297ca81"
+  },
+  "derivation": {
+    "method": "Manual integer set accounting and rational arithmetic from the frozen two-episode public fixture bytes; probability losses retained as analytic natural-log expressions.",
+    "hard_policy": "as_recorded, so every recorded raw outcome is the final outcome.",
+    "probability_working_values": "Every binary label decision gives probability 4/5 to its observed outcome, yielding per-label and mean Brier 1/25 and analytic loss -ln(4/5).",
+    "independence": "No Validator command, production scoring source, Validator output, private T029/T030 artifact, production-derived expected fixture, or internal numerical handoff was used.",
+    "generated_run_output_is_fixture": false
+  },
+  "hash_exclusion": "manifest.json deliberately has no self-hash to avoid a circular digest dependency."
+}

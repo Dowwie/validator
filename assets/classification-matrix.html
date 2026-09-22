@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reproducible Validator example: 87.1% micro-F1 alongside 50% security recall across 20 synthetic multi-label code reviews.">
+  <title>Validator worked example | Evaluate a code-review workflow</title>
+  <link rel="stylesheet" href="classification-matrix.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="brand">Validator <span>Worked example · Synthetic data</span></p>
+      <h1>Example: evaluating<br> a code-review workflow.</h1>
+      <p class="intro">Compare a code reviewer's predicted findings with expected labels using Validator.<br> These 20 synthetic cases show how an overall score can hide missed security issues.</p>
+    </header>
+    <dl class="headline-metrics" aria-label="Overall results">
+      <div><dt>Micro-F1</dt><dd>87.1%</dd><dd class="metric-note">Pools all label counts</dd></div>
+      <div><dt>Macro-F1</dt><dd>82.1%</dd><dd class="metric-note">Gives each label equal weight</dd></div>
+      <div><dt>Exact-match accuracy</dt><dd>65.0%</dd><dd class="metric-note">13 of 20 complete sets correct</dd></div>
+      <div class="critical"><dt>Security recall</dt><dd>50.0%</dd><dd class="metric-note">3 of 6 security findings missed</dd></div>
+    </dl>
+    <section class="matrices" aria-label="Per-label binary confusion matrices">
+      <p class="section-intro" id="matrix-key">Four labels. Four confusion matrices. <span>Each matrix counts the same 20 reviews.</span></p>
+      <div class="matrix-grid">
+      <section class="label-panel" aria-labelledby="correctness">
+        <h2 id="correctness">Correctness</h2>
+        <p class="support">13 expected positives / 20 reviews</p>
+        <table aria-describedby="matrix-key">
+          <caption>Predicted</caption>
+          <thead><tr><td>Expected</td><th scope="col">Present</th><th scope="col">Absent</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Present</th><td class="correct" data-count="correctness.true_positive"><strong>12</strong><span>TP · Found</span></td><td class="error" data-count="correctness.false_negative"><strong>1</strong><span>FN · Missed</span></td></tr>
+            <tr><th scope="row">Absent</th><td class="error" data-count="correctness.false_positive"><strong>1</strong><span>FP · Extra</span></td><td class="correct" data-count="correctness.true_negative"><strong>6</strong><span>TN · Clear</span></td></tr>
+          </tbody>
+        </table>
+        <dl class="label-metrics"><div><dt>Precision</dt><dd>92.3%</dd></div><div><dt>Recall</dt><dd>92.3%</dd></div><div><dt>F1</dt><dd>92.3%</dd></div></dl>
+      </section>
+      <section class="label-panel focus" aria-labelledby="security">
+        <h2 id="security">Security</h2>
+        <p class="support">6 expected positives / 20 reviews</p>
+        <table aria-describedby="matrix-key">
+          <caption>Predicted</caption>
+          <thead><tr><td>Expected</td><th scope="col">Present</th><th scope="col">Absent</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Present</th><td class="correct" data-count="security.true_positive"><strong>3</strong><span>TP · Found</span></td><td class="error" data-count="security.false_negative"><strong>3</strong><span>FN · Missed</span></td></tr>
+            <tr><th scope="row">Absent</th><td class="error" data-count="security.false_positive"><strong>1</strong><span>FP · Extra</span></td><td class="correct" data-count="security.true_negative"><strong>13</strong><span>TN · Clear</span></td></tr>
+          </tbody>
+        </table>
+        <dl class="label-metrics"><div><dt>Precision</dt><dd>75.0%</dd></div><div><dt>Recall</dt><dd>50.0%</dd></div><div><dt>F1</dt><dd>60.0%</dd></div></dl>
+      </section>
+      <section class="label-panel" aria-labelledby="performance">
+        <h2 id="performance">Performance</h2>
+        <p class="support">8 expected positives / 20 reviews</p>
+        <table aria-describedby="matrix-key">
+          <caption>Predicted</caption>
+          <thead><tr><td>Expected</td><th scope="col">Present</th><th scope="col">Absent</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Present</th><td class="correct" data-count="performance.true_positive"><strong>7</strong><span>TP · Found</span></td><td class="error" data-count="performance.false_negative"><strong>1</strong><span>FN · Missed</span></td></tr>
+            <tr><th scope="row">Absent</th><td class="error" data-count="performance.false_positive"><strong>2</strong><span>FP · Extra</span></td><td class="correct" data-count="performance.true_negative"><strong>10</strong><span>TN · Clear</span></td></tr>
+          </tbody>
+        </table>
+        <dl class="label-metrics"><div><dt>Precision</dt><dd>77.8%</dd></div><div><dt>Recall</dt><dd>87.5%</dd></div><div><dt>F1</dt><dd>82.4%</dd></div></dl>
+      </section>
+      <section class="label-panel" aria-labelledby="maintainability">
+        <h2 id="maintainability">Maintainability</h2>
+        <p class="support">16 expected positives / 20 reviews</p>
+        <table aria-describedby="matrix-key">
+          <caption>Predicted</caption>
+          <thead><tr><td>Expected</td><th scope="col">Present</th><th scope="col">Absent</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Present</th><td class="correct" data-count="maintainability.true_positive"><strong>15</strong><span>TP · Found</span></td><td class="error" data-count="maintainability.false_negative"><strong>1</strong><span>FN · Missed</span></td></tr>
+            <tr><th scope="row">Absent</th><td class="error" data-count="maintainability.false_positive"><strong>1</strong><span>FP · Extra</span></td><td class="correct" data-count="maintainability.true_negative"><strong>3</strong><span>TN · Clear</span></td></tr>
+          </tbody>
+        </table>
+        <dl class="label-metrics"><div><dt>Precision</dt><dd>93.8%</dd></div><div><dt>Recall</dt><dd>93.8%</dd></div><div><dt>F1</dt><dd>93.8%</dd></div></dl>
+      </section>
+      </div>
+      <p class="legend"><span class="legend-error">Errors: missed findings + extra flags</span><span>TP / TN: correct presence / absence</span></p>
+    </section>
+    <section class="case" aria-labelledby="case-title">
+      <div><p class="case-id">Inside review-02</p><h2 id="case-title">Two matched.<br> One missed. One extra.</h2></div>
+      <div class="case-sets">
+        <p><strong>Expected</strong><span>Correctness · <em>Security</em> · Maintainability</span></p>
+        <p><strong>Predicted</strong><span>Correctness · <em>Performance</em> · Maintainability</span></p>
+        <p class="case-reading">Security is missed; performance is an extra flag. The counts do not establish a substitution.</p>
+      </div>
+    </section>
+    <footer>
+      <p><strong>20 reviews · 4 labels · 100% coverage</strong><span>No abstentions. Raw and final results are identical.</span></p>
+      <p>Synthetic illustration, not measured model performance.<br><a href="../examples/readme-code-review/README.md">Reproduce the counts and metrics</a></p>
+    </footer>
+  </main>
+</body>
+</html>
